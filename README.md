@@ -3,6 +3,7 @@
 - NOMAN ALI noman.ali@informatik.hs-fulda.de nomansahi
 - JESÚS MORENO DURÁN jesusmd2000@gmail.com Jesus
 - PARAS paras.paras@informatik.hs-fulda.de Paras
+- TOME A. DONDO 
 
 | Name (team lead first)   | email | Nickname (preferred way to be called) | Back end or front End affinity/lead Or GitHub master | Can meet these times outside class |
 | ------------------------ | ----- | --------------------------------------| ---------------------------------------------------- | ---------------------------------- |
@@ -10,3 +11,4 @@
 | Noman Ali                | noman.ali@informatik.hs-fulda.de | nomansahi  | Front End lead                                       |    ex.                             |
 | Jesús Moreno Durán       | jesusmd2000@gmail.com | Jesus                 | Back End lead                                        |    ex.                             |
 | Paras                    | paras.paras@informatik.hs-fulda.de | Paras    | Github master                                        |    ex.                             |
+| Tome A. Dondo (AI)       | ex.   | ex.                                   |                                                      |    ex.                             |
