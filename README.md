@@ -9,6 +9,6 @@
 | ------------------------ | ----- | --------------------------------------| ---------------------------------------------------- | ---------------------------------- |
 | Luis Miguel García Marín | luismgarciamarin@gmail.com | Luis/lintenn     | Team lead                                            | M:11:25-13:30, Tu:15:20-18:30, W:11:00-16:30, Th:11:00-16:30, F:11:00-15:00 |
 | Noman Ali                | noman.ali@informatik.hs-fulda.de | nomansahi  | Front End lead                                       |    ex.                             |
-| Jesús Moreno Durán       | jesusmd2000@gmail.com | Jesus                 | Back End lead                                        |    ex.                             |
+| Jesús Moreno Durán       | jesusmd2000@gmail.com | Jesús                 | Back End lead                                        |    ex.                             |
 | Paras                    | paras.paras@informatik.hs-fulda.de | Paras    | Github master                                        |    ex.                             |
 | Tome A. Dondo (AI)       | ex.   | ex.                                   |                                                      |    ex.                             |
