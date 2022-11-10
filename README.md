@@ -1,8 +1,8 @@
 # GDSD_Team_3
-- LUIS MIGUEL GARCÍA MARÍN luismgarciamarin@gmail.com luis/lintenn
+- LUIS MIGUEL GARCÍA MARÍN luismgarciamarin@gmail.com lintenn
 - NOMAN ALI noman.ali@informatik.hs-fulda.de nomansahi
-- JESÚS MORENO DURÁN jesusmd2000@gmail.com Jesus
-- PARAS paras.paras@informatik.hs-fulda.de Paras
+- JESÚS MORENO DURÁN jesusmd2000@gmail.com jesu-m0
+- PARAS paras.paras@informatik.hs-fulda.de Paras14
 - TOME A. DONDO 
 
 | Name (team lead first)   | email | Nickname (preferred way to be called) | Back end or front End affinity/lead Or GitHub master | Can meet these times outside class |
