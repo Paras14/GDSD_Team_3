@@ -3,8 +3,8 @@
 - NOMAN ALI noman.ali@informatik.hs-fulda.de nomansahi
 - JESÚS MORENO DURÁN jesus.moreno-duran@informatik.hs-fulda.de jesu-m0
 - PARAS paras.paras@informatik.hs-fulda.de Paras14
-- TOME A. DONDO 
-- AMAN DAGAR 
+- ALHASSANE DONDO TOURE alhassane-dondo.toure@informatik.hs-fulda.de Hassan0895
+- AMAN DAGAR aman.dagar@informatik.hs-fulda.de AmanDagar
 
 | Name (team lead first)   | email | Nickname (preferred way to be called) | Back end or front End affinity/lead Or GitHub master | Can meet these times outside class |
 | ------------------------ | ----- | --------------------------------------| ---------------------------------------------------- | ---------------------------------- |
