@@ -40,7 +40,7 @@ const About = () => {
             <div class="info">Noman</div>
           </div>
           <div class="flex-items">
-            <a href="http://team3gdsdweb.s3-website-us-east-1.amazonaws.com/personal_webpages/Paras_personal-site.html"
+            <a href="http://team3gdsdweb.s3-website-us-east-1.amazonaws.com/personal_webpages/Paras-CV.html"
               ><img
                 src={parasIMG}
                 alt="Paras_image"
