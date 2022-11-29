@@ -12,4 +12,5 @@
 | Noman Ali                | noman.ali@informatik.hs-fulda.de | nomansahi  | Front End lead                                       |    ex.                             |
 | Jesús Moreno Durán       | jesus.moreno-duran@informatik.hs-fulda.de | Jesús                 | Back End lead                                        |    ex.                             |
 | Paras                    | paras.paras@informatik.hs-fulda.de | Paras    | Github master                                        |    ex.                             |
+| Vichitar Dagar           | vichitar.dagar@informatik.hs-fulda.de | Aman  | Backend affinity                                     |    ex.                             |
 | Tome A. Dondo (AI)       | ex.   | ex.                                   |                                                      |    ex.                             |
