@@ -13,4 +13,4 @@
 | Jesús Moreno Durán       | jesus.moreno-duran@informatik.hs-fulda.de | Jesús                 | Back End lead                                        |    ex.                             |
 | Paras                    | paras.paras@informatik.hs-fulda.de | Paras    | Github master                                        |    ex.                             |
 | Vichitar Dagar           | vichitar.dagar@informatik.hs-fulda.de | Aman  | Backend affinity                                     |    ex.                             |
-| Alhassane Dondo Toure    | alhassane-dondo.toure@informatik.hs-fulda.de  | ex.               |                                  |    ex.                             |
+| Alhassane Dondo Toure    | alhassane-dondo.toure@informatik.hs-fulda.de  | Hassan               | ex.                           |    ex.                             |
