@@ -1,5 +1,5 @@
 # MySQL Database Credentials:
-- Url: db-instance-team3.c3o5h2a0hsns.us-east-1.rds.amazonaws.com
+- Url: db-instance-team3.czsntcnwbbwf.us-east-1.rds.amazonaws.com
 - Port: 3306
 - Username: admin
 - Password: gdsdteam3
@@ -7,7 +7,7 @@
 
 # Backend Instance Credentials:
 instance ID:
-i-0d334a7a114c96bc2 (restaurant-instance)
+i-0f29ac7a0b9cf8e77 (restaurant-instance)
 1. Open an SSH client.
 
 2. Locate the private key file. The key used to launch this instance is restaurant-key-pair.pem
@@ -16,8 +16,8 @@ i-0d334a7a114c96bc2 (restaurant-instance)
   chmod 400 restaurant-key-pair.pem
 
 4. Connect to the instance using its public DNS:
-  ec2-54-234-85-146.compute-1.amazonaws.com
+  ec2-3-87-229-41.compute-1.amazonaws.com
 
 Example:
 
-  ssh -i "restaurant-key-pair.pem" ubuntu@ec2-54-234-85-146.compute-1.amazonaws.com
+  ssh -i "restaurant-key-pair.pem" ubuntu@ec2-3-87-229-41.compute-1.amazonaws.com
