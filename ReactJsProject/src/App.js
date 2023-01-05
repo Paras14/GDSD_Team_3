@@ -1,15 +1,13 @@
-import logo from "./logo.svg";
-import "./App.css";
-import About from "./components/about";
+import Navbar from "./components/HomePage/Navbar";
+import Cards from "./components/HomePage/Cards";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <h1>Team 3</h1>
-
-      <About />
+    <div>
+      <Navbar />
+      <Cards />
     </div>
   );
-}
+};
 
 export default App;
