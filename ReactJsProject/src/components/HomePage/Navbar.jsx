@@ -1,5 +1,4 @@
 import Logo from "./Logo";
-import "./LogoCss.css";
 
 const Navbar = () => {
   return (

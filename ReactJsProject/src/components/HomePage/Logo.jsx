@@ -1,13 +1,14 @@
-import logo from "../../images/logo1.png";
+import logo from "../../images/logo1-white.png";
+import "./LogoCss.css";
 
 const Logo = () => {
   return (
     <div>
       <img
         src={logo}
-        alt="logo"
-        style={{ width: "45px" }}
-        className="p-2 logo__color"
+        alt="Logo"
+        style={{ width: "45px", color: "white" }}
+        className="p-2 logo_color"
       />
     </div>
   );
