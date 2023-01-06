@@ -1,3 +1,5 @@
+import SignIn from "../SignIn/SignIn";
+import SignUp from "../SignUp/SignUp";
 import Logo from "./Logo";
 
 const Navbar = () => {
@@ -9,8 +11,9 @@ const Navbar = () => {
             <Logo fill="white" />
           </div>
           <div className="align-self-center">
-            <button className="btn btn-light mx-2 fs-5">SignIn</button>
-            <button className="btn btn-light fs-5">SignUp</button>
+            <SignIn />
+
+            <SignUp />
           </div>
         </div>
       </div>
