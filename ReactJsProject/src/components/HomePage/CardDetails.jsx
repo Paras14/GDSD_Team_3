@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import { Card, Container, Row, Col, Button } from "react-bootstrap";
 
 const CardDetails = () => {
+  const navigate = useNavigate();
   const CardComponentDetails = [
     {
       id: 1,
@@ -76,7 +78,15 @@ const CardDetails = () => {
                   <Card.Title>{card.name}</Card.Title>
                   <Card.Text>{card.body}</Card.Text>
                 </Card.Body>
-                <Button variant="primary">Go To Visit</Button>
+
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    navigate("/restaurentDetails");
+                  }}
+                >
+                  Go to Visit
+                </Button>
               </Card>
             </Col>
           ))}

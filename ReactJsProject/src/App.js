@@ -1,14 +1,33 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/HomePage/Navbar";
 import Cards from "./components/HomePage/Cards";
 import SearchBar from "./components/HomePage/SearchBar";
+import ErrorPage from "./components/ErrorPage";
+import RestaurentDetails from "./components/HomePage/RestaurentDetails/RestaurentDetails";
+import SignIn from "./components/SignIn/SignIn";
+import SignUp from "./components/SignUp/SignUp";
 
 const App = () => {
   return (
     <div>
-      <Navbar />
-
-      <SearchBar />
-      <Cards />
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div>
+                <Navbar />
+                <SearchBar />
+                <Cards />
+              </div>
+            }
+          />
+          <Route path="/restaurentDetails" element={<RestaurentDetails />} />
+          <Route path="/signIn" element={<SignIn />} />
+          <Route path="/signUp" element={<SignUp />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </Router>
     </div>
   );
 };

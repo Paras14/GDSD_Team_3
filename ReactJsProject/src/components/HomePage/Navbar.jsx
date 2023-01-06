@@ -1,19 +1,27 @@
-import SignIn from "../SignIn/SignIn";
-import SignUp from "../SignUp/SignUp";
+import { useNavigate } from "react-router-dom";
+
+import "../HomePage/navbarIndex.css";
 import Logo from "./Logo";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   return (
-    <div className=" bg-primary">
-      <div className="container">
+    <div className=" bg-primary ">
+      <div className="container ">
         <div className="d-flex justify-content-between ">
           <div>
             <Logo fill="white" />
           </div>
           <div className="align-self-center">
-            <SignIn />
-
-            <SignUp />
+            <button
+              className="btn btn-light mx-2"
+              onClick={() => {
+                navigate("/signIn");
+              }}
+            >
+              SignIn
+            </button>
+            <button className="btn btn-light">SignUp</button>
           </div>
         </div>
       </div>
