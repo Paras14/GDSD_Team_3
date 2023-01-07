@@ -40,7 +40,7 @@ function SignIn() {
             navigate("/signUp");
           }}
         >
-          SignUp
+          Register
         </Button>
       </p>
     </Container>
