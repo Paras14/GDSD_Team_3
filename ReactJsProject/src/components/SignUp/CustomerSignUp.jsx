@@ -18,10 +18,12 @@ const schema = Yup.object().shape({
   terms: Yup.bool().required().oneOf([true], "terms must be accepted"),
 });
 
-function signUp() {
+function CustomerSignUp() {
   return (
     <Container>
-      <h1 className="text-center my-4 py-4">Register YourSelf As a Manager!</h1>
+      <h1 className="text-center my-4 py-4">
+        Register YourSelf As a Customer!
+      </h1>
       <Formik
         validationSchema={schema}
         onSubmit={console.log}
@@ -209,19 +211,7 @@ function signUp() {
                 </Form.Control.Feedback>
               </Form.Group>
             </Row>
-            <Form.Group className="position-relative mb-3">
-              <Form.Label>File</Form.Label>
-              <Form.Control
-                type="file"
-                required
-                name="file"
-                onChange={handleChange}
-                isInvalid={!!errors.file}
-              />
-              <Form.Control.Feedback type="invalid" tooltip>
-                {errors.file}
-              </Form.Control.Feedback>
-            </Form.Group>
+
             <Form.Group className="position-relative mb-3">
               <Form.Check
                 required
@@ -243,4 +233,4 @@ function signUp() {
   );
 }
 
-export default signUp;
+export default CustomerSignUp;

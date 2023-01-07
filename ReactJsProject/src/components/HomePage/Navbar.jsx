@@ -24,7 +24,7 @@ const Navbar = () => {
             <button
               className="btn btn-light"
               onClick={() => {
-                navigate("/signUp");
+                navigate("/userType");
               }}
             >
               Register
