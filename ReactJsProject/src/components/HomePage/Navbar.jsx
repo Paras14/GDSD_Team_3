@@ -21,7 +21,14 @@ const Navbar = () => {
             >
               SignIn
             </button>
-            <button className="btn btn-light">Register</button>
+            <button
+              className="btn btn-light"
+              onClick={() => {
+                navigate("/signUp");
+              }}
+            >
+              Register
+            </button>
           </div>
         </div>
       </div>

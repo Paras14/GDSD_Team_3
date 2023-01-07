@@ -74,7 +74,7 @@ const CardDetails = () => {
           >
             <Form.Control
               type="text"
-              placeholder="Search There"
+              placeholder="Search There Your Favourite Restaurent"
               size="lg"
               className="mx-4"
               onChange={(event) => setSearchTerm(event.target.value)}
