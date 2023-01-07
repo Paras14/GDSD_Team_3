@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/HomePage/Navbar";
 import Cards from "./components/HomePage/Cards";
-import SearchBar from "./components/HomePage/SearchBar";
+// import SearchBar from "./components/HomePage/SearchBar";
 import ErrorPage from "./components/ErrorPage";
 import RestaurentDetails from "./components/HomePage/RestaurentDetails/RestaurentDetails";
 import SignIn from "./components/SignIn/SignIn";
@@ -17,7 +17,7 @@ const App = () => {
             element={
               <div>
                 <Navbar />
-                <SearchBar />
+                {/* <SearchBar /> */}
                 <Cards />
               </div>
             }

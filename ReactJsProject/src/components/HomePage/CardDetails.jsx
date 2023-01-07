@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { Card, Container, Row, Col, Button } from "react-bootstrap";
+import { Card, Container, Row, Col, Button, Form } from "react-bootstrap";
+import { useState } from "react";
 
 const CardDetails = () => {
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
   const CardComponentDetails = [
     {
@@ -65,8 +67,35 @@ const CardDetails = () => {
   return (
     <div className="grid">
       <Container className="mt-4">
+        <Container>
+          <Form.Group
+            className="mb-3 d-flex justify-content-center mt-4"
+            controlId="formBasicEmail"
+          >
+            <Form.Control
+              type="text"
+              placeholder="Search There"
+              size="lg"
+              className="mx-4"
+              onChange={(event) => setSearchTerm(event.target.value)}
+            />
+            <Button variant="primary" size="lg">
+              Search
+            </Button>
+          </Form.Group>
+        </Container>
         <Row>
-          {CardComponentDetails.map((card, index) => (
+          {CardComponentDetails.filter((val) => {
+            if (searchTerm === "") {
+              return val;
+            } else if (
+              val.name
+                .toLocaleLowerCase()
+                .includes(searchTerm.toLocaleLowerCase())
+            ) {
+              return val;
+            }
+          }).map((card, index) => (
             <Col md={3} key={index}>
               <Card className="box m-2">
                 <Card.Img
