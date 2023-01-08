@@ -11,6 +11,16 @@ const schema = Yup.object().shape({
   firstName: Yup.string().required(),
   lastName: Yup.string().required(),
   username: Yup.string().required(),
+  password: Yup.string().required(),
+  reenterpassword: Yup.string()
+    .required()
+    .when("password", {
+      is: (val) => (val && val.length > 0 ? true : false),
+      then: Yup.string().oneOf(
+        [Yup.ref("password")],
+        "Both password need to be the same"
+      ),
+    }),
   city: Yup.string().required(),
   state: Yup.string().required(),
   zip: Yup.string().required(),
@@ -105,7 +115,6 @@ function signUp() {
                 </InputGroup>
               </Form.Group>
             </Row>
-
             <Row className="mb-3">
               <Form.Group
                 as={Col}
@@ -147,7 +156,6 @@ function signUp() {
                 </Form.Control.Feedback>
               </Form.Group>
             </Row>
-
             <Row className="mb-3">
               <Form.Group
                 as={Col}

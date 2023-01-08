@@ -11,10 +11,19 @@ const schema = Yup.object().shape({
   firstName: Yup.string().required(),
   lastName: Yup.string().required(),
   username: Yup.string().required(),
+  password: Yup.string().required(),
+  reenterpassword: Yup.string()
+    .required()
+    .when("password", {
+      is: (val) => (val && val.length > 0 ? true : false),
+      then: Yup.string().oneOf(
+        [Yup.ref("password")],
+        "Both password need to be the same"
+      ),
+    }),
   city: Yup.string().required(),
   state: Yup.string().required(),
   zip: Yup.string().required(),
-  file: Yup.mixed().required(),
   terms: Yup.bool().required().oneOf([true], "terms must be accepted"),
 });
 
@@ -36,7 +45,7 @@ function CustomerSignUp() {
           city: "",
           state: "",
           zip: "",
-          file: null,
+
           terms: false,
         }}
       >

@@ -87,7 +87,13 @@ const RestaurentDetails = () => {
             <li> iced raspberries 5.50</li>
           </ul>
         </p>
-        <Button size="lg" className="text-center">
+        <Button
+          size="lg"
+          className="text-center"
+          onClick={() => {
+            navigate("/signIn");
+          }}
+        >
           Book Now
         </Button>
       </div>
