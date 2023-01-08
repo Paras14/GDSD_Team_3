@@ -20,7 +20,7 @@ function UserType() {
             Register
           </Button>
         </div>
-
+        <p className="text-uppercase fs-1 text-info fst-italic">or</p>
         <div>
           <p className="fs-4">Register Yourself as Manager?</p>
           <Button
