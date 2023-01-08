@@ -61,7 +61,7 @@ const About = () => {
         </div>
       </div>
       <div class="links">
-        Github : - >
+        Github : - &gt;
         <a href="https://github.com/Paras14/GDSD_Team_3">GDSD_Team_3</a>
       </div>
       <div class="footer">Made with teamwork</div>
