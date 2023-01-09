@@ -7,7 +7,7 @@ function UserType() {
   return (
     <Container>
       <h1 className="text-center my-4 py-4">
-        Want to become a Customer or Manager!!
+        Want to become a Customer or Restaurent!!
       </h1>
       <div className="d-flex justify-content-center justify-items-center flex-column text-center">
         <div className="my-4">
@@ -22,7 +22,7 @@ function UserType() {
         </div>
         <p className="text-uppercase fs-1 text-info fst-italic">or</p>
         <div>
-          <p className="fs-4">Register Yourself as Manager?</p>
+          <p className="fs-4">Register Yourself as Restaurent?</p>
           <Button
             onClick={() => {
               navigate("/signUp");

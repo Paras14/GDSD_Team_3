@@ -8,9 +8,10 @@ import * as Yup from "yup";
 import { Container } from "react-bootstrap";
 
 const schema = Yup.object().shape({
-  firstName: Yup.string().required(),
-  lastName: Yup.string().required(),
+  restaurentname: Yup.string().required(),
+  managername: Yup.string().required(),
   username: Yup.string().required(),
+  managermail: Yup.string().required(),
   password: Yup.string().required(),
   reenterpassword: Yup.string()
     .required()
@@ -24,27 +25,34 @@ const schema = Yup.object().shape({
   city: Yup.string().required(),
   state: Yup.string().required(),
   zip: Yup.string().required(),
+  telefonenumber: Yup.string().required(),
   file: Yup.mixed().required(),
+  restaurenttype: Yup.mixed().required(),
   terms: Yup.bool().required().oneOf([true], "terms must be accepted"),
 });
 
 function signUp() {
   return (
     <Container>
-      <h1 className="text-center my-4 py-4">Register YourSelf As a Manager!</h1>
+      <h1 className="text-center my-4 py-4  text-uppercase">
+        Register YourSelf As a Restaurent!
+      </h1>
       <Formik
         validationSchema={schema}
         onSubmit={console.log}
         initialValues={{
-          firstName: "Noman",
-          lastName: "Ali",
+          restaurentname: "Chinese Restaurent",
+          managername: "Ali",
           username: "",
+          managermail: "",
           password: "",
           reenterpassword: "",
           city: "",
           state: "",
           zip: "",
+          telefonenumber: "",
           file: null,
+          restaurenttype: "",
           terms: false,
         }}
       >
@@ -65,13 +73,13 @@ function signUp() {
                 controlId="validationFormik101"
                 className="position-relative"
               >
-                <Form.Label>First name</Form.Label>
+                <Form.Label>Restaurant Name</Form.Label>
                 <Form.Control
                   type="text"
-                  name="firstName"
-                  value={values.firstName}
+                  name="restaurentname"
+                  value={values.restaurentname}
                   onChange={handleChange}
-                  isValid={touched.firstName && !errors.firstName}
+                  isValid={touched.restaurentname && !errors.restaurentname}
                 />
                 <Form.Control.Feedback tooltip>
                   Looks good!
@@ -83,13 +91,13 @@ function signUp() {
                 controlId="validationFormik102"
                 className="position-relative"
               >
-                <Form.Label>Last name</Form.Label>
+                <Form.Label>Manager Name</Form.Label>
                 <Form.Control
                   type="text"
-                  name="lastName"
-                  value={values.lastName}
+                  name="managername"
+                  value={values.managername}
                   onChange={handleChange}
-                  isValid={touched.lastName && !errors.lastName}
+                  isValid={touched.managername && !errors.managername}
                 />
 
                 <Form.Control.Feedback tooltip>
@@ -118,7 +126,27 @@ function signUp() {
             <Row className="mb-3">
               <Form.Group
                 as={Col}
-                md="6"
+                md="4"
+                controlId="validationFormik110"
+                className="position-relative"
+              >
+                <Form.Label>Manager Email</Form.Label>
+                <Form.Control
+                  type="mail"
+                  placeholder="Enter Email"
+                  name="managermail"
+                  value={values.managermail}
+                  onChange={handleChange}
+                  isInvalid={!!errors.managermail}
+                />
+
+                <Form.Control.Feedback type="invalid" tooltip>
+                  {errors.managermail}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group
+                as={Col}
+                md="4"
                 controlId="validationFormik110"
                 className="position-relative"
               >
@@ -138,7 +166,7 @@ function signUp() {
               </Form.Group>
               <Form.Group
                 as={Col}
-                md="6"
+                md="4"
                 controlId="validationFormik111"
                 className="position-relative"
               >
@@ -179,7 +207,7 @@ function signUp() {
               </Form.Group>
               <Form.Group
                 as={Col}
-                md="3"
+                md="6"
                 controlId="validationFormik104"
                 className="position-relative"
               >
@@ -196,9 +224,31 @@ function signUp() {
                   {errors.state}
                 </Form.Control.Feedback>
               </Form.Group>
+            </Row>
+            <Row className="mb-3">
               <Form.Group
                 as={Col}
-                md="3"
+                md="4"
+                controlId="validationFormik105"
+                className="position-relative"
+              >
+                <Form.Label>Restaurant Telephone</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Enter Number"
+                  name="telefonenumber"
+                  value={values.telefonenumber}
+                  onChange={handleChange}
+                  isInvalid={!!errors.telefonenumber}
+                />
+
+                <Form.Control.Feedback type="invalid" tooltip>
+                  {errors.telefonenumber}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group
+                as={Col}
+                md="4"
                 controlId="validationFormik105"
                 className="position-relative"
               >
@@ -214,6 +264,27 @@ function signUp() {
 
                 <Form.Control.Feedback type="invalid" tooltip>
                   {errors.zip}
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group
+                as={Col}
+                md="4"
+                controlId="validationFormik105"
+                className="position-relative"
+              >
+                <Form.Label>Restaurant Type</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Restaurent Type"
+                  name="restaurenttype"
+                  value={values.restaurenttype}
+                  onChange={handleChange}
+                  isInvalid={!!errors.restaurenttype}
+                />
+
+                <Form.Control.Feedback type="invalid" tooltip>
+                  {errors.restaurenttype}
                 </Form.Control.Feedback>
               </Form.Group>
             </Row>
