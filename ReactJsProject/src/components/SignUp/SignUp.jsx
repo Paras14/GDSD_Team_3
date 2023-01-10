@@ -6,6 +6,8 @@ import Row from "react-bootstrap/Row";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Container } from "react-bootstrap";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const schema = Yup.object().shape({
   restaurentname: Yup.string().required(),
@@ -31,13 +33,16 @@ const schema = Yup.object().shape({
   terms: Yup.bool().required().oneOf([true], "terms must be accepted"),
 });
 
-function signUp() {
+function SignUp() {
+  const navigate = useNavigate();
+
   return (
     <Container>
       <h1 className="text-center my-4 py-4  text-uppercase">
         Register YourSelf As a Restaurent!
       </h1>
       <Formik
+        method="POST"
         validationSchema={schema}
         onSubmit={console.log}
         initialValues={{
@@ -314,7 +319,30 @@ function signUp() {
                 feedbackTooltip
               />
             </Form.Group>
-            <Button type="submit">Submit form</Button>
+
+            <Button
+              type="submit"
+              disabled={
+                (values.restaurentname === "",
+                values.managername === "",
+                values.username === "",
+                values.managermail === "",
+                values.password === "",
+                values.reenterpassword === "",
+                values.city === "",
+                values.state === "",
+                values.telefonenumber === "",
+                values.zip === "",
+                values.restaurenttype === "",
+                values.file === null,
+                values.terms === false)
+              }
+              onClick={() => {
+                navigate("/restaurentRegistration");
+              }}
+            >
+              Submit form
+            </Button>
           </Form>
         )}
       </Formik>
@@ -322,4 +350,4 @@ function signUp() {
   );
 }
 
-export default signUp;
+export default SignUp;

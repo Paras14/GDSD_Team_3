@@ -11,6 +11,7 @@ const schema = Yup.object().shape({
   firstName: Yup.string().required(),
   lastName: Yup.string().required(),
   username: Yup.string().required(),
+  customeremail: Yup.string().required(),
   password: Yup.string().required(),
   reenterpassword: Yup.string()
     .required()
@@ -30,7 +31,7 @@ const schema = Yup.object().shape({
 function CustomerSignUp() {
   return (
     <Container>
-      <h1 className="text-center my-4 py-4">
+      <h1 className="text-center my-4 py-4 text-uppercase">
         Register YourSelf As a Customer!
       </h1>
       <Formik
@@ -40,6 +41,7 @@ function CustomerSignUp() {
           firstName: "Noman",
           lastName: "Ali",
           username: "",
+          customeremail: "",
           password: "",
           reenterpassword: "",
           city: "",
@@ -120,7 +122,27 @@ function CustomerSignUp() {
             <Row className="mb-3">
               <Form.Group
                 as={Col}
-                md="6"
+                md="4"
+                controlId="validationFormik110"
+                className="position-relative"
+              >
+                <Form.Label>Customer Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Enter Your Email"
+                  name="customeremail"
+                  value={values.customeremail}
+                  onChange={handleChange}
+                  isInvalid={!!errors.customeremail}
+                />
+
+                <Form.Control.Feedback type="invalid" tooltip>
+                  {errors.customeremail}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group
+                as={Col}
+                md="4"
                 controlId="validationFormik110"
                 className="position-relative"
               >
@@ -140,7 +162,7 @@ function CustomerSignUp() {
               </Form.Group>
               <Form.Group
                 as={Col}
-                md="6"
+                md="4"
                 controlId="validationFormik111"
                 className="position-relative"
               >

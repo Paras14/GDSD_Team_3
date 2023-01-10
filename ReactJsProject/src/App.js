@@ -8,6 +8,7 @@ import SignIn from "./components/SignIn/SignIn";
 import SignUp from "./components/SignUp/SignUp";
 import UserType from "./components/SignUp/UserType";
 import CustomerSignUp from "./components/SignUp/CustomerSignUp";
+import RestaurentRegistration from "./components/SignUp/RestaurentRegistration";
 
 const App = () => {
   return (
@@ -58,6 +59,15 @@ const App = () => {
               <div>
                 <Navbar />
                 <CustomerSignUp />
+              </div>
+            }
+          />
+          <Route
+            path="/restaurentRegistration"
+            element={
+              <div>
+                <Navbar />
+                <RestaurentRegistration />
               </div>
             }
           />
