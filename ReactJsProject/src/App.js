@@ -9,6 +9,10 @@ import SignUp from "./components/SignUp/SignUp";
 import UserType from "./components/SignUp/UserType";
 import CustomerSignUp from "./components/SignUp/CustomerSignUp";
 import RestaurentRegistration from "./components/SignUp/RestaurentRegistration";
+import AdminPanel from "./components/Admin/AdminPanel";
+import AdminPanelNavbar from "./components/Admin/AdminPanelNavbar";
+import PendingRestaurentReg from "./components/Admin/PendingRestaurentReg";
+import PendingRestaurentForm from "./components/Admin/PendingRestaurentForm";
 
 const App = () => {
   return (
@@ -68,6 +72,33 @@ const App = () => {
               <div>
                 <Navbar />
                 <RestaurentRegistration />
+              </div>
+            }
+          />
+          <Route
+            path="/adminPanel"
+            element={
+              <div>
+                <AdminPanelNavbar />
+                <AdminPanel />
+              </div>
+            }
+          />
+          <Route
+            path="/pendingRestaurentRegistration"
+            element={
+              <div>
+                <AdminPanelNavbar />
+                <PendingRestaurentReg />
+              </div>
+            }
+          />
+          <Route
+            path="/pendingRestaurentForm"
+            element={
+              <div>
+                <AdminPanelNavbar />
+                <PendingRestaurentForm />
               </div>
             }
           />
