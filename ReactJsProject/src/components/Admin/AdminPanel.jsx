@@ -24,7 +24,11 @@ function AdminPanel() {
             View pending review posts
           </Button>
 
-          <Button className="mb-3 text-capitalize fs-3" size="lg">
+          <Button className="mb-3 text-capitalize fs-3" size="lg" 
+          onClick={() => {
+              navigate("/ListOfUsers");
+            }}
+          >
             View list of users
           </Button>
           <Button className="text-capitalize fs-3" size="lg">

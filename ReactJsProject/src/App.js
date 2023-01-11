@@ -13,6 +13,8 @@ import AdminPanel from "./components/Admin/AdminPanel";
 import AdminPanelNavbar from "./components/Admin/AdminPanelNavbar";
 import PendingRestaurentReg from "./components/Admin/PendingRestaurentReg";
 import PendingRestaurentForm from "./components/Admin/PendingRestaurentForm";
+import ListOfUsers from "./components/Admin/ListOfUsers";
+
 
 const App = () => {
   return (
@@ -99,6 +101,15 @@ const App = () => {
               <div>
                 <AdminPanelNavbar />
                 <PendingRestaurentForm />
+              </div>
+            }
+          />
+          <Route
+            path="/ListOfUsers"
+            element={
+              <div>
+                <AdminPanelNavbar />
+                <ListOfUsers />
               </div>
             }
           />
