@@ -3,14 +3,20 @@ import { Container } from "react-bootstrap";
 import Logo from "./../HomePage/Logo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 function AdminPanelNavbar() {
+  const navigate = useNavigate();
   const element = <FontAwesomeIcon icon={faUser} />;
   return (
     <div className=" bg-primary ">
       <Container>
         <div className="d-flex justify-content-between ">
-          <div>
+          <div
+          onClick={() => {
+                        navigate("/adminPanel");
+                    }}
+          >
             <Logo fill="white" />
           </div>
 
