@@ -9,10 +9,10 @@ const Navbar = () => {
     <div className=" bg-primary ">
       <div className="container ">
         <div className="d-flex justify-content-between ">
-          <div 
-          onClick={() => {
-                        navigate("/");
-                    }}
+          <div
+            onClick={() => {
+              navigate("/");
+            }}
           >
             <Logo fill="white" />
           </div>
