@@ -1,6 +1,8 @@
+'use strict';
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import { Sequelize } from 'sequelize';
+const { User } = require('./models');
 
 // The GraphQL schema
 const typeDefs = `#graphql
@@ -10,6 +12,14 @@ const typeDefs = `#graphql
   }
   type Query {
     getUsers: [User]!
+  }
+  type Mutation {
+    registerUser(
+      username: String!, 
+      email: String!, 
+      password: String!, 
+      confirmPassword: String!
+    ): User!
   }
 `;
 
@@ -27,6 +37,35 @@ const resolvers = {
     },
       
   },
+  Mutation: {
+    registerUser: async (_, args) => {
+      const { username, email, password, confirmPassword } = args;
+      try {
+
+        // Validate user data
+        
+
+        // Check if username / email exists
+
+        // Create user
+
+        const user = await User.create({
+          username,
+          email, 
+          password,
+        });
+
+        // Return user
+
+        return user;
+        
+      }
+      catch (error) {
+        console.log(error);
+        throw new Error(error);
+      }
+    }
+  }
 };
 
 const server = new ApolloServer({

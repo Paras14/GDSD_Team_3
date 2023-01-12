@@ -12,6 +12,7 @@
   "name": "nodeserver",
   "version": "1.0.0",
   "main": "server.mjs",
+  "type":"commonjs",
   "devDependencies": {
     "nodemon": "^2.0.20"
   },
