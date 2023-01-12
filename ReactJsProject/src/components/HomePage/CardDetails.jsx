@@ -9,6 +9,7 @@ const CardDetails = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterValue, setFilterValue] = useState("all");
   const [cardDetails, setCardDetails] = useState([]);
+  
 
   const navigate = useNavigate();
 
@@ -21,7 +22,7 @@ const CardDetails = () => {
   }, []);
 
   const filteredList = cardDetails.filter((data) => {
-    return filterValue === "all" ? true : data.category === filterValue;
+    return filterValue === "-1" ? true : ""+data.restaurantCategoryId === filterValue;
   });
 
   const onFilterValueSelected = (filterValue) => {
