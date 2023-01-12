@@ -39,7 +39,11 @@ function AdminPanel() {
           >
             View list of users
           </Button>
-          <Button className="text-capitalize fs-3" size="lg">
+          <Button className="text-capitalize fs-3" size="lg"
+          onClick={() => {
+              navigate("/ListOfRestaurants");
+            }}
+          >
             View list of restaurants
           </Button>
         </Row>

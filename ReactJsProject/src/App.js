@@ -17,6 +17,7 @@ import ListOfUsers from "./components/Admin/ListOfUsers";
 import PendingReviews from "./components/Admin/PendingReviews";
 import PendingReviewPost from "./components/Admin/PostReviews/PendingReviewPost";
 import ReviewCheckBox from "./components/Admin/PostReviews/ReviewCheckBox";
+import ListOfRestaurants from "./components/Admin/ListOfRestaurants";
 
 const App = () => {
   return (
@@ -148,6 +149,15 @@ const App = () => {
               <div>
                 <AdminPanel />
                 <ListOfUsers />
+              </div>
+            }
+          />
+          <Route
+            path="/ListOfRestaurants"
+            element={
+              <div>
+                <AdminPanelNavbar />
+                <ListOfRestaurants />
               </div>
             }
           />
