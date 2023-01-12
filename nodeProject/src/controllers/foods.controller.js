@@ -145,7 +145,7 @@ exports.deleteAll = (req, res) => {
 
 exports.findAllInRestaurant = (req, res) => {
     const restaurantId = req.params.restaurantId;
-    const condition = restaurantId ? { restaurantId: { [Op.like]: `%${restaurantId}%` } } : null;
+    const condition = restaurantId ? { restaurantId: { [Op.eq]: restaurantId } } : null;
     
     Food.findAll({ where: condition })
       .then(data => {
