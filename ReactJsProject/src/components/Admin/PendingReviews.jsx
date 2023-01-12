@@ -44,7 +44,7 @@ function PendingReviews() {
                     <p className="fs-4 fw-bold">{data.time_of_post}</p>
                     <Button
                         onClick={() => {
-                            navigate("/pendingRestaurentForm");
+                            navigate("/PendingReviewPost");
                         }}
                         >
                         {arrow}
