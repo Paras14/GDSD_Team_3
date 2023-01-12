@@ -8,7 +8,7 @@ function AdminPanel() {
     <Container>
       <div>
         <p className="fs-1 text-center p-3 m-4 text-capitalize fw-bold">
-          wellcome Administrator
+          Welcome Administrator
         </p>
         <Row>
           <Button
@@ -18,14 +18,20 @@ function AdminPanel() {
               navigate("/pendingRestaurentRegistration");
             }}
           >
-            View Pending restaurent registration
+            View Pending restaurant registration
           </Button>
-          <Button className="mb-3 text-capitalize fs-3" size="lg">
+          <Button className="mb-3 text-capitalize fs-3" size="lg"
+          onClick={() => {
+              navigate("/PendingReviews");
+            }}
+          >
             View pending review posts
           </Button>
 
-          <Button className="mb-3 text-capitalize fs-3" size="lg" 
-          onClick={() => {
+          <Button
+            className="mb-3 text-capitalize fs-3"
+            size="lg"
+            onClick={() => {
               navigate("/ListOfUsers");
             }}
           >

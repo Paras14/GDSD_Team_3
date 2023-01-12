@@ -14,7 +14,9 @@ import AdminPanelNavbar from "./components/Admin/AdminPanelNavbar";
 import PendingRestaurentReg from "./components/Admin/PendingRestaurentReg";
 import PendingRestaurentForm from "./components/Admin/PendingRestaurentForm";
 import ListOfUsers from "./components/Admin/ListOfUsers";
-
+import PendingReviews from "./components/Admin/PendingReviews";
+import PendingReviewPost from "./components/Admin/PostReviews/PendingReviewPost";
+import ReviewCheckBox from "./components/Admin/PostReviews/ReviewCheckBox";
 
 const App = () => {
   return (
@@ -110,6 +112,33 @@ const App = () => {
               <div>
                 <AdminPanelNavbar />
                 <ListOfUsers />
+              </div>
+            }
+          />
+          <Route
+            path="/PendingReviews"
+            element={
+              <div>
+                <AdminPanelNavbar />
+                <PendingReviews />
+              </div>
+            }
+          />
+          <Route
+            path="/PendingReviewPost"
+            element={
+              <div>
+                <AdminPanelNavbar />
+                <PendingReviewPost />
+              </div>
+            }
+          />
+          <Route
+            path="/ReviewCheckBox"
+            element={
+              <div>
+                <AdminPanelNavbar />
+                <ReviewCheckBox />
               </div>
             }
           />
