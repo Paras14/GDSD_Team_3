@@ -11,6 +11,13 @@ app.use(function (req, res, cb) {
     cb();
 });
 
+app.use(function (req, res, cb) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', '*');        
+    res.header('Access-Control-Allow-Methods', '*');        
+    cb();
+});
+
 const cors = require('cors');
 const { Sequelize } = require('sequelize');
 
@@ -19,6 +26,7 @@ const db = require('./src/models');
 const foodRoute = require('./src/routes/food.routes')(app);
 const restaurantRoute = require('./src/routes/restaurant.routes')(app);
 const foodCategoryRoute = require('./src/routes/foodCategory.routes')(app);
+const restaurtantRout = require('./src/routes/restaurantCategory.routes')(app);
 const bodyParser = require("body-parser");
 
 app.use (cors({origin: "http://localhost:8080/"}));
@@ -58,3 +66,8 @@ db.sequelize.sync()
     .catch( (err) => {
         console.log("Failed to sync db: " + err.message);
     });
+
+
+
+    
+        
