@@ -8,7 +8,7 @@ function AdminPanel() {
     <Container>
       <div>
         <p className="fs-1 text-center p-3 m-4 text-capitalize fw-bold">
-          wellcome Administrator
+          Welcome Administrator
         </p>
         <Row>
           <Button
