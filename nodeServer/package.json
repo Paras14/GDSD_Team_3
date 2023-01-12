@@ -1,7 +1,9 @@
 {
   "dependencies": {
     "@apollo/server": "^4.3.0",
-    "graphql": "^16.6.0"
+    "graphql": "^16.6.0",
+    "mysql2": "^3.0.0",
+    "sequelize": "^6.28.0"
   },
   "scripts": {
     "dev": "nodemon server.mjs",
