@@ -9,6 +9,9 @@ module.exports = app => {
     // Retrieve a single Food Category with id
     router.get("/:id", foodCategories.findOne);
 
+    // Create a Food Category
+    router.post("/", foodCategories.create);
+
   
     app.use('/foodCategories', router);
   };

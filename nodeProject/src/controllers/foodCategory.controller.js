@@ -3,6 +3,35 @@ const FoodCategory = db.foodCategory;
 const Op = db.Sequelize.Op;
 
 
+// Create and Save a new Food Category
+exports.create = (req, res) => {
+    // Validate request
+    console.log(req.query);
+    if (!req.query.name) {
+      res.status(400).send({
+        message: "Food Category name can not be empty!"
+      });
+      return;
+    }
+  
+    // Create a Food Category
+    const foodCategory = {
+        name: req.query.name
+    };
+  
+    // Save Food Category in the database
+    FoodCategory.create(foodCategory)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while creating the Food Category."
+        });
+      });
+  };
+
 // Retrieve all Food Categories from the database.
 exports.findAll = (req, res) => {
     const name = req.query.name;
