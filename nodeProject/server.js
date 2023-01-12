@@ -1,7 +1,15 @@
 const express = require("express");
 const app = express();
 
-const { Sequelize } = require('sequelize');
+
+
+// CORS
+app.use(function (req, res, cb) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', '*');
+    res.setHeader('Access-Control-Allow-Methods', '*');
+    cb();
+});
 
 app.use(function (req, res, cb) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -11,6 +19,7 @@ app.use(function (req, res, cb) {
 });
 
 const cors = require('cors');
+const { Sequelize } = require('sequelize');
 
 const db = require('./src/models');
 
@@ -26,6 +35,8 @@ app.use (cors({origin: "http://localhost:8080/"}));
 app.use (bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use (bodyParser.urlencoded({extended:true}));
+
+
 
 //simple route
 app.get ("/", (req, res, callback) => {
