@@ -20,12 +20,20 @@ function AdminPanel() {
           >
             View Pending restaurent registration
           </Button>
-          <Button className="mb-3 text-capitalize fs-3" size="lg">
+          <Button
+            className="mb-3 text-capitalize fs-3"
+            size="lg"
+            onClick={() => {
+              navigate("/pendingReviewPost");
+            }}
+          >
             View pending review posts
           </Button>
 
-          <Button className="mb-3 text-capitalize fs-3" size="lg" 
-          onClick={() => {
+          <Button
+            className="mb-3 text-capitalize fs-3"
+            size="lg"
+            onClick={() => {
               navigate("/ListOfUsers");
             }}
           >
