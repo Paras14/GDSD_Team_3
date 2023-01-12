@@ -19,6 +19,13 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
+db.foodCategory = require("./foodCategory.model")(sequelize, Sequelize);
 db.foods = require("./food.model")(sequelize, Sequelize);
+db.restaurant = require("./restaurant.model")(sequelize, Sequelize);
+
+db.foods.belongsTo(db.foodCategory);
+db.foods.belongsTo(db.restaurant);
+db.restaurant.belongsToMany(db.foodCategory, {through:'foodCategoryRestaurant'});
 
 module.exports = db;
+

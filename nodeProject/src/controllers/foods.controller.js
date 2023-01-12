@@ -2,7 +2,7 @@ const db = require("../models");
 const Food = db.foods;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Tutorial
+// Create and Save a new Food
 exports.create = (req, res) => {
     // Validate request
     console.log(req.query);
@@ -13,14 +13,17 @@ exports.create = (req, res) => {
       return;
     }
   
-    // Create a Tutorial
+    // Create a Food
     const food = {
         name: req.query.name,
         ingredients: req.query.ingredients,
-        foodCategory: req.query.foodCategory
+        foodCategory: req.query.foodCategory,
+        image: req.query.image,
+        foodCategoryId: req.query.foodCategoryId,
+        restaurantId: req.query.restaurantId
     };
   
-    // Save Tutorial in the database
+    // Save Food in the database
     Food.create(food)
       .then(data => {
         res.send(data);
@@ -33,7 +36,7 @@ exports.create = (req, res) => {
       });
   };
 
-// Retrieve all Tutorials from the database.
+// Retrieve all Foods from the database.
 exports.findAll = (req, res) => {
     const name = req.query.name;
     var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
@@ -50,27 +53,108 @@ exports.findAll = (req, res) => {
       });
   };
 
-// // Find a single Tutorial with an id
-// exports.findOne = (req, res) => {
-  
+// // Find a single Food with an id
+exports.findOne = (req, res) => {
+  const id = req.params.id;
+
+  Food.findByPk(id)
+    .then(data => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find Food with id=${id}.`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Food with id=" + id
+      });
+    });
+};
 // };
 
-// // Update a Tutorial by the id in the request
-// exports.update = (req, res) => {
+// Update a Food by the id in the request
+exports.update = (req, res) => {
+  const id = req.query.id;
   
-// };
+  Food.update(req.query, {
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Food was updated successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot update Food with id=${id}. Maybe Food was not found or req.query is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Food with id=" + id
+      });
+    });
+};
 
-// // Delete a Tutorial with the specified id in the request
-// exports.delete = (req, res) => {
-  
-// };
+// // Delete a Food with the specified id in the request
+exports.delete = (req, res) => {
+  const id = req.query.id;
 
-// // Delete all Tutorials from the database.
-// exports.deleteAll = (req, res) => {
-  
-// };
+  Food.destroy({
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Food was deleted successfully!"
+        });
+      } else {
+        res.send({
+          message: `Cannot delete Food with id=${id}. Maybe Food was not found!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not delete Food with id=" + id
+      });
+    });
+};
 
-// // Find all published Tutorials
-// exports.findAllPublished = (req, res) => {
-  
-// };
+// // Delete all Foods from the database.
+exports.deleteAll = (req, res) => {
+  Food.destroy({
+    where: {},
+    truncate: false
+  })
+    .then(nums => {
+      res.send({ message: `${nums} Foods were deleted successfully!` });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while removing all foods."
+      });
+    });
+};
+
+
+exports.findAllInRestaurant = (req, res) => {
+    const restaurantId = req.params.restaurantId;
+    const condition = restaurantId ? { restaurantId: { [Op.like]: `%${restaurantId}%` } } : null;
+    
+    Food.findAll({ where: condition })
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving foods."
+        });
+      });
+}

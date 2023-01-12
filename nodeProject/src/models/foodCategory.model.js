@@ -1,6 +1,5 @@
-
 module.exports = (sequelize, datatypes) => {
-    const Food = sequelize.define("food", {
+    const FoodCategory = sequelize.define("foodCategory", {
     id: {
     type: datatypes.INTEGER,
     autoIncrement: true,
@@ -8,15 +7,8 @@ module.exports = (sequelize, datatypes) => {
     },
     name: {
     type: datatypes.STRING
-    },
-    ingredients: {
-    type: datatypes.STRING
-    },
-    image: {
-    type: datatypes.STRING
     }
     });
-    return Food;
+    return FoodCategory;
     
 };
-

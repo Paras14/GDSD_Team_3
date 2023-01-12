@@ -8,6 +8,8 @@ const cors = require('cors');
 const db = require('./src/models');
 
 const foodRoute = require('./src/routes/food.routes')(app);
+const restaurantRoute = require('./src/routes/restaurant.routes')(app);
+const foodCategoryRoute = require('./src/routes/foodCategory.routes')(app);
 const bodyParser = require("body-parser");
 
 app.use (cors({origin: "http://localhost:8080/"}));
@@ -36,7 +38,9 @@ console.log ('Server is running on port $(PORT).' );
 //     dialect: 'mysql'
 //   });
 
-db.sequelize.sync({force: true})
+
+//{force: true}
+db.sequelize.sync()
     .then( () => {
         console.log("Synced db.")
     })

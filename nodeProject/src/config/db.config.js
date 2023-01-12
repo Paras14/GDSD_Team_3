@@ -1,8 +1,8 @@
 module.exports = {
-    HOST: "localhost",
-    USER: "root",
-    PASSWORD: "aman",
-    DB: "risto",
+    HOST: "db-instance-team3.czsntcnwbbwf.us-east-1.rds.amazonaws.com",
+    USER: "admin",
+    PASSWORD: "gdsdteam3",
+    DB: "restaurantsbd",
     dialect: "mysql", 
     pool: {
     max: 5,
