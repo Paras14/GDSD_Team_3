@@ -16,17 +16,12 @@ const typeDefs = `#graphql
 // A map of functions which return data for the schema.
 const resolvers = {
   Query: {
-    getUsers: () => {
-      const users = [
-        {
-          username: 'user1',
-          email: 'john@email.com'
-        },
-        {
-          username: 'user2',
-          email: 'jane@email.com'
-        },
-      ];
+    getUsers: async () => {
+      try {
+        const users = await User.findAll();
+      } catch (error) {
+        console.log(error);
+      }
 
       return users;
     },
