@@ -14,7 +14,12 @@ import AdminPanelNavbar from "./components/Admin/AdminPanelNavbar";
 import PendingRestaurentReg from "./components/Admin/PendingRestaurentReg";
 import PendingRestaurentForm from "./components/Admin/PendingRestaurentForm";
 import ListOfUsers from "./components/Admin/ListOfUsers";
+<<<<<<< HEAD
 import PendingReviewPost from "./components/Admin/PostReviews/PendingReviewPost";
+=======
+import PendingReviews from "./components/Admin/PendingReviews";
+
+>>>>>>> 647e63829508fa954d80b6bb71b3e9530b783b15
 
 const App = () => {
   return (
@@ -114,11 +119,19 @@ const App = () => {
             }
           />
           <Route
+<<<<<<< HEAD
             path="pendingReviewPost"
             element={
               <div>
                 <AdminPanelNavbar />
                 <PendingReviewPost />
+=======
+            path="/PendingReviews"
+            element={
+              <div>
+                <AdminPanelNavbar />
+                <PendingReviews />
+>>>>>>> 647e63829508fa954d80b6bb71b3e9530b783b15
               </div>
             }
           />
