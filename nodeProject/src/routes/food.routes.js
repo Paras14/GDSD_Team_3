@@ -23,7 +23,7 @@ module.exports = app => {
     router.delete("/", foods.deleteAll);
 
    // Retrieve all Foods with same restaurant id
-    router.get("/restaurant/:restaurantId", foods.findAll);
+    router.get("/restaurant/:restaurantId", foods.findAllInRestaurant);
 
     app.use('/foods', router);
   };
