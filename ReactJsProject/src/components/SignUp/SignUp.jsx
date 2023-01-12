@@ -6,8 +6,7 @@ import Row from "react-bootstrap/Row";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Container } from "react-bootstrap";
-import { Navigate, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const schema = Yup.object().shape({
   restaurentname: Yup.string().required(),
@@ -35,7 +34,6 @@ const schema = Yup.object().shape({
 
 function SignUp() {
   const navigate = useNavigate();
-
   return (
     <Container>
       <h1 className="text-center my-4 py-4  text-uppercase">
@@ -257,7 +255,7 @@ function SignUp() {
                 controlId="validationFormik105"
                 className="position-relative"
               >
-                <Form.Label>Zip</Form.Label>
+                <Form.Label>ZipCode</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Zip"

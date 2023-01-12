@@ -227,7 +227,7 @@ function CustomerSignUp() {
                 controlId="validationFormik105"
                 className="position-relative"
               >
-                <Form.Label>Zip</Form.Label>
+                <Form.Label>ZipCode</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Zip"
