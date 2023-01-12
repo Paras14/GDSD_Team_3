@@ -14,6 +14,7 @@ import AdminPanelNavbar from "./components/Admin/AdminPanelNavbar";
 import PendingRestaurentReg from "./components/Admin/PendingRestaurentReg";
 import PendingRestaurentForm from "./components/Admin/PendingRestaurentForm";
 import ListOfUsers from "./components/Admin/ListOfUsers";
+import PendingReviews from "./components/Admin/PendingReviews";
 
 
 const App = () => {
@@ -110,6 +111,15 @@ const App = () => {
               <div>
                 <AdminPanelNavbar />
                 <ListOfUsers />
+              </div>
+            }
+          />
+          <Route
+            path="/PendingReviews"
+            element={
+              <div>
+                <AdminPanelNavbar />
+                <PendingReviews />
               </div>
             }
           />
