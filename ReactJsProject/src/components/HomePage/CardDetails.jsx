@@ -7,7 +7,7 @@ import { setUpHome } from "../../helpers/SetUpHome";
 
 const CardDetails = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterValue, setFilterValue] = useState("all");
+  const [filterValue, setFilterValue] = useState("-1");
   const [cardDetails, setCardDetails] = useState([]);
   
 
