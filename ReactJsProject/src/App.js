@@ -142,6 +142,15 @@ const App = () => {
               </div>
             }
           />
+          <Route
+            path="/listOfUsers"
+            element={
+              <div>
+                <AdminPanel />
+                <ListOfUsers />
+              </div>
+            }
+          />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Router>
