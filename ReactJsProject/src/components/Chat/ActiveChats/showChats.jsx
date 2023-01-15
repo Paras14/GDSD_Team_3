@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { fotoPerfil } from '../format/photoProfile';
+import { photoProfile } from '../format/photoProfile';
 import { formatDate } from '../format/formatDate';
 import { formatMessage } from '../format/formatMessage';
 import { setConection } from '../format/setConection';
@@ -102,9 +102,10 @@ export const Chats = ({ users, mensajesBuscar, receptor, //group,
         height= "400px">
         <ul className="list-unstyled mb-0">
           {
-            ( users.length !== 0 && mensajesBuscar.length !== 0 ) && mensajesBuscar.filter( men => men.id_grupo_receptor !== 1 ).reverse().map( ( men, index ) => (
+            ( users.length !== 0 && mensajesBuscar.length !== 0 ) && mensajesBuscar.reverse().map( ( men, index ) => (
 
-              ( ( users2.indexOf( men.nombre_usuario_receptor ) === -1 ) && ( users2.indexOf( men.nombre_usuario_emisor ) === -1 ) && ( users2.indexOf( men.id_grupo_receptor ) === -1 ) )
+              ( ( users2.indexOf( men.nombre_usuario_receptor ) === -1 ) && ( users2.indexOf( men.nombre_usuario_emisor ) === -1 ) //&& ( users2.indexOf( men.id_grupo_receptor ) === -1 ) 
+              )
                 ? <li className="p-2 border-bottom"
                   key={index}>
                   <button className={'d-flex justify-content-between botonNaranja btn-chat-seleccionado-hover'}
@@ -112,7 +113,7 @@ export const Chats = ({ users, mensajesBuscar, receptor, //group,
                     onClick={() => changeChat( men )}>
                     <div className="d-flex flex-row">
                       <div className="align-items-center divObjectsSend margen-foto-chat-perfil">
-                        {fotoPerfil( getGrupo( men.id_grupo_receptor, myGroups ), men.nombre_usuario_receptor === null ? '' : ( men.nombre_usuario_emisor !== user.nombre ? men.nombre_usuario_emisor : men.nombre_usuario_receptor ), users, 60 )}
+                        {photoProfile( men.nombre_usuario_receptor === null ? '' : ( men.nombre_usuario_emisor !== user.nombre ? men.nombre_usuario_emisor : men.nombre_usuario_receptor ), users, 60 )}
                       </div>
                       <div className="pt-1">
                         {putUsers2( men )}
@@ -142,15 +143,15 @@ Chats.propTypes = {
   users: PropTypes.array.isRequired,
   mensajesBuscar: PropTypes.array.isRequired,
   receptor: PropTypes.string.isRequired,
-  group: PropTypes.object.isRequired,
+  //group: PropTypes.object.isRequired,
   setResponder: PropTypes.func.isRequired,
   setReceptor: PropTypes.func.isRequired,
-  setGroup: PropTypes.func.isRequired,
+  //setGroup: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   setMensaje: PropTypes.func.isRequired,
   setConexion: PropTypes.func.isRequired,
-  myGroups: PropTypes.array.isRequired,
-  setConfigurationGroups: PropTypes.func.isRequired,
+  //myGroups: PropTypes.array.isRequired,
+  //setConfigurationGroups: PropTypes.func.isRequired,
   mensajes: PropTypes.array.isRequired,
   recienEnviado: PropTypes.bool.isRequired
 };

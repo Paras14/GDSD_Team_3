@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import Input from '@material-ui/core/Input';
+//import Input from '@material-ui/core/Input';
 import PropTypes from 'prop-types';
 import socket from '../Socket';
-import { Global } from '../../../helper/Global';
+import { Global } from '../../../helpers/Global.js';
 //import { chatUsers } from '../createNewChats/newChat';
 //import { chatGroups } from '../createNewChats/newGroup';
 import axios from 'axios';
@@ -12,7 +12,7 @@ import { eventKeyboard } from '../eventsKeyboard';
 import { setConection } from '../format/setConection';
 import { Chats } from './showChats';
 
-export const ChatsActivos = ({ users, mensajes, user, setReceptor, setConexion, setMensaje, receptor, //group, setGroup, myGroups, configurationGroups, setConfigurationGroups, 
+export const ActiveChats = ({ users, mensajes, user, setReceptor, setConexion, setMensaje, receptor, //group, setGroup, myGroups, configurationGroups, setConfigurationGroups, 
 setIniciandoChat, mensajesDESC, setResponder, mensajesBuscar, setMensajesBuscar, recienEnviado, setRecienEnviado }) => {
 
   const baseUrl = Global.baseUrl;
@@ -152,7 +152,7 @@ setIniciandoChat, mensajesDESC, setResponder, mensajesBuscar, setMensajesBuscar,
       <div className="p-3 botonTransparente">
 
         <div className="input-group rounded mb-3 botonTransparente divObjectsSend">
-          <Input className="input3"
+          <input className="input3"
             type="search"
             size="15"
             placeholder="Busca un mensaje"
@@ -206,7 +206,7 @@ setIniciandoChat, mensajesDESC, setResponder, mensajesBuscar, setMensajesBuscar,
 
 };
 
-ChatsActivos.propTypes = {
+ActiveChats.propTypes = {
   users: PropTypes.array.isRequired,
   mensajes: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { setUpChat } from '../helper/SetUpChat';
+import { setUpChat } from '../../helpers/SetUpChat';
 import { ActiveChats } from './ActiveChats/ActiveChats.jsx';
 import { Conversation } from './Conversation/Conversation';
-import '../styles/Chat.css';
-import { isAuthorized } from '../helper/isAuthorized.js';
-import { useNavigate, useParams } from '../../node_modules/react-router/index';
+import '../../styles/Chat.css';
+import { isAuthorized } from '../../helpers/isAuthorized.js';
+import { useNavigate, useParams } from '../../../node_modules/react-router/dist/index.js';
 import socket from './Socket';
 //import { Header } from '../components/header';
 //import { Footer } from '../components/footer';
-import { IniciarChat } from '../components/chat/IniciarChat';
+//import { IniciarChat } from '../components/chat/IniciarChat';
 
 export const Chat = () => {
 
@@ -35,7 +35,7 @@ export const Chat = () => {
 
     if ( !isauthorized ) {
 
-      navigate( '/noLogin' );
+      navigate( '/signIn' );
 
     } else {
 
@@ -173,21 +173,31 @@ export const Chat = () => {
           </section>
         </div>
         : <div className="row justify-content-center">
-          <IniciarChat
-            setIniciandoChat={ setIniciandoChat }
-            users={ users }
-            messages={ messagesDESC }
-            user={ user }
-            setReceptor={ setReceptor }
-            setConexion={ setConexion }
-            setMessage={ setMessage }
-            receptor={ receptor }
-            //group={ group }
-            //setGroup={ setGroup }
-            //myGroups={ myGroups }
-            //configurationGroups={ configurationGroups }
-            //setConfigurationGroups={ setConfigurationGroups }
-          />
+          <div className="mt-5 centrar">
+            <div className="mt-5 centrar">
+                <div className="mt-5">
+                <h1 className="mt-5">Inicia un nuevo chat para comenzar a chatear</h1>
+                <div className="dropdown centrar mt-5">
+                    <button className="botonTransparente3"
+                    type="button"
+                    id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    >
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        width="150"
+                        height="150"
+                        fill="currentColor"
+                        className="bi bi-plus-lg"
+                        viewBox="0 0 16 16">
+                        <path fillRule="evenodd"
+                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                    </svg>
+                    </button>
+                </div>
+                </div>
+            </div>
+            </div>
         </div>
   );
 
