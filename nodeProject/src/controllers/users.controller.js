@@ -18,7 +18,7 @@ exports.create = (req, res) => {
     // Create a User
     const user = {
         username: req.query.username,
-        password: req.query.password, //hashSync(req.query.password, genSaltSync(10)),
+        password: hashSync(req.query.password, genSaltSync(10)),
         firstname: req.query.firstname,
         lastname: req.query.lastname,
         email: req.query.email,
