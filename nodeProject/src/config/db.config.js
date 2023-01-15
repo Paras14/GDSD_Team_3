@@ -2,7 +2,7 @@ module.exports = {
     HOST: "db-instance-team3.czsntcnwbbwf.us-east-1.rds.amazonaws.com",
     USER: "admin",
     PASSWORD: "gdsdteam3",
-    DB: "restaurantsbd",
+    DB: "testrestaurantsbd",
     dialect: "mysql", 
     pool: {
     max: 5,
