@@ -16,12 +16,12 @@ app.use(function (req, res, cb) {
     cb();
 });
 
-app.use(function (req, res, cb) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', '*');        
-    res.header('Access-Control-Allow-Methods', '*');        
-    cb();
-});
+// app.use(function (req, res, cb) {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     res.header('Access-Control-Allow-Headers', '*');        
+//     res.header('Access-Control-Allow-Methods', '*');        
+//     cb();
+// });
 
 const cors = require('cors');
 const { Sequelize } = require('sequelize');

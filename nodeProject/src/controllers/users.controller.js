@@ -84,14 +84,14 @@ exports.findOne = (req, res) => {
 // Update a User by the id in the request
 exports.update = (req, res) => {
     const id = req.query.id;
-
+    
     User.update(req.query, {
       where: { id: id }
     })
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "User was updated successfully."
+            message: `User was updated successfully. ${num}`
           });
         } else {
           res.send({
