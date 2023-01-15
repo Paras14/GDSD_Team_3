@@ -23,11 +23,14 @@ db.foodCategory = require("./foodCategory.model")(sequelize, Sequelize);
 db.foods = require("./food.model")(sequelize, Sequelize);
 db.restaurant = require("./restaurant.model")(sequelize, Sequelize);
 db.restaurantCategory = require("./restaurantCategory.model")(sequelize, Sequelize);
+db.user = require("./user.model")(sequelize, Sequelize);
+db.rol = require("./rol.model")(sequelize, Sequelize);
 
 db.foods.belongsTo(db.foodCategory);
 db.foods.belongsTo(db.restaurant);
 db.restaurant.belongsToMany(db.foodCategory, {through:'foodCategoryRestaurant'});
 db.restaurant.belongsTo(db.restaurantCategory);
+db.user.belongsTo(db.rol);
 
 module.exports = db;
 

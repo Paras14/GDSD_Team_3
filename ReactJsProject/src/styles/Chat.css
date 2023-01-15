@@ -1,0 +1,385 @@
+.panelChat {
+    width: 78%;
+    align-content: center;
+    float: left;
+    margin: 5px;
+}
+
+div:hover > li {
+    display: inline-block !important;
+}
+
+.max-tamaño-swal-Chat{
+    max-height: 80vh;
+}
+
+.ocultar {
+    display: none;
+}
+
+.imagen-perfil-chat{
+    border-radius: 150px;
+}
+
+.margen-foto-chat-perfil{
+    margin: 16px 0px 16px 16px;
+}
+
+.tamañoMaximoImagenEditar {
+    max-width: 90%;
+}
+
+.marginChatActivos{
+    margin-top: 15px;
+}
+
+.mostrar {
+    display: block;
+}
+
+small{
+    font-size: xx-small;
+    text-align: right;
+}
+ 
+p{
+    margin: 10px;
+    text-align: justify;
+    word-wrap:break-word;
+}
+
+*::-webkit-scrollbar {
+    width: 8px !important;
+
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+  
+*::-webkit-scrollbar-thumb {
+    background-color: black !important;
+    border-radius: 20px;
+    border: 3px solid transparent !important; 
+}
+
+.divNameUser {
+    display: flex;
+}
+
+#online {
+    background-color: rgb(4, 196, 4);
+}
+
+#offline {
+    background-color: red;
+}
+
+#online, #offline {
+    display: inline-block;
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    margin: 10px;
+    vertical-align: bottom;
+}
+
+#divOnline {
+    color: rgb(4, 196, 4);
+}
+
+#divOffline {
+    color: red;
+}
+
+#divOnline, #divOffline {
+    margin: 10px;
+}
+
+#labelNameUser{
+    display: inline-block;
+    color: black;
+}
+
+#imagenUser{
+    display: inline-block;
+}
+
+.tamañoMaximoImagen{
+    max-width: 100%;
+}
+
+#chat3 {
+    border-color: transparent;
+    box-shadow: inset 0px 0px 0px 1px transparent;
+}
+
+a {
+    text-decoration: none;
+}
+
+.botonTransparente, .botonTransparente2 {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.botonTransparente2 {
+    color: #0d6efd;
+	padding: 10px;
+}
+
+.botonTransparente3 {
+    color: #0d6efd;
+	padding: 10px;
+    border-radius: 20px;
+}
+
+.botonTransparente3:hover {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.botonTransparente4 {
+    color: black;
+	padding: 10px;
+    border-radius: 20px;
+    width: 200px;
+}
+
+.botonNaranja {
+    background-color: #ffffff;
+    border-color: transparent;
+    border-radius: 20px;
+    min-width: 100%;
+    max-width: 100%;
+}
+
+.mensajeActualizadoOtro  {
+    background-color: #ffffff;
+    margin-left: 10px;
+}
+
+.mensajeActualizadoMio {
+    background-color: #d9fdd3;
+}
+
+.mensajeAdministracion{
+    background-color: #f8e1b1;
+    max-width: 100% !important;
+}
+
+.mensajeRespuestaMio{
+    background-color: #f7ffea;
+    border-radius: 10px;
+    color: black;
+    margin: 10px;
+}
+
+.mensajeRespuestaOtro{
+    background-color: #f1f5e9;
+    border-radius: 10px;
+    color: black;
+    margin: 10px;
+}
+
+.mensajeActualizadoMio, .mensajeActualizadoOtro, .mensajeAdministracion {
+    margin-bottom: 5px;
+    border-radius: 5px;
+    max-width: 70%;
+}
+
+.mensajeActualizadoMio:hover, .mensajeActualizadoOtro:hover, .chatSeleccionado, .btn-chat-seleccionado-hover:hover {
+    background-color: #c6daf8;
+}
+
+.emogiIcon {
+    margin-left: 5px;
+}
+
+.clipIcon {
+    margin-left: 10px;
+}
+
+.sendIcon, .emogiIcon, .clipIcon, .searchIcon, .responseIcon {
+    color: #0d6efd;
+    background-color: transparent;
+}
+
+.input3 { 
+	width: 80%; 
+    height: 30px;
+	margin-top: 7px; 
+}
+
+.input2 { 
+	width: 100%; 
+    height: 30px;
+	margin-top: 5px; 
+}
+
+.input2, .input3 {
+	background: white; 
+	border: 1px solid rgb(135, 132, 132);
+	outline: none;
+	padding: 10px;
+	font-size: 13px;
+	color: black;
+	/* text-shadow: 1px 1px 1px rgba(0,0,0,0.3); */
+	/* border: 1px solid rgba(0,0,0,0.3); */
+	border-radius: 4px;
+	/* box-shadow: inset 0 -5px 45px rgba(100,100,100,0.2), 0 1px 1px rgba(255,255,255,0.2); */
+	-webkit-transition: box-shadow .5s ease;
+	-moz-transition: box-shadow .5s ease;
+	-o-transition: box-shadow .5s ease;
+	-ms-transition: box-shadow .5s ease;
+	transition: box-shadow .5s ease;
+}
+
+.input3:focus, .input2:focus  { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgba(255,255,255,0.2); }
+
+.searchIcon {
+	padding: 10px;
+    margin-bottom: 10px;
+}
+
+.h3NameUser, .divObjectsSend{
+    display: flex;
+    align-items: center;
+}
+
+.panelChatMensajes, .panelChatUsers {
+    border: 1px solid rgb(201, 192, 192);
+    border-radius: 10px;
+    background: #f0eeee !important;
+}
+
+.panelChatUsers {
+    margin-top: -5px;
+}
+
+.textoTransparente {
+    color: transparent !important;
+}
+
+.textoDerecha {
+    text-align: right;
+}
+
+.tamañoMaximoMensaje {
+    max-width: 82%;
+}
+
+.tamnyoHora {
+    font-size: x-small !important;
+}
+
+.btnAñadirChats {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: #0d6efd !important;
+}
+
+.btnAñadirChats:hover {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: #0d6efd !important;
+}
+
+.centrar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.centrar-vertical-padre {
+	position: absolute !important;
+	color: black !important;
+	font-size: 14px !important;
+	top: 50% !important;
+	left: 50% !important;
+	margin: -100px 0 0 -208px !important;
+	width:416px !important;
+	height:200px !important;
+}
+
+.centrar-vertical-hijo {
+    width: 416px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+ }
+
+@media only screen and (max-height: 500px) {
+    .my-custom-scrollbar {
+        position: relative;
+        min-height: 100px;
+        max-height: 100px;
+        overflow: auto;
+    }
+    .table-wrapper-scroll-y {
+        display: block;
+    }
+}
+
+@media only screen and (min-height: 501px) {
+    .my-custom-scrollbar {
+        position: relative;
+        min-height: 150px;
+        max-height: 150px;
+        overflow: auto;
+    }
+    .table-wrapper-scroll-y {
+        display: block;
+    }
+}
+
+@media only screen and (min-height: 601px) {
+    .my-custom-scrollbar {
+        position: relative;
+        min-height: 250px;
+        max-height: 250px;
+        overflow: auto;
+    }
+    .table-wrapper-scroll-y {
+        display: block;
+    }
+    
+}
+
+@media only screen and (min-height: 701px) {
+    .my-custom-scrollbar {
+        position: relative;
+        min-height: 350px;
+        max-height: 350px;
+        overflow: auto;
+    }
+    .table-wrapper-scroll-y {
+        display: block;
+    }
+}
+
+@media only screen and (min-height: 801px) {
+    .my-custom-scrollbar {
+        position: relative;
+        min-height: 450px;
+        max-height: 450px;
+        overflow: auto;
+    }
+    .table-wrapper-scroll-y {
+        display: block;
+    }
+    
+}
+
+@media only screen and (min-height: 901px) {
+    .my-custom-scrollbar {
+        position: relative;
+        min-height: 550px;
+        max-height: 550px;
+        overflow: auto;
+    }
+    .table-wrapper-scroll-y {
+        display: block;
+    }
+    
+}

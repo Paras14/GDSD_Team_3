@@ -18,6 +18,7 @@ import PendingReviews from "./components/Admin/PendingReviews";
 import PendingReviewPost from "./components/Admin/PostReviews/PendingReviewPost";
 import ReviewCheckBox from "./components/Admin/PostReviews/ReviewCheckBox";
 import ListOfRestaurants from "./components/Admin/ListOfRestaurants";
+import { Chat } from "./components/Chat/Chat";
 
 const App = () => {
   return (
@@ -158,6 +159,24 @@ const App = () => {
               <div>
                 <AdminPanelNavbar />
                 <ListOfRestaurants />
+              </div>
+            }
+          />
+          <Route
+            path="/chat"
+            element={
+              <div>
+                <Navbar />
+                <Chat />
+              </div>
+            }
+          />
+          <Route
+            path="/chat/:receptorActual"
+            element={
+              <div>
+                <Navbar />
+                <Chat />
               </div>
             }
           />
