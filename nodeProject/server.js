@@ -25,6 +25,11 @@ app.use(function (req, res, cb) {
 
 const cors = require('cors');
 const { Sequelize } = require('sequelize');
+const http = require('http');
+const socketio = require('socket.io');
+
+const server = http.createServer(app);
+const io = socketio(server);
 
 const db = require('./src/models');
 
@@ -50,6 +55,8 @@ app.get ("/", (req, res, callback) => {
 });
 
 //app.use('/foods', foodRoute);
+
+require('./src/socket/socket.js')(io);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
