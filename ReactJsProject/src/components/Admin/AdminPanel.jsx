@@ -20,8 +20,10 @@ function AdminPanel() {
           >
             View Pending restaurant registration
           </Button>
-          <Button className="mb-3 text-capitalize fs-3" size="lg"
-          onClick={() => {
+          <Button
+            className="mb-3 text-capitalize fs-3"
+            size="lg"
+            onClick={() => {
               navigate("/PendingReviews");
             }}
           >
@@ -37,7 +39,11 @@ function AdminPanel() {
           >
             View list of users
           </Button>
-          <Button className="text-capitalize fs-3" size="lg">
+          <Button className="text-capitalize fs-3" size="lg"
+          onClick={() => {
+              navigate("/ListOfRestaurants");
+            }}
+          >
             View list of restaurants
           </Button>
         </Row>
