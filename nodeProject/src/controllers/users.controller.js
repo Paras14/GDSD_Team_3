@@ -17,7 +17,7 @@ exports.create = (req, res) => {
   
     // Create a User
     const user = {
-        username: req.query.name,
+        username: req.query.username,
         password: req.query.password, //hashSync(req.query.password, genSaltSync(10)),
         firstname: req.query.firstname,
         lastname: req.query.lastname,
@@ -27,6 +27,7 @@ exports.create = (req, res) => {
         zip: req.query.zip,
         description: req.query.description,
         image: req.query.image,
+        rolId: req.query.rolId
     };
   
     // Save User in the database
@@ -47,7 +48,7 @@ exports.findAll = (req, res) => {
     const name = req.query.username;
     var condition = name ? { username: { [Op.like]: `%${name}%` } } : null;
   
-    Restaurant.findAll({ where: condition })
+    User.findAll({ where: condition })
       .then(data => {
         res.send(data);
       })
@@ -61,7 +62,7 @@ exports.findAll = (req, res) => {
 
 // // Find a single User with an id
 exports.findOne = (req, res) => {
-    const id = req.query.id;
+    const id = req.params.id;
   
     User.findByPk(id)
       .then(data => {
@@ -165,12 +166,14 @@ exports.deleteAll = (req, res) => {
                 message: "Error retrieving User with email=" + email
             });
         });
+      };
 
   exports.login = (req, res) => {
-    const email = req.query.email;
-    const password = req.query.password;
+    const email = req.body.email;
+    const password = req.body.password;
     User.findOne({ where: { email: email } })
         .then(user => {
+            console.log(password);
             const result = compareSync(password, user.password);
 
             if (result) {
@@ -193,6 +196,6 @@ exports.deleteAll = (req, res) => {
             });
         });
     };    
-  };
+  
 
 

@@ -2,6 +2,11 @@ const express = require("express");
 const app = express();
 
 
+const bodyParser = require("body-parser");
+// parse requests of content-type - application/json
+app.use (bodyParser.json());
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use (bodyParser.urlencoded({extended:true}));
 
 // CORS
 app.use(function (req, res, cb) {
@@ -27,14 +32,14 @@ const foodRoute = require('./src/routes/food.routes')(app);
 const restaurantRoute = require('./src/routes/restaurant.routes')(app);
 const foodCategoryRoute = require('./src/routes/foodCategory.routes')(app);
 const restaurtantRout = require('./src/routes/restaurantCategory.routes')(app);
-const bodyParser = require("body-parser");
+const userRoute = require('./src/routes/user.routes')(app);
+const rolRoute = require('./src/routes/rol.routes')(app);
+
+
 
 app.use (cors({origin: "http://localhost:8080/"}));
 
-// parse requests of content-type - application/json
-app.use (bodyParser.json());
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use (bodyParser.urlencoded({extended:true}));
+
 
 
 
