@@ -7,6 +7,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { Container } from "react-bootstrap";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 const schema = Yup.object().shape({
   firstName: Yup.string().required(),
@@ -30,9 +31,23 @@ const schema = Yup.object().shape({
 });
 
 function CustomerSignUp() {
-  const handleSubmit = (values, { setSubmitting }) => {
+  const handleSubmit = async (values, { setSubmitting }) => {
     console.log(values);
+    let user = {
+      username: values.username,
+      password: values.password,
+      firstname: values.firstName,
+      lastname: values.lastName,
+      email: values.customeremail,
+      city: values.city,
+      state: values.state,
+      zip: values.zip,
+      description: "i am software Engineer",
+      image: "image is not available",
+      rolId: 9
+    }
 
+    /*
     values.email = values.customeremail;
     values.username = values.username;
     values.password = values.password;
@@ -45,11 +60,14 @@ function CustomerSignUp() {
     values.description = "i am software Engineer";
     values.image = "image is not available";
     values.rolId = 9;
+    */
 
-    console.log(values);
+    console.log(user);
+    
+    /*
     fetch("http://localhost:8080/users/", {
       method: "POST",
-      body: values,
+      body: user,
     })
       .then((response) => response.json())
       .then((data) => {
@@ -60,6 +78,9 @@ function CustomerSignUp() {
         setSubmitting(false);
         console.error(error);
       });
+      */
+
+      await axios.post("http://localhost:8080/users/", user);
   };
 
   return (
