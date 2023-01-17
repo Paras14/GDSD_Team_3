@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Container } from "react-bootstrap";
+import { useState, useEffect } from "react";
 
 const schema = Yup.object().shape({
   firstName: Yup.string().required(),
@@ -29,6 +30,38 @@ const schema = Yup.object().shape({
 });
 
 function CustomerSignUp() {
+  const handleSubmit = (values, { setSubmitting }) => {
+    console.log(values);
+
+    values.email = values.customeremail;
+    values.username = values.username;
+    values.password = values.password;
+    values.firstname = values.firstName;
+    values.lastname = values.lastName;
+    values.email = values.customeremail;
+    values.city = values.city;
+    values.state = values.state;
+    values.zip = values.zip;
+    values.description = "i am software Engineer";
+    values.image = "image is not available";
+    values.rolId = 9;
+
+    console.log(values);
+    fetch("http://localhost:8080/users/", {
+      method: "POST",
+      body: values,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setSubmitting(false);
+        console.log(data);
+      })
+      .catch((error) => {
+        setSubmitting(false);
+        console.error(error);
+      });
+  };
+
   return (
     <Container>
       <h1 className="text-center my-4 py-4 text-uppercase">
@@ -36,7 +69,7 @@ function CustomerSignUp() {
       </h1>
       <Formik
         validationSchema={schema}
-        onSubmit={console.log}
+        onSubmit={handleSubmit}
         initialValues={{
           firstName: "Noman",
           lastName: "Ali",
