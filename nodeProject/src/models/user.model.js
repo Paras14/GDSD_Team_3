@@ -36,7 +36,6 @@ module.exports = (sequelize, datatypes) => {
     type: datatypes.STRING
     }
     });
-    //Food.belongsTo(FoodCategory);
     return User;
     
 };

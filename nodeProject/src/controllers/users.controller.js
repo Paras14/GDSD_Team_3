@@ -8,26 +8,28 @@ const { sign } = require("jsonwebtoken");
 exports.create = (req, res) => {
     // Validate request
     console.log(req.query);
-    if (!req.query.username) {
+    if (!req.body.username) {
       res.status(400).send({
         message: "User name can not be empty!"
       });
       return;
     }
-  
+    
+    console.log("Username is: " + req.body.username);
+
     // Create a User
     const user = {
-        username: req.query.username,
-        password: hashSync(req.query.password, genSaltSync(10)),
-        firstname: req.query.firstname,
-        lastname: req.query.lastname,
-        email: req.query.email,
-        city: req.query.city,
-        state: req.query.state,
-        zip: req.query.zip,
-        description: req.query.description,
-        image: req.query.image,
-        rolId: req.query.rolId
+        username: req.body.username,
+        password: hashSync(req.body.password, genSaltSync(10)),
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        city: req.body.city,
+        state: req.body.state,
+        zip: req.body.zip,
+        description: req.body.description,
+        image: req.body.image,
+        rolId: req.body.rolId
     };
   
     // Save User in the database
