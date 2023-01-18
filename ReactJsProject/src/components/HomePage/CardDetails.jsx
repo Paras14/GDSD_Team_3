@@ -78,7 +78,7 @@ const CardDetails = () => {
                   <Button
                     variant="primary"
                     onClick={() => {
-                      navigate("/restaurentDetails");
+                      navigate("/restaurantDetail_alt");
                     }}
                   >
                     Go to Visit
