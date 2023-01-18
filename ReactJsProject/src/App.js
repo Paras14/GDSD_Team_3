@@ -19,6 +19,7 @@ import PendingReviewPost from "./components/Admin/PostReviews/PendingReviewPost"
 import ReviewCheckBox from "./components/Admin/PostReviews/ReviewCheckBox";
 import ListOfRestaurants from "./components/Admin/ListOfRestaurants";
 import { Chat } from "./components/Chat/Chat";
+import CustomerAfterRegister from "./components/SignUp/CustomerAfterRegister";
 
 const App = () => {
   return (
@@ -177,6 +178,15 @@ const App = () => {
               <div>
                 <Navbar />
                 <Chat />
+              </div>
+            }
+          />
+          <Route
+            path="/customerAfterRegister"
+            element={
+              <div>
+                <Navbar />
+                <CustomerAfterRegister />
               </div>
             }
           />

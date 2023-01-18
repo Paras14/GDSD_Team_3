@@ -3,7 +3,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
-import { Formik } from "formik";
+import { Formik, Field } from "formik";
 import * as Yup from "yup";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -34,6 +34,36 @@ const schema = Yup.object().shape({
 
 function SignUp() {
   const navigate = useNavigate();
+  const handleSubmit = async (values, { setSubmitting, setErrors }) => {
+    try {
+      setSubmitting(true);
+      // Make the API call
+      const response = await fetch("http://localhost:8080/users/", {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: { "Content-Type": "application/json" },
+      });
+      // Parse the response to JSON
+      const data = await response.json();
+      if (response.ok) {
+        navigate("/restaurentRegistration");
+        setSubmitting(false);
+      } else {
+        // Set errors if the response is not successful
+        setErrors({ submit: data.message });
+        setSubmitting(false);
+      }
+    } catch (error) {
+      setErrors({ submit: error.message });
+      setSubmitting(false);
+    }
+    setTimeout(() => {
+      alert(JSON.stringify(values, null, 2));
+      setSubmitting(false);
+    }, 400);
+    console.log(values);
+  };
+
   return (
     <Container>
       <h1 className="text-center my-4 py-4  text-uppercase">
@@ -42,7 +72,7 @@ function SignUp() {
       <Formik
         method="POST"
         validationSchema={schema}
-        onSubmit={console.log}
+        onSubmit={handleSubmit}
         initialValues={{
           restaurentname: "Chinese Restaurent",
           managername: "Ali",
@@ -277,14 +307,16 @@ function SignUp() {
                 className="position-relative"
               >
                 <Form.Label>Restaurant Type</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Restaurent Type"
-                  name="restaurenttype"
-                  value={values.restaurenttype}
-                  onChange={handleChange}
-                  isInvalid={!!errors.restaurenttype}
-                />
+                {
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter Restaurent Type"
+                    name="restaurenttype"
+                    value={values.restaurenttype}
+                    onChange={handleChange}
+                    isInvalid={!!errors.restaurenttype}
+                  />
+                }
 
                 <Form.Control.Feedback type="invalid" tooltip>
                   {errors.restaurenttype}
@@ -335,9 +367,6 @@ function SignUp() {
                 values.file === null,
                 values.terms === false)
               }
-              onClick={() => {
-                navigate("/restaurentRegistration");
-              }}
             >
               Submit form
             </Button>

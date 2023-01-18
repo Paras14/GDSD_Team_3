@@ -8,14 +8,13 @@ const { sign } = require("jsonwebtoken");
 exports.create = (req, res) => {
   // Validate request
   // console.log(req.query);
+  console.log("Username is: " + req.body);
   if (!req.body.username) {
     res.status(400).send({
       message: "User name can not be empty!",
     });
     return;
   }
-
-  console.log("Username is: " + req.body.username);
 
   // Create a User
   const user = {

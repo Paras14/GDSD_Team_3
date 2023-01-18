@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import { Container } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const schema = Yup.object().shape({
   firstName: Yup.string().required(),
@@ -31,56 +32,35 @@ const schema = Yup.object().shape({
 });
 
 function CustomerSignUp() {
-  const handleSubmit = async (values, { setSubmitting }) => {
-    console.log(values);
-    let user = {
-      username: values.username,
-      password: values.password,
-      firstname: values.firstName,
-      lastname: values.lastName,
-      email: values.customeremail,
-      city: values.city,
-      state: values.state,
-      zip: values.zip,
-      description: "",
-      image: "",
-      rolId: 9
-    }
-
-    /*
-    values.email = values.customeremail;
-    values.username = values.username;
-    values.password = values.password;
-    values.firstname = values.firstName;
-    values.lastname = values.lastName;
-    values.email = values.customeremail;
-    values.city = values.city;
-    values.state = values.state;
-    values.zip = values.zip;
-    values.description = "i am software Engineer";
-    values.image = "image is not available";
-    values.rolId = 9;
-    */
-
-    console.log(user);
-    
-    /*
-    fetch("http://localhost:8080/users/", {
-      method: "POST",
-      body: user,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setSubmitting(false);
-        console.log(data);
-      })
-      .catch((error) => {
-        setSubmitting(false);
-        console.error(error);
+  const navigate = useNavigate();
+  const handleSubmit = async (values, { setSubmitting, setErrors }) => {
+    try {
+      setSubmitting(true);
+      // Make the API call
+      const response = await fetch("http://localhost:8080/users/", {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: { "Content-Type": "application/json" },
       });
-      */
-
-      await axios.post("http://localhost:8080/users/", user);
+      // Parse the response to JSON
+      const data = await response.json();
+      if (response.ok) {
+        navigate("/customerAfterRegister");
+        setSubmitting(false);
+      } else {
+        // Set errors if the response is not successful
+        setErrors({ submit: data.message });
+        setSubmitting(false);
+      }
+    } catch (error) {
+      setErrors({ submit: error.message });
+      setSubmitting(false);
+    }
+    setTimeout(() => {
+      alert(JSON.stringify(values, null, 2));
+      setSubmitting(false);
+    }, 400);
+    console.log(values);
   };
 
   return (
@@ -101,7 +81,7 @@ function CustomerSignUp() {
           city: "",
           state: "",
           zip: "",
-          
+
           terms: false,
         }}
       >
@@ -126,6 +106,7 @@ function CustomerSignUp() {
                 <Form.Control
                   type="text"
                   name="firstName"
+                  onBlur={handleBlur}
                   value={values.firstName}
                   onChange={handleChange}
                   isValid={touched.firstName && !errors.firstName}
@@ -144,6 +125,7 @@ function CustomerSignUp() {
                 <Form.Control
                   type="text"
                   name="lastName"
+                  onBlur={handleBlur}
                   value={values.lastName}
                   onChange={handleChange}
                   isValid={touched.lastName && !errors.lastName}
@@ -163,6 +145,7 @@ function CustomerSignUp() {
                     aria-describedby="inputGroupPrepend"
                     name="username"
                     value={values.username}
+                    onBlur={handleBlur}
                     onChange={handleChange}
                     isInvalid={!!errors.username}
                   />
@@ -186,6 +169,7 @@ function CustomerSignUp() {
                   placeholder="Enter Your Email"
                   name="customeremail"
                   value={values.customeremail}
+                  onBlur={handleBlur}
                   onChange={handleChange}
                   isInvalid={!!errors.customeremail}
                 />
@@ -206,6 +190,7 @@ function CustomerSignUp() {
                   placeholder="Enter Password"
                   name="password"
                   value={values.password}
+                  onBlur={handleBlur}
                   onChange={handleChange}
                   isInvalid={!!errors.password}
                 />
@@ -226,6 +211,7 @@ function CustomerSignUp() {
                   placeholder="Re-Enter Password"
                   name="reenterpassword"
                   value={values.reenterpassword}
+                  onBlur={handleBlur}
                   onChange={handleChange}
                   isInvalid={!!errors.reenterpassword}
                 />
@@ -249,6 +235,7 @@ function CustomerSignUp() {
                   name="city"
                   value={values.city}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   isInvalid={!!errors.city}
                 />
 
@@ -268,6 +255,7 @@ function CustomerSignUp() {
                   placeholder="State"
                   name="state"
                   value={values.state}
+                  onBlur={handleBlur}
                   onChange={handleChange}
                   isInvalid={!!errors.state}
                 />
@@ -287,6 +275,7 @@ function CustomerSignUp() {
                   placeholder="Zip"
                   name="zip"
                   value={values.zip}
+                  onBlur={handleBlur}
                   onChange={handleChange}
                   isInvalid={!!errors.zip}
                 />
@@ -303,6 +292,7 @@ function CustomerSignUp() {
                 name="terms"
                 label="Agree to terms and conditions"
                 onChange={handleChange}
+                onBlur={handleBlur}
                 isInvalid={!!errors.terms}
                 feedback={errors.terms}
                 feedbackType="invalid"

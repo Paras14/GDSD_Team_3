@@ -8,6 +8,7 @@ import { useState } from "react";
 import axios from "axios";
 
 function SignIn() {
+  const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -24,21 +25,23 @@ function SignIn() {
     console.log(email);
     console.log(password);
 
-    axios.post("http://localhost:8080/users/login", {
-      email: email,
-      password: password,
-    }).then((response) => {
-      console.log(response);
-      if (response.data.message === "Login successful") {
-        
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("useremail", email);
-        navigate("/");
-      }
-    }).catch((error) => {
-      console.log(error);
-    });
-
+    axios
+      .post("http://localhost:8080/users/login", {
+        email: email,
+        password: password,
+      })
+      .then((response) => {
+        console.log(response);
+        if (response.data.message === "Login successful") {
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("useremail", email);
+          navigate("/");
+          setMessage("You are successfully registered");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -89,6 +92,7 @@ function SignIn() {
           </div>
         </Row>
       </Form>
+      {message !== "" && <div>{message}</div>}
     </Container>
   );
 }
