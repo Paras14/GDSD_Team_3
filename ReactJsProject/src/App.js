@@ -20,6 +20,7 @@ import ReviewCheckBox from "./components/Admin/PostReviews/ReviewCheckBox";
 import ListOfRestaurants from "./components/Admin/ListOfRestaurants";
 import { Chat } from "./components/Chat/Chat";
 import CustomerAfterRegister from "./components/SignUp/CustomerAfterRegister";
+import RedirectPage from "./components/SignIn/RedirectPage";
 
 const App = () => {
   return (
@@ -187,6 +188,15 @@ const App = () => {
               <div>
                 <Navbar />
                 <CustomerAfterRegister />
+              </div>
+            }
+          />
+          <Route
+            path="/redirectPage"
+            element={
+              <div>
+                <RedirectPage />
+                <Cards />
               </div>
             }
           />
