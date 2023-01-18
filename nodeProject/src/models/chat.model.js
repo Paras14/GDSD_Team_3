@@ -8,10 +8,7 @@ module.exports = (sequelize, datatypes) => {
     
     text: {
     type: datatypes.STRING
-    },
-    date: {
-    type: datatypes.DATE
-    },
+    }
     
     });
     //Food.belongsTo(FoodCategory);
