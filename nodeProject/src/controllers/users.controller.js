@@ -149,6 +149,7 @@ exports.deleteAll = (req, res) => {
 
 exports.findUserByEmail = (req, res) => {
   const email = req.query.email;
+  
   User.findOne({ where: { email: email } })
     .then((user) => {
       if (user) {
@@ -164,6 +165,22 @@ exports.findUserByEmail = (req, res) => {
         message: "Error retrieving User with email=" + email,
       });
     });
+};
+
+exports.findLocalUserByEmail = (req, res, next) => {
+  const email = req.query.email;
+  
+   return User.findOne({ where: { email: email } })
+    .then((user) => {
+      if (user) {
+        return user;;
+      } else {
+        res.status(500).send({
+          message: "Error retrieving User with email=" + email,
+        });
+      }
+    })
+    
 };
 
 exports.login = (req, res) => {

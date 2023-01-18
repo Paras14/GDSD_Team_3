@@ -42,8 +42,8 @@ function CustomerSignUp() {
       city: values.city,
       state: values.state,
       zip: values.zip,
-      description: "i am software Engineer",
-      image: "image is not available",
+      description: "",
+      image: "",
       rolId: 9
     }
 
@@ -101,7 +101,7 @@ function CustomerSignUp() {
           city: "",
           state: "",
           zip: "",
-
+          
           terms: false,
         }}
       >

@@ -1,3 +1,4 @@
+const { checkAdmin } = require("../auth/role_validation");
 const { checkToken } = require("../auth/token_validation");
 
 module.exports = app => {
@@ -9,9 +10,9 @@ module.exports = app => {
     router.post("/", users.create);
   
     // Retrieve all Tutorials
-    router.get("/", users.findAll);
+    router.get("/",checkAdmin, users.findAll);
   // Retrieve a single Tutorial with id
-  router.get("/:id", users.findOne);
+    router.get("/:id", users.findOne);
 
   // Update a Tutorial with id
     router.put("/:id", users.update);
@@ -23,7 +24,7 @@ module.exports = app => {
     router.delete("/", users.deleteAll);
 
     // Find user by email
-    router.get("/email/:email", users.findUserByEmail);
+    router.get("/email/find", users.findUserByEmail);
 
     // Login
     router.post("/login", users.login);
