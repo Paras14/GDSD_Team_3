@@ -21,6 +21,8 @@ import ListOfRestaurants from "./components/Admin/ListOfRestaurants";
 import { Chat } from "./components/Chat/Chat";
 import CustomerAfterRegister from "./components/SignUp/CustomerAfterRegister";
 import RedirectPage from "./components/SignIn/RedirectPage";
+import RestaurantUpperDetail from "./components/RestaurantUpperDetail";
+import RestaurantTabDetails from "./components/RestaurantTabDetails";
 
 const App = () => {
   return (
@@ -197,6 +199,17 @@ const App = () => {
               <div>
                 <RedirectPage />
                 <Cards />
+              </div>
+            }
+          />
+          <Route
+            path="/RestaurantDetails_alt"
+            element={
+              <div>
+                <Navbar />
+                <RestaurantUpperDetail />
+                <RestaurantTabDetails />
+               
               </div>
             }
           />
