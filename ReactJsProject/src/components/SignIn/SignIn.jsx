@@ -35,7 +35,7 @@ function SignIn() {
         if (response.data.message === "Login successful") {
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("useremail", email);
-          navigate("/");
+          navigate("/redirectPage");
           setMessage("You are successfully registered");
         }
       })

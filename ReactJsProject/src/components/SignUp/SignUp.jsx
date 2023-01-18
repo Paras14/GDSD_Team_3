@@ -3,7 +3,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
-import { Formik, Field } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -307,16 +307,14 @@ function SignUp() {
                 className="position-relative"
               >
                 <Form.Label>Restaurant Type</Form.Label>
-                {
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter Restaurent Type"
-                    name="restaurenttype"
-                    value={values.restaurenttype}
-                    onChange={handleChange}
-                    isInvalid={!!errors.restaurenttype}
-                  />
-                }
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Restaurent Type"
+                  name="restaurenttype"
+                  value={values.restaurenttype}
+                  onChange={handleChange}
+                  isInvalid={!!errors.restaurenttype}
+                />
 
                 <Form.Control.Feedback type="invalid" tooltip>
                   {errors.restaurenttype}
@@ -324,9 +322,9 @@ function SignUp() {
               </Form.Group>
             </Row>
             <Form.Group className="position-relative mb-3">
-              <Form.Label>File</Form.Label>
+              <Form.Label>Upload image Url</Form.Label>
               <Form.Control
-                type="file"
+                type="url"
                 required
                 name="file"
                 onChange={handleChange}
