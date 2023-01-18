@@ -200,6 +200,7 @@ exports.login = (req, res) => {
         res.json({
           message: "Login successful",
           token: jsonToken,
+          user: user,
         });
       } else {
         res.status(404).send({
