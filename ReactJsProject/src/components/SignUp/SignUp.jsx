@@ -7,10 +7,12 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 const schema = Yup.object().shape({
   restaurentname: Yup.string().required(),
-  managername: Yup.string().required(),
+  managerfirstname: Yup.string().required(),
+  managerlastname: Yup.string().required(),
   username: Yup.string().required(),
   managermail: Yup.string().required(),
   password: Yup.string().required(),
@@ -36,23 +38,68 @@ function SignUp() {
   const navigate = useNavigate();
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
+      const user = {
+        username: values.username,
+        firstname: values.managerfirstname,
+        lastname: values.managerlastname,
+        email: values.managermail,
+        password: values.password,
+        city: values.city,
+        state: values.state,
+        zip: values.zip,
+        description: "",
+        image: "",
+        rolId: "9",
+      };
+
+      const restaurant = {
+        name: values.restaurentname,
+        city: values.city,
+        state: values.state,
+        zip: values.zip,
+        telephone: values.telefonenumber,
+        description: values.description,
+        image: values.file,
+        restaurantCategoryId: values.restaurenttype,
+        userId:""      
+      };
+
       setSubmitting(true);
-      // Make the API call
-      const response = await fetch("http://localhost:8080/users/", {
-        method: "POST",
-        body: JSON.stringify(values),
-        headers: { "Content-Type": "application/json" },
+      console.log("User is: " + JSON.stringify(user));
+      axios.post('http://localhost:8080/users/', user)
+      .then(function (response) {
+        console.log("Reached Restaurant save part: " + response.data.id);
+        restaurant.userId = response.data.id;
+        console.log("Restaurant is: " + JSON.stringify(restaurant));
+        axios.post('http://localhost:8080/restaurants/', restaurant)
+        .then(function (response){
+          navigate("/restaurentRegistration");
+          setSubmitting(false);
+        })
+        .catch(function(error){
+          axios.delete('http://localhost:8080/users/' + response.data.id);
+          console.log(error);
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
       });
+      // Make the API call
+      // const response = await fetch("http://localhost:8080/users/", {
+      //   method: "POST",
+      //   body: JSON.stringify(values),
+      //   headers: { "Content-Type": "application/json" },
+      // });
       // Parse the response to JSON
-      const data = await response.json();
-      if (response.ok) {
-        navigate("/restaurentRegistration");
-        setSubmitting(false);
-      } else {
-        // Set errors if the response is not successful
-        setErrors({ submit: data.message });
-        setSubmitting(false);
-      }
+      // const data = await response.json();
+      // if (response.ok) {
+      //   navigate("/restaurentRegistration");
+      //   setSubmitting(false);
+      // } else { 
+      //   // Set errors if the response is not successful
+      //   setErrors({ submit: data.message });
+      //   setSubmitting(false);
+      // }
     } catch (error) {
       setErrors({ submit: error.message });
       setSubmitting(false);
@@ -75,7 +122,8 @@ function SignUp() {
         onSubmit={handleSubmit}
         initialValues={{
           restaurentname: "Chinese Restaurent",
-          managername: "Ali",
+          managerfirstname: "Ali",
+          managerlastname: "",
           username: "",
           managermail: "",
           password: "",
@@ -102,7 +150,7 @@ function SignUp() {
             <Row className="mb-3">
               <Form.Group
                 as={Col}
-                md="4"
+                md="3"
                 controlId="validationFormik101"
                 className="position-relative"
               >
@@ -120,24 +168,43 @@ function SignUp() {
               </Form.Group>
               <Form.Group
                 as={Col}
-                md="4"
+                md="3"
                 controlId="validationFormik102"
                 className="position-relative"
               >
-                <Form.Label>Manager Name</Form.Label>
+                <Form.Label>Manager First Name</Form.Label>
                 <Form.Control
                   type="text"
-                  name="managername"
-                  value={values.managername}
+                  name="managerfirstname"
+                  value={values.managerfirstname}
                   onChange={handleChange}
-                  isValid={touched.managername && !errors.managername}
+                  isValid={touched.managerfirstname && !errors.managerfirstname}
                 />
 
                 <Form.Control.Feedback tooltip>
                   Looks good!
                 </Form.Control.Feedback>
               </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationFormikUsername2">
+              <Form.Group
+                as={Col}
+                md="3"
+                controlId="validationFormik102"
+                className="position-relative"
+              >
+                <Form.Label>Manager Last Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="managerlastname"
+                  value={values.managerlastname}
+                  onChange={handleChange}
+                  isValid={touched.managerlastname && !errors.managerlastname}
+                />
+
+                <Form.Control.Feedback tooltip>
+                  Looks good!
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group as={Col} md="3" controlId="validationFormikUsername2">
                 <Form.Label>Username</Form.Label>
                 <InputGroup hasValidation>
                   <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>

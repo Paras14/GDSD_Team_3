@@ -3,6 +3,8 @@ module.exports = {
     checkAdmin:  async (req, res, next) => {
         const users = require("../controllers/users.controller");
         users.findLocalUserByEmail(req, res).then((user)=>{
+            //rols.controller
+            //findRoleIdByRolName
         if (user.rolId==7) {
             if(next)
                 next();
