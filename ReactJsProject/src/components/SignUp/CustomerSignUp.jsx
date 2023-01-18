@@ -35,11 +35,25 @@ function CustomerSignUp() {
   const navigate = useNavigate();
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
+      const user = {
+        username: values.username,
+        firstname: values.firstName,
+        lastname: values.lastName,
+        email: values.customeremail,
+        password: values.password,
+        city: values.city,
+        state: values.state,
+        zip: values.zip,
+        description: "",
+        image: "",
+        rolId: 8,
+      };
+
       setSubmitting(true);
       // Make the API call
       const response = await fetch("http://localhost:8080/users/", {
         method: "POST",
-        body: JSON.stringify(values),
+        body: JSON.stringify(user),
         headers: { "Content-Type": "application/json" },
       });
       // Parse the response to JSON
