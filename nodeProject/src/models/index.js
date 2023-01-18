@@ -31,6 +31,7 @@ db.foods.belongsTo(db.foodCategory);
 db.foods.belongsTo(db.restaurant);
 db.restaurant.belongsToMany(db.foodCategory, {through:'foodCategoryRestaurant'});
 db.restaurant.belongsTo(db.restaurantCategory);
+db.user.hasOne(db.restaurant);
 db.user.belongsTo(db.rol);
 db.chat.belongsTo(db.user, {foreignKey: 'user_emitter'});
 db.chat.belongsTo(db.user, {foreignKey: 'user_receiver'});

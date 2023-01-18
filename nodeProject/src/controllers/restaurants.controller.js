@@ -5,8 +5,8 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Restaurant
 exports.create = (req, res) => {
     // Validate request
-    console.log(req.query);
-    if (!req.query.name) {
+    console.log(req.body);
+    if (!req.body.name) {
       res.status(400).send({
         message: "Restaurant name can not be empty!"
       });
@@ -15,10 +15,16 @@ exports.create = (req, res) => {
   
     // Create a Restaurant
     const restaurant = {
-        name: req.query.name,
-        address: req.query.address,
-        description: req.query.description,
-        image: req.query.image,
+        name: req.body.name,
+        address: req.body.address,
+        description: req.body.description,
+        image: req.body.image,
+        city: req.body.city,
+        state: req.body.state,
+        zip: req.body.zip,
+        telephone: req.body.telephone,
+        restaurantCategoryId: req.body.restaurantCategoryId,
+        userId: req.body.userId
     };
   
     // Save Restaurant in the database
