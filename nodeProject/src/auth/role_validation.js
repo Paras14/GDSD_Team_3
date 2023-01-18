@@ -4,7 +4,8 @@ module.exports = {
         const users = require("../controllers/users.controller");
         users.findLocalUserByEmail(req, res).then((user)=>{
         if (user.rolId==7) {
-            next();
+            if(next)
+                next();
             } else {
                 res.status(500).json({
                     success: 0,
@@ -18,7 +19,8 @@ module.exports = {
         const users = require("../controllers/users.controller");
         users.findLocalUserByEmail(req, res).then((user)=>{
         if (user.rolId==9) {
-            next();
+            if(next)
+                next();
             } else {
                 res.status(500).json({
                     success: 0,
@@ -32,7 +34,8 @@ module.exports = {
         const users = require("../controllers/users.controller");
         users.findLocalUserByEmail(req, res).then((user)=>{
         if (user.rolId==10) {
-            next();
+            if(next)
+                next();
             } else {
                 res.status(500).json({
                     success: 0,
@@ -46,7 +49,8 @@ module.exports = {
         const users = require("../controllers/users.controller");
         users.findLocalUserByEmail(req, res).then((user)=>{
         if (user.rolId==8) {
-            next();
+            if(next)
+                next();
             } else {
                 res.status(500).json({
                     success: 0,

@@ -12,6 +12,9 @@ module.exports = (sequelize, datatypes) => {
     ingredients: {
     type: datatypes.STRING
     },
+    price: {
+    type: datatypes.NUMBER
+    },
     image: {
     type: datatypes.STRING
     }

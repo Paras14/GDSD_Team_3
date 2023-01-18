@@ -1,3 +1,4 @@
+const { checkAdmin } = require("../auth/role_validation");
 const db = require("../models");
 const Chat = db.chat;
 const Op = db.Sequelize.Op;
@@ -5,10 +6,10 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Chat
 exports.create = (req, res) => {
     // Validate request
-    console.log(req.query);
-    if (!req.query.name) {
+    // checkAdmin(req,res);
+    if (!req.query.user_emitter || !req.query.user_receiver) {
       res.status(400).send({
-        message: "Chat name can not be empty!"
+        message: "Chat must have sender and receiver id"
       });
       return;
     }
@@ -17,8 +18,7 @@ exports.create = (req, res) => {
     const chat = {
         user_emitter: req.query.user_emitter,
         user_receiver: req.query.user_receiver,
-        text: req.query.text,
-        date: req.query.date
+        text: req.query.text
     };
   
     // Save Chat in the database

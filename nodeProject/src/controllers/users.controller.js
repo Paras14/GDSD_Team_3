@@ -166,7 +166,7 @@ exports.findUserByEmail = (req, res) => {
     });
 };
 
-/*
+
 exports.findLocalUserByEmail = (req, res, next) => {
   const email = req.query.email;
   
@@ -182,7 +182,7 @@ exports.findLocalUserByEmail = (req, res, next) => {
     })
     
 };
-*/
+
 
 exports.login = (req, res) => {
   const email = req.body.email;
