@@ -6,7 +6,8 @@ module.exports = (sequelize, datatypes) => {
     primaryKey: true
     },
     username: {
-    type: datatypes.STRING
+    type: datatypes.STRING,
+    unique: true
     },
     password: {
     type: datatypes.STRING
@@ -18,7 +19,8 @@ module.exports = (sequelize, datatypes) => {
     type: datatypes.STRING
     },
     email: {
-    type: datatypes.STRING
+    type: datatypes.STRING,
+    unique: true
     },
     city: {
     type: datatypes.STRING
