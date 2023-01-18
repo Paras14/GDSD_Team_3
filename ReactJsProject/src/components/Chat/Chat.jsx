@@ -42,18 +42,8 @@ export const Chat = () => {
 
       document.title = 'Chat';
 
-      const useremail = localStorage.getItem( 'useremail' );
-      axios.get( `http://localhost:8080/users/email/${useremail}` ).then( ( response ) => {
+      setUser( JSON.parse( localStorage.getItem( 'user' ) ) );
 
-        setUser( response.data );
-
-        }).catch( ( error ) => {
-
-            console.log( error );
-
-        });
-
-      //setUser( JSON.parse( localStorage.getItem( 'user' ) ) );
       if ( receptorActual !== undefined ) {
 
         setReceptor( receptorActual );
