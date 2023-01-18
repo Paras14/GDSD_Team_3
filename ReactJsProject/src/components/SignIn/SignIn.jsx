@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import { useState } from "react";
+import axios from "axios";
 
 function SignIn() {
   const [email, setEmail] = useState("");
@@ -22,6 +23,22 @@ function SignIn() {
     e.preventDefault();
     console.log(email);
     console.log(password);
+
+    axios.post("http://localhost:8080/users/login", {
+      email: email,
+      password: password,
+    }).then((response) => {
+      console.log(response);
+      if (response.data.message === "Login successful") {
+        
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("useremail", email);
+        navigate("/");
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
+
   };
 
   return (

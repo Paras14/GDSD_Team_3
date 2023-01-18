@@ -12,6 +12,7 @@ export const setUpChat = ( user, setUsers, setMessages, setMessagesDESC, //setMy
     //Swal.showLoading();
 
   }
+  console.log( 'Trying to set up chat' );
 
   axios.get( `${baseUrl}chats/${user.nombre}` )
     .then( res => setMessagesSearch( res.data ) );

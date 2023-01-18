@@ -22,6 +22,9 @@ module.exports = app => {
   // Delete all Tutorials
     router.delete("/", users.deleteAll);
 
+    // Find user by email
+    router.get("/email/:email", users.findUserByEmail);
+
     // Login
     router.post("/login", users.login);
 

@@ -6,6 +6,7 @@ import '../../styles/Chat.css';
 import { isAuthorized } from '../../helpers/isAuthorized.js';
 import { useNavigate, useParams } from '../../../node_modules/react-router/dist/index.js';
 import socket from './Socket';
+import axios from 'axios';
 //import { Header } from '../components/header';
 //import { Footer } from '../components/footer';
 //import { IniciarChat } from '../components/chat/IniciarChat';
@@ -40,7 +41,19 @@ export const Chat = () => {
     } else {
 
       document.title = 'Chat';
-      setUser( JSON.parse( localStorage.getItem( 'user' ) ) );
+
+      const useremail = localStorage.getItem( 'useremail' );
+      axios.get( `http://localhost:8080/users/email/${useremail}` ).then( ( response ) => {
+
+        setUser( response.data );
+
+        }).catch( ( error ) => {
+
+            console.log( error );
+
+        });
+
+      //setUser( JSON.parse( localStorage.getItem( 'user' ) ) );
       if ( receptorActual !== undefined ) {
 
         setReceptor( receptorActual );
