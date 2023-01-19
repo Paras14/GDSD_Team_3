@@ -12,25 +12,25 @@ import { eventKeyboard } from '../eventsKeyboard';
 import { setConection } from '../format/setConection';
 import { Chats } from './showChats';
 
-export const ActiveChats = ({ users, mensajes, user, setReceptor, setConexion, setMensaje, receptor, //group, setGroup, myGroups, configurationGroups, setConfigurationGroups, 
-setIniciandoChat, mensajesDESC, setResponder, mensajesBuscar, setMensajesBuscar, recienEnviado, setRecienEnviado }) => {
+export const ActiveChats = ({ users, messages, user, setReceptor, setConexion, setMessage, receptor, //group, setGroup, myGroups, configurationGroups, setConfigurationGroups, 
+setIniciandoChat, messagesDESC, setResponder, messagesBuscar, setMessagesBuscar, recienEnviado, setRecienEnviado }) => {
 
   const baseUrl = Global.baseUrl;
   const [buscar, setBuscar] = useState( '' );
 
   useEffect( () => {
 
-    socket.emit( 'conectado', user.nombre );
+    socket.emit( 'connected', user.nombre );
 
   }, [user.nombre]);
 
   useEffect( () => {
 
-    if ( receptor === '' //&& group.nombre === undefined 
+    if ( receptor === -1 //&& group.nombre === undefined 
     ) {
 
       const messages = [];
-      mensajesBuscar.reverse().forEach( ( mensaje ) => {
+      messagesBuscar.reverse().forEach( ( mensaje ) => {
 
         //if ( mensaje.id_grupo_receptor !== 1 ) {
 
@@ -49,24 +49,24 @@ setIniciandoChat, mensajesDESC, setResponder, mensajesBuscar, setMensajesBuscar,
         setGroup( getGrupo( firstMessage.id_grupo_receptor, myGroups ) );
         document.title = `Chateando en ${getGrupo( firstMessage.id_grupo_receptor, myGroups ).nombre}`;
 
-      } else */ if ( firstMessage.nombre_usuario_receptor !== null ) {
+      } else */ if ( firstMessage.user_receiver !== null ) {
 
-        setConection( firstMessage.nombre_usuario_receptor !== user.nombre ? firstMessage.nombre_usuario_receptor : firstMessage.nombre_usuario_emisor, users, setConexion );
-        setReceptor( firstMessage.nombre_usuario_receptor !== user.nombre ? firstMessage.nombre_usuario_receptor : firstMessage.nombre_usuario_emisor );
+        setConection( firstMessage.user_receiver !== user.id ? firstMessage.user_receiver : firstMessage.user_emitter, users, setConexion );
+        setReceptor( firstMessage.user_receiver !== user.id ? firstMessage.user_receiver : firstMessage.user_emitter );
         //setGroup({});
-        document.title = `Chateando con ${firstMessage.nombre_usuario_receptor !== user.nombre ? firstMessage.nombre_usuario_receptor : firstMessage.nombre_usuario_emisor}`;
+        document.title = `Chateando con ${firstMessage.user_receiver !== user.id ? firstMessage.user_receiver : firstMessage.user_emitter}`;
 
       }
 
-      if ( document.getElementById( `${( firstMessage.nombre_usuario_receptor !== null && firstMessage.nombre_usuario_receptor === user.nombre ) ? firstMessage.nombre_usuario_emisor : firstMessage.nombre_usuario_receptor}` ) !== null ) {
+      if ( document.getElementById( `${( firstMessage.user_receiver !== null && firstMessage.user_receiver === user.id ) ? firstMessage.user_emitter : firstMessage.user_receiver}` ) !== null ) {
 
-        document.getElementById( `${( firstMessage.nombre_usuario_receptor !== null && firstMessage.nombre_usuario_receptor === user.nombre ) ? firstMessage.nombre_usuario_emisor : firstMessage.nombre_usuario_receptor}` ).classList.add( 'chatSeleccionado' );
+        document.getElementById( `${( firstMessage.user_receiver !== null && firstMessage.user_receiver === user.id ) ? firstMessage.user_emitter : firstMessage.user_receiver}` ).classList.add( 'chatSeleccionado' );
 
       }
 
     } else {
 
-      if ( receptor !== '' //&& group.nombre === undefined 
+      if ( receptor !== -1 //&& group.nombre === undefined 
       ) {
 
         //setGroup({});
@@ -93,7 +93,7 @@ setIniciandoChat, mensajesDESC, setResponder, mensajesBuscar, setMensajesBuscar,
 
     }
 
-  }, [mensajesBuscar]);
+  }, [messagesBuscar]);
 
   /*
   useEffect( () => {
@@ -110,7 +110,7 @@ setIniciandoChat, mensajesDESC, setResponder, mensajesBuscar, setMensajesBuscar,
 
   useEffect( () => {
 
-    document.querySelector( '#inputMensaje-enviar-chat' ).addEventListener( 'keyup', function ( event ) {
+    document.querySelector( '#inputMessage-enviar-chat' ).addEventListener( 'keyup', function ( event ) {
 
       event.preventDefault();
       eventKeyboard( event );
@@ -128,11 +128,11 @@ setIniciandoChat, mensajesDESC, setResponder, mensajesBuscar, setMensajesBuscar,
 
           if ( res.data[0] === undefined ) {
 
-            setMensajesBuscar([]);
+            setMessagesBuscar([]);
 
           } else {
 
-            setMensajesBuscar( res.data );
+            setMessagesBuscar( res.data );
 
           }
 
@@ -140,7 +140,7 @@ setIniciandoChat, mensajesDESC, setResponder, mensajesBuscar, setMensajesBuscar,
 
     } else {
 
-      setMensajesBuscar( mensajes );
+      setMessagesBuscar( messages );
 
     }
 
@@ -155,7 +155,7 @@ setIniciandoChat, mensajesDESC, setResponder, mensajesBuscar, setMensajesBuscar,
           <input className="input3"
             type="search"
             size="15"
-            placeholder="Busca un mensaje"
+            placeholder="Search a message"
             aria-label="Search"
             aria-describedby="search-addon"
             onChange={( e ) => {
@@ -184,18 +184,18 @@ setIniciandoChat, mensajesDESC, setResponder, mensajesBuscar, setMensajesBuscar,
         </div>
         <Chats
           users={users}
-          mensajesBuscar={mensajesBuscar}
+          messagesBuscar={messagesBuscar}
           receptor={receptor}
           //group={group}
           setResponder={setResponder}
           setReceptor={setReceptor}
           //setGroup={setGroup}
           user={user}
-          setMensaje={setMensaje}
+          setMessage={setMessage}
           setConexion={setConexion}
           //myGroups={myGroups}
           //setConfigurationGroups={setConfigurationGroups}
-          mensajes={mensajes}
+          messages={messages}
           recienEnviado={recienEnviado}
         />
 
@@ -206,13 +206,14 @@ setIniciandoChat, mensajesDESC, setResponder, mensajesBuscar, setMensajesBuscar,
 
 };
 
+/*
 ActiveChats.propTypes = {
   users: PropTypes.array.isRequired,
-  mensajes: PropTypes.array.isRequired,
+  messages: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
   setReceptor: PropTypes.func.isRequired,
   setConexion: PropTypes.func.isRequired,
-  setMensaje: PropTypes.func.isRequired,
+  setMessage: PropTypes.func.isRequired,
   receptor: PropTypes.string.isRequired,
   //group: PropTypes.object.isRequired,
   //setGroup: PropTypes.func.isRequired,
@@ -220,10 +221,11 @@ ActiveChats.propTypes = {
   //setConfigurationGroups: PropTypes.func.isRequired,
   //configurationGroups: PropTypes.node.isRequired,
   setIniciandoChat: PropTypes.func.isRequired,
-  mensajesDESC: PropTypes.array.isRequired,
+  messagesDESC: PropTypes.array.isRequired,
   setResponder: PropTypes.func.isRequired,
-  mensajesBuscar: PropTypes.array.isRequired,
-  setMensajesBuscar: PropTypes.func.isRequired,
+  messagesBuscar: PropTypes.array.isRequired,
+  setMessagesBuscar: PropTypes.func.isRequired,
   recienEnviado: PropTypes.bool.isRequired,
   setRecienEnviado: PropTypes.func.isRequired
 };
+*/

@@ -7,21 +7,21 @@ import { setConection } from '../format/setConection';
 //import { setMiembrosGrupo } from '../format/setMiembrosGrupo';
 //import { getGrupo } from '../format/getGroup';
 
-export const Chats = ({ users, mensajesBuscar, receptor, //group, 
+export const Chats = ({ users, messagesBuscar, receptor, //group, 
     setResponder, setReceptor, //setGroup, 
-    user, setMensaje, setConexion, //myGroups, setConfigurationGroups, 
-    mensajes, recienEnviado }) => {
+    user, setMessage, setConexion, //myGroups, setConfigurationGroups, 
+    messages, recienEnviado }) => {
 
   const users2 = [];
 
   const nombreEmisorOrId = ( men ) => {
 
-    let nombre = '';
+    let nombre = -1;
 
-    if ( men.nombre_usuario_receptor !== null //&& men.id_grupo_receptor === null 
+    if ( men.user_receiver !== null //&& men.id_grupo_receptor === null 
         ) {
 
-      men.nombre_usuario_emisor !== user.nombre ? nombre = men.nombre_usuario_emisor : nombre = men.nombre_usuario_receptor;
+      men.user_emitter !== user.id ? nombre = men.user_emitter : nombre = men.user_receiver;
 
     } /*else if ( men.nombre_usuario_receptor === null && men.id_grupo_receptor !== null ) {
 
@@ -35,9 +35,9 @@ export const Chats = ({ users, mensajesBuscar, receptor, //group,
 
   const putUsers2 = ( men ) => {
 
-    if ( mensajesBuscar.length === mensajes.length || recienEnviado ) {
+    if ( messagesBuscar.length === messages.length || recienEnviado ) {
 
-      users2.push( ( men.nombre_usuario_receptor !== null && men.nombre_usuario_emisor !== user.nombre ? men.nombre_usuario_emisor : men.nombre_usuario_receptor ) );
+      users2.push( ( men.user_receiver !== null && men.user_emitter !== user.id ? men.user_emitter : men.user_receiver ) );
 
     }
 
@@ -47,12 +47,12 @@ export const Chats = ({ users, mensajesBuscar, receptor, //group,
 
   const nombreEmisor = ( men ) => {
 
-    let nombre = '';
+    let nombre = -1;
 
-    if ( men.nombre_usuario_receptor !== null //&& men.id_grupo_receptor === null 
+    if ( men.user_receiver !== null //&& men.id_grupo_receptor === null 
         ) {
 
-      men.nombre_usuario_emisor !== user.nombre ? nombre = men.nombre_usuario_emisor : nombre = men.nombre_usuario_receptor;
+      men.user_emitter !== user.id ? nombre = men.user_emitter : nombre = men.user_receiver;
 
     } /*else if ( men.nombre_usuario_receptor === null && men.id_grupo_receptor !== null ) {
 
@@ -75,13 +75,13 @@ export const Chats = ({ users, mensajesBuscar, receptor, //group,
 
     }
     document.getElementById( `${nombreEmisorOrId( men )}` ).classList.add( 'chatSeleccionado' );
-    if ( men.nombre_usuario_receptor !== null //&& men.id_grupo_receptor === null 
+    if ( men.user_receiver !== null //&& men.id_grupo_receptor === null 
         ) {
 
-      setReceptor( men.nombre_usuario_emisor !== user.nombre ? men.nombre_usuario_emisor : men.nombre_usuario_receptor );
-      setConection( men.nombre_usuario_emisor !== user.nombre ? men.nombre_usuario_emisor : men.nombre_usuario_receptor, users, setConexion );
+      setReceptor( men.user_emitter !== user.id ? men.user_emitter : men.user_receiver );
+      setConection( men.user_emitter !== user.id ? men.user_emitter : men.user_receiver, users, setConexion );
       //setGroup({});
-      document.title = `Chateando con ${men.nombre_usuario_emisor !== user.nombre ? men.nombre_usuario_emisor : men.nombre_usuario_receptor}`;
+      document.title = `Chateando con ${men.user_emitter !== user.id ? men.user_emitter : men.user_receiver}`;
 
     } /* else if ( men.nombre_usuario_receptor === null && men.id_grupo_receptor !== null ) {
 
@@ -91,7 +91,7 @@ export const Chats = ({ users, mensajesBuscar, receptor, //group,
       document.title = `Chateando en ${getGrupo( men.id_grupo_receptor, myGroups ).nombre}`;
 
     } */
-    setMensaje( '' );
+    setMessage( '' );
 
   };
 
@@ -102,9 +102,9 @@ export const Chats = ({ users, mensajesBuscar, receptor, //group,
         height= "400px">
         <ul className="list-unstyled mb-0">
           {
-            ( users.length !== 0 && mensajesBuscar.length !== 0 ) && mensajesBuscar.reverse().map( ( men, index ) => (
+            ( users.length !== 0 && messagesBuscar.length !== 0 ) && messagesBuscar.reverse().map( ( men, index ) => (
 
-              ( ( users2.indexOf( men.nombre_usuario_receptor ) === -1 ) && ( users2.indexOf( men.nombre_usuario_emisor ) === -1 ) //&& ( users2.indexOf( men.id_grupo_receptor ) === -1 ) 
+              ( ( users2.indexOf( men.user_receiver ) === -1 ) && ( users2.indexOf( men.user_emitter ) === -1 ) //&& ( users2.indexOf( men.id_grupo_receptor ) === -1 ) 
               )
                 ? <li className="p-2 border-bottom"
                   key={index}>
@@ -113,18 +113,18 @@ export const Chats = ({ users, mensajesBuscar, receptor, //group,
                     onClick={() => changeChat( men )}>
                     <div className="d-flex flex-row">
                       <div className="align-items-center divObjectsSend margen-foto-chat-perfil">
-                        {photoProfile( men.nombre_usuario_receptor === null ? '' : ( men.nombre_usuario_emisor !== user.nombre ? men.nombre_usuario_emisor : men.nombre_usuario_receptor ), users, 60 )}
+                        {photoProfile( men.user_receiver === null ? '' : ( men.user_emitter !== user.id ? men.user_emitter : men.user_receiver ), users, 60 )}
                       </div>
                       <div className="pt-1">
                         {putUsers2( men )}
                         <p className="fw-bold mb-0">{nombreEmisor( men )}</p>
-                        <p className="small text-muted">{formatMessage( men.mensaje === null ? 'imagen' : men.mensaje )}</p>
+                        <p className="small text-muted">{formatMessage( men.text === null ? 'imagen' : men.text )}</p>
                       </div>
                     </div>
                     <div className="pt-1">
                       <p className="small text-muted mb-1 textoTransparente textoDerecha tamnyoHora">&nbsp;</p>
                       <p className="small text-muted mb-1 textoTransparente textoDerecha tamnyoHora">&nbsp;</p>
-                      <p className="small text-muted mb-1 textoDerecha tamnyoHora">{formatDate( men.fecha_envio )}</p>
+                      <p className="small text-muted mb-1 textoDerecha tamnyoHora">{formatDate( men.createdAt )}</p>
                     </div>
                   </button>
                 </li>
@@ -139,19 +139,21 @@ export const Chats = ({ users, mensajesBuscar, receptor, //group,
 
 };
 
+/*
 Chats.propTypes = {
   users: PropTypes.array.isRequired,
-  mensajesBuscar: PropTypes.array.isRequired,
+  messagesBuscar: PropTypes.array.isRequired,
   receptor: PropTypes.string.isRequired,
   //group: PropTypes.object.isRequired,
   setResponder: PropTypes.func.isRequired,
   setReceptor: PropTypes.func.isRequired,
   //setGroup: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  setMensaje: PropTypes.func.isRequired,
+  setMessage: PropTypes.func.isRequired,
   setConexion: PropTypes.func.isRequired,
   //myGroups: PropTypes.array.isRequired,
   //setConfigurationGroups: PropTypes.func.isRequired,
-  mensajes: PropTypes.array.isRequired,
+  messages: PropTypes.array.isRequired,
   recienEnviado: PropTypes.bool.isRequired
 };
+*/

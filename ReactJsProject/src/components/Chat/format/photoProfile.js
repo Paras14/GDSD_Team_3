@@ -4,14 +4,14 @@ export const photoProfile = ( receptor, users, tam ) => {
 
   let imagen = '';
 
-  if ( receptor !== '' ) {
+  if ( receptor !== -1 ) {
 
-    users.forEach( ( user ) => {
+    //users.forEach( ( user ) => {
 
-      if ( user.nombre === receptor ) {
+      if ( users.id === receptor ) {
 
         imagen =
-          <img src={user.imagen}
+          <img src={users.image}
             alt="avatar"
             className="d-flex align-self-center me-3 imagen-perfil-chat"
             width={tam}
@@ -19,7 +19,7 @@ export const photoProfile = ( receptor, users, tam ) => {
 
       }
 
-    });
+    //});
 
   }
 

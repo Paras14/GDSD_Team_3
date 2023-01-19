@@ -2,10 +2,10 @@ import React from 'react';
 
 export const setConection = ( receptor, users, setConexion ) => {
 
-  users.forEach( ( us ) => {
+  /*users.forEach( ( us ) => {
 
-    if ( us.nombre === receptor ) {
-
+    if ( us.id === receptor ) {
+      
       if ( us.online ) {
 
         setConexion(
@@ -26,6 +26,6 @@ export const setConection = ( receptor, users, setConexion ) => {
 
     }
 
-  });
+  });*/
 
 };

@@ -4,7 +4,7 @@ import { formatDate } from '../format/formatDate';
 import { getOrientation, getEnlace, getMargen, getOrigenMensaje, getOrigenMensajeRespuesta } from '../format/formatDesignMessage';
 import PropTypes from 'prop-types';
 
-export const Messages = ({ mensajes, user, receptor, //group, 
+export const Messages = ({ messages, user, receptor, //group, 
     users, //myGroups, 
     setResponder, setIdMensajeRespuesta, setMensajeRespuesta, setImagenRespuesta, setNombreMensajeRespuesta }) => {
 
@@ -19,8 +19,8 @@ export const Messages = ({ mensajes, user, receptor, //group,
   return (
     <div>
       {
-        mensajes.length !== 0 && mensajes.map( ( mensaje, index ) => (
-          ( ( mensaje.nombre_usuario_receptor === receptor ) || ( mensaje.nombre_usuario_emisor === receptor ) ) //&& mensaje.id_grupo_receptor !== 1
+        messages.length !== 0 && messages.map( ( mensaje, index ) => (
+          ( ( mensaje.user_receiver === receptor ) || ( mensaje.emitter === receptor ) ) //&& mensaje.id_grupo_receptor !== 1
             ? <div className={`d-flex flex-row ${getOrientation( user, mensaje )}`}
               id={mensaje.id}
               key = {index}>
@@ -29,41 +29,19 @@ export const Messages = ({ mensajes, user, receptor, //group,
                   {/*( group !== {} && receptor === '' && mensaje.nombre_usuario_emisor !== user.nombre && mensaje.nombre_usuario_emisor !== nombreAnterior && !mensaje.administracion )
                     ? <p className="fw-bold mb-0">{mensaje.nombre_usuario_emisor}</p>
         : <div></div>*/}
-                  {mensaje.respuesta !== null
-                    ? mensaje.mensajeRespuesta !== null
-                      ? <a href={getEnlace( mensaje )}>
-                        <div className={getOrigenMensajeRespuesta( user, mensaje )}>
-                          <p className="fw-bold mb-0">{mensaje.nombreEmisorRespuesta}</p>
-                          <p className="small cols-12 mb-2">{mensaje.mensajeRespuesta}</p>
-                        </div>
-                      </a>
-                      : <a href={getEnlace( mensaje )}>
-                        <div className={getOrigenMensajeRespuesta( user, mensaje )}>
-                          <p className="fw-bold mb-0">{mensaje.nombreEmisorRespuesta}</p>
-                          <p className="small cols-12">
-                            <img alt="imagenEnviada"
-                              src={mensaje.imagenRespuesta}
-                              className="tamañoMaximoImagen mb-2"></img>
-                          </p>
-                        </div>
-                      </a>
-                    : <div></div>}
-                  {mensaje.mensaje !== null
-                    ? <p className="small cols-12">{mensaje.mensaje}</p>
+                  {mensaje.text !== null
+                    ? <p className="small cols-12">{mensaje.text}</p>
                     : <p className="small cols-12">
                       <img alt="imagenEnviada"
-                        src={mensaje.imagen}
+                        src="https://www.w3schools.com/howto/img_avatar.png"
                         className="tamañoMaximoImagen"></img>
                     </p>}
                 </div>
                 <div className="pt-1">
-                  {mensaje.editado ? <p className="small text-muted mb-1 cols-4 tamnyoHora">Editado</p> : <div></div>}
-                  {mensaje.reenviado ? <p className="small text-muted mb-1 cols-4 tamnyoHora">Reenviado</p> : <div></div>}
-                  <p className="small text-muted mb-1 cols-4 tamnyoHora">{formatDate( mensaje.fecha_envio )}</p>
-                  {setNombreAnterior( mensaje.nombre_usuario_emisor )}
+                  <p className="small text-muted mb-1 cols-4 tamnyoHora">{formatDate( mensaje.createdAt )}</p>
+                  {setNombreAnterior( mensaje.user_emitter )}
                 </div>
-                {!mensaje.administracion
-                  ? <li className=" d-none nav-item">
+                 <li className=" d-none nav-item">
                     <button className="btn nav-link"
                       id="navbarDropdownBtnChat"
                       aria-expanded="false"
@@ -78,7 +56,7 @@ export const Messages = ({ mensajes, user, receptor, //group,
                       </svg>
                     </button>
                   </li>
-                  : <div></div>}
+    
               </div>
             </div>
             : <div key = {index}></div>
@@ -89,8 +67,9 @@ export const Messages = ({ mensajes, user, receptor, //group,
 
 };
 
+/*
 Messages.propTypes = {
-  mensajes: PropTypes.array.isRequired,
+  messages: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
   receptor: PropTypes.string.isRequired,
   //group: PropTypes.object.isRequired,
@@ -102,3 +81,4 @@ Messages.propTypes = {
   setImagenRespuesta: PropTypes.func.isRequired,
   setNombreMensajeRespuesta: PropTypes.func.isRequired
 };
+*/

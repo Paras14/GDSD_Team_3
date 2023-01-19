@@ -14,21 +14,27 @@ export const setUpChat = ( user, setUsers, setMessages, setMessagesDESC, //setMy
   }
   console.log( 'Trying to set up chat' );
 
-  axios.get( `${baseUrl}chats/${user.nombre}` )
-    .then( res => setMessagesSearch( res.data ) );
+  axios.get( `${baseUrl}chats/user/${user.id}` )
+    .then( res => {
+      setUsers( res.data );
+    });
 
-  axios.get( `${baseUrl}chats/fecha/${user.nombre}` )
+ 
+
+  /*
+    axios.get( `${baseUrl}chats/fecha/${user.nombre}` )
     .then( res => {
 
       setMessagesDESC( res.data );
 
     });
+  */
 
-  axios.get( `${baseUrl}users` )
+  /*axios.get( `${baseUrl}users` )
     .then( res => setUsers( res.data ) );
 
   axios.get( `${baseUrl}chats/${user.nombre}` )
-    .then( res => setMessages( res.data ) );
+    .then( res => setMessages( res.data ) );*/
 
   //axios.get( `${baseUrl}participantsGroups/grupos/${user.nombre}` )
   //  .then( res => setMyGroups( res.data ) );
