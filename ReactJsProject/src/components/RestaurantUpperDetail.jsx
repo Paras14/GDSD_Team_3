@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-// import imageRestaurant from "../images/RestaurantUpperImage.jpg";
+import RestaurantPhoto from "./RestaurantPhoto";
 
 function RestaurantUpperDetail() {
   const navigate = useNavigate();
@@ -13,16 +13,14 @@ function RestaurantUpperDetail() {
     <Container>
     <br></br>
       <Row>
-        <div style={{height: '10em', backgroundColor: 'grey', width:'90%'}}>
-        <img href={require("../images/RestaurantUpperImage.jpg")} alt="Restaurant Cover"/>
-        </div>
+        <RestaurantPhoto />
       </Row>
       <br></br>
       <Row>
         <Container>
           <Row>
             <Col>
-              {restaurantDetail[0].name}
+              <h2>{restaurantDetail[0].name}</h2>
             </Col>
             <Col lg={6} md={6}></Col>
             <Col>
