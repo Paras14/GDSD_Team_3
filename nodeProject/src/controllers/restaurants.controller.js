@@ -26,6 +26,8 @@ exports.create = (req, res) => {
         restaurantCategoryId: req.body.restaurantCategoryId,
         userId: req.body.userId
     };
+
+    console.log(restaurant);
   
     // Save Restaurant in the database
     Restaurant.create(restaurant)

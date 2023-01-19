@@ -8,6 +8,10 @@ import * as Yup from "yup";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { Global } from "../../helpers/Global.js";
+
+
+const baseUrl = Global.baseUrl;
 
 const schema = Yup.object().shape({
   restaurentname: Yup.string().required(),
@@ -54,11 +58,12 @@ function SignUp() {
 
       const restaurant = {
         name: values.restaurentname,
+        address: "",
         city: values.city,
         state: values.state,
         zip: values.zip,
         telephone: values.telefonenumber,
-        description: values.description,
+        description: "",
         image: values.file,
         restaurantCategoryId: values.restaurenttype,
         userId:""      
@@ -66,18 +71,18 @@ function SignUp() {
 
       setSubmitting(true);
       console.log("User is: " + JSON.stringify(user));
-      axios.post('http://localhost:8080/users/', user)
+      axios.post(baseUrl + 'users/', user)
       .then(function (response) {
         console.log("Reached Restaurant save part: " + response.data.id);
         restaurant.userId = response.data.id;
         console.log("Restaurant is: " + JSON.stringify(restaurant));
-        axios.post('http://localhost:8080/restaurants/', restaurant)
+        axios.post(baseUrl + 'restaurants/', restaurant)
         .then(function (response){
           navigate("/restaurentRegistration");
           setSubmitting(false);
         })
         .catch(function(error){
-          axios.delete('http://localhost:8080/users/' + response.data.id);
+          axios.delete(baseUrl + 'users/' + response.data.id);
           console.log(error);
         });
       })

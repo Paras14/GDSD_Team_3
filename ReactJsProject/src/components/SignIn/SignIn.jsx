@@ -6,12 +6,14 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import { useState } from "react";
 import axios from "axios";
+import { Global } from "../../helpers/Global.js";
 
 function SignIn() {
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const baseUrl = Global.baseUrl;
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -26,7 +28,7 @@ function SignIn() {
     console.log(password);
 
     axios
-      .post("http://localhost:8080/users/login", {
+      .post(baseUrl + "users/login", {
         email: email,
         password: password,
       })

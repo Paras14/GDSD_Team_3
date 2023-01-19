@@ -6,6 +6,8 @@ export const getOrigenMensajeRespuesta = ( user, mensaje ) => mensaje.user_emitt
 
 export const getMargen = ( mensaje, nombreAnterior ) => {
 
+  console.log(mensaje);
+
   let margin = '';
   ( nombreAnterior === mensaje.user_emitter ) ? margin = 'mt-0' : margin = 'mt-4';
   return margin;

@@ -77,6 +77,7 @@ export const Chat = () => {
 
           setMessages( response.data );
           setMessagesBuscar( response.data );
+          console.log(response.data);
 
         }).catch( ( error ) => {
           console.log( error );
@@ -105,6 +106,7 @@ export const Chat = () => {
 
               setMessages( response.data );
               setMessagesBuscar( response.data );
+              console.log(response.data);
 
             }).catch( ( error ) => {
               console.log( error );

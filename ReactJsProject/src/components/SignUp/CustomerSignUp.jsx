@@ -9,6 +9,9 @@ import { Container } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Global } from "../../helpers/Global.js";
+
+const baseUrl = Global.baseUrl;
 
 const schema = Yup.object().shape({
   firstName: Yup.string().required(),
@@ -51,7 +54,7 @@ function CustomerSignUp() {
 
       setSubmitting(true);
       // Make the API call
-      const response = await fetch("http://localhost:8080/users/", {
+      const response = await fetch(baseUrl + "users/", {
         method: "POST",
         body: JSON.stringify(user),
         headers: { "Content-Type": "application/json" },

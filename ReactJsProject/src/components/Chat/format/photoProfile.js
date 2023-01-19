@@ -11,7 +11,7 @@ export const photoProfile = ( receptor, users, tam ) => {
       if ( users.id === receptor ) {
 
         imagen =
-          <img src={users.image}
+          <img src="https://i.imgur.com/hepj9ZS.png"
             alt="avatar"
             className="d-flex align-self-center me-3 imagen-perfil-chat"
             width={tam}
