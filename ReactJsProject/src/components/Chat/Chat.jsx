@@ -7,16 +7,19 @@ import { isAuthorized } from '../../helpers/isAuthorized.js';
 import { useNavigate, useParams } from '../../../node_modules/react-router/dist/index.js';
 import socket from './Socket';
 import axios from 'axios';
+import { Global } from '../../helpers/Global.js';
 //import { Header } from '../components/header';
 //import { Footer } from '../components/footer';
 //import { IniciarChat } from '../components/chat/IniciarChat';
 
 export const Chat = () => {
 
+  const baseUrl = Global.baseUrl;
+
   const isauthorized = isAuthorized();
   const navigate = useNavigate();
   const { receptorActual } = useParams();
-  const [receptor, setReceptor] = useState( '' );
+  const [receptor, setReceptor] = useState( -1 );
   const [conexion, setConexion] = useState( '' );
   const [message, setMessage] = useState( '' );
   //const [configurationGroups, setConfigurationGroups] = useState( '' );
@@ -48,7 +51,7 @@ export const Chat = () => {
 
         setReceptor( receptorActual );
         setIniciandoChat( true );
-        document.title = `Chateando con ${receptorActual}`;
+        document.title = `Chating with ${receptorActual}`;
 
       }
 
@@ -60,8 +63,24 @@ export const Chat = () => {
 
     if ( user !== null ) {
 
+      console.log(user);
+
       setUpChat( user, setUsers, setMessages, setMessagesDESC, //setMyGroups, 
         setMessagesBuscar );
+
+        axios.get( `${baseUrl}chats/conversation/`, {
+          params: {
+            userid1: user.id,
+            userid2: receptor
+          }
+        }).then( ( response ) => {
+
+          setMessages( response.data );
+          setMessagesBuscar( response.data );
+
+        }).catch( ( error ) => {
+          console.log( error );
+        });
 
     }
 
@@ -71,8 +90,27 @@ export const Chat = () => {
 
     socket.on( 'messages', () => {
 
-      setUpChat( user, setUsers, setMessages, setMessagesDESC, //setMyGroups, 
-        setMessagesBuscar, false );
+      if ( user !== null ) {
+
+
+          setUpChat( user, setUsers, setMessages, setMessagesDESC, //setMyGroups, 
+            setMessagesBuscar, false );
+
+            axios.get( `${baseUrl}chats/conversation/`, {
+              params: {
+                userid1: user.id,
+                userid2: receptor
+              }
+            }).then( ( response ) => {
+
+              setMessages( response.data );
+              setMessagesBuscar( response.data );
+
+            }).catch( ( error ) => {
+              console.log( error );
+            });
+
+      }
 
     });
 
@@ -116,7 +154,7 @@ export const Chat = () => {
 
 
   return (
-    user === null || users.length === 0 || messages.length === 0 || messagesDESC.length === 0 // || myGroups.length === 0
+    user === null //|| users.length === 0 || messages.length === 0 || messagesDESC.length === 0 // || myGroups.length === 0
       ? <div></div>
       : conMessages || iniciandoChat
         ? <div className="row justify-content-center">
@@ -179,13 +217,16 @@ export const Chat = () => {
           <div className="mt-5 centrar">
             <div className="mt-5 centrar">
                 <div className="mt-5">
-                <h1 className="mt-5">Inicia un nuevo chat para comenzar a chatear</h1>
+                <h1 className="mt-5">Find a user to chat with</h1>
                 <div className="dropdown centrar mt-5">
                     <button className="botonTransparente3"
                     type="button"
                     id="dropdownMenuButton1"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
+                    onClick={ () => {
+                      navigate( '/' );
+                    }}
                     >
                     <svg xmlns="http://www.w3.org/2000/svg"
                         width="150"

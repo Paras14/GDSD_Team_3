@@ -1,4 +1,4 @@
-export const eliminarEspaciosMensajes = ( mensaje ) => {
+export const removeSpacesMessages = ( mensaje ) => {
 
     let mensajeNuevo = '';
   

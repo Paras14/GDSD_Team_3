@@ -38,9 +38,9 @@ exports.create = (req, res) => {
 exports.findAllConversationsFromUser = (req, res) => {
     const userid = req.params.userid;
 
-    db.query("SELECT DISTINCT user_receptor FROM chats WHERE user_emitter = :userid UNION SELECT DISTINCT user_emitter FROM chats WHERE user_receptor = :user", {
+    db.sequelize.query("SELECT * FROM users u WHERE u.id IN (SELECT DISTINCT user_receiver FROM chats WHERE user_emitter = :user UNION SELECT DISTINCT user_emitter FROM chats WHERE user_receiver = :user)", {
         replacements: { user: userid },
-        type: sequelize.QueryTypes.SELECT,
+        type: db.sequelize.QueryTypes.SELECT,
         raw: true,
         plain: true,
         nest: true,
@@ -66,8 +66,8 @@ exports.findAllByConversation = (req, res) => {
     Chat.findAll({
         where: {
             [Op.or]: [
-                { emisor: userid1, receptor: userid2 },
-                { emisor: userid2, receptor: userid1 }
+                { user_emitter: userid1, user_receiver: userid2 },
+                { user_emitter: userid2, user_receiver: userid1 }
             ]
         }
     }).then(data => {

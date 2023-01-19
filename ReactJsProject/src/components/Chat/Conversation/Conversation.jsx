@@ -107,7 +107,7 @@ export const Conversation = ({ users, messages, user, receptor, conexion, messag
           id="inputMessage-enviar-chat"
           type="text"
           value={message}
-          placeholder="Escribe un message aquí"
+          placeholder="Type a message here..."
           onChange={( e ) => setMessage( e.target.value )}
         />
         <div className="ocultar"
@@ -137,6 +137,7 @@ export const Conversation = ({ users, messages, user, receptor, conexion, messag
 
 };
 
+/*
 Conversation.propTypes = {
   users: PropTypes.array.isRequired,
   messages: PropTypes.array.isRequired,
@@ -154,3 +155,4 @@ Conversation.propTypes = {
   setResponder: PropTypes.func.isRequired,
   setRecienEnviado: PropTypes.func.isRequired
 };
+*/

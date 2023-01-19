@@ -11,7 +11,7 @@ function UserType() {
       </h1>
       <div className="d-flex justify-content-center justify-items-center flex-column text-center">
         <div className="my-4">
-          <p className="fs-4">Register Yourself as Customer?</p>
+          <p className="fs-4 text-center">Register Yourself as Customer?</p>
           <Button
             onClick={() => {
               navigate("/customerSignUp");
@@ -20,9 +20,9 @@ function UserType() {
             Register
           </Button>
         </div>
-        <p className="text-uppercase fs-1 text-info fst-italic">or</p>
+        <p className="text-uppercase fs-1 text-info fst-italic text-center">or</p>
         <div>
-          <p className="fs-4">Register Yourself as Restaurent?</p>
+          <p className="fs-4 text-center">Register Yourself as Restaurent?</p>
           <Button
             onClick={() => {
               navigate("/signUp");

@@ -60,8 +60,8 @@ require('./src/socket/socket.js')(io);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-console.log ('Server is running on port $(PORT).' );
+server.listen(PORT, () => {
+console.log (`Server is running on port $(PORT).` );
 });
 
 // const sequelize = new Sequelize('risto', 'root', 'aman', {

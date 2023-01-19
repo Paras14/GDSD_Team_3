@@ -2,15 +2,15 @@
 import axios from 'axios';
 import { Global } from '../../helpers/Global';
 import socket from './Socket';
-import { eliminarEspaciosMensajes } from './format/removeSpacesMessages';
+import { removeSpacesMessages } from './format/removeSpacesMessages';
 
 const baseUrl = Global.baseUrl;
 const URI = `${baseUrl}chats/`;
 
-export const submit = async ( mensaje, receptor, //group, 
-    responder, mensajeRespuesta, user, idMensajeRespuesta, nombreMensajeRespuesta, imagenRespuesta, setResponder, setIdMensajeRespuesta, setMensajeRespuesta, setImagenRespuesta, setNombreMensajeRespuesta, setMensaje, setRecienEnviado ) => {
+export const submit = async ( message, receptor, //group, 
+    responder, messageRespuesta, user, idMessageRespuesta, nombreMessageRespuesta, imagenRespuesta, setResponder, setIdMessageRespuesta, setMessageRespuesta, setImagenRespuesta, setNombreMessageRespuesta, setMessage, setRecienEnviado ) => {
 
-  if ( eliminarEspaciosMensajes( mensaje ) ) {
+  if ( removeSpacesMessages( message ) ) {
 
     //Swal.showLoading();
     if ( document.getElementById( `${receptor}` ) !== null ) {
@@ -19,39 +19,42 @@ export const submit = async ( mensaje, receptor, //group,
 
     }
 
-      if ( responder ) {
+      /*if ( responder ) {
 
-        if ( mensajeRespuesta !== '' ) {
+        if ( messageRespuesta !== '' ) {
 
-          axios.post( URI, { nombre_usuario_emisor: user.nombre, nombre_usuario_receptor: receptor, mensaje: mensaje, respuesta: idMensajeRespuesta, mensajeRespuesta, nombreEmisorRespuesta: nombreMensajeRespuesta });
+          axios.post( URI, { nombre_usuario_emisor: user.nombre, nombre_usuario_receptor: receptor, message: message, respuesta: idMessageRespuesta, messageRespuesta, nombreEmisorRespuesta: nombreMessageRespuesta });
 
         } else {
 
-          axios.post( URI, { nombre_usuario_emisor: user.nombre, nombre_usuario_receptor: receptor, mensaje: mensaje, respuesta: idMensajeRespuesta, imagenRespuesta: imagenRespuesta, nombreEmisorRespuesta: nombreMensajeRespuesta });
+          axios.post( URI, { nombre_usuario_emisor: user.nombre, nombre_usuario_receptor: receptor, message: message, respuesta: idMessageRespuesta, imagenRespuesta: imagenRespuesta, nombreEmisorRespuesta: nombreMessageRespuesta });
 
         }
 
         setResponder( false );
-        setIdMensajeRespuesta( '' );
-        setMensajeRespuesta( '' );
+        setIdMessageRespuesta( '' );
+        setMessageRespuesta( '' );
         setImagenRespuesta( '' );
-        setNombreMensajeRespuesta( '' );
+        setNombreMessageRespuesta( '' );
         document.querySelector( '#botonResponder' ).classList.add( 'ocultar' );
 
-      } else {
+      } else {*/
 
-        axios.post( URI, { nombre_usuario_emisor: user.nombre, nombre_usuario_receptor: receptor, mensaje });
+        const token = localStorage.getItem( 'token' );
 
-      }
+        axios.post( URI, { user_emitter: user.id, user_receiver: receptor, text: message },
+          { headers: { Authorization: `${token}` } });
+
+      //}
 
     
-    setMensaje( '' );
+    setMessage( '' );
     setRecienEnviado( true );
 
-    await axios.get( `${baseUrl}chats/${user.nombre}` )
+    await axios.get( `${baseUrl}chats/user/${user.id}` )
       .then( ( res ) => {
 
-        socket.emit( 'mensaje' );
+        socket.emit( 'message' );
 
       }
       );
@@ -60,7 +63,7 @@ export const submit = async ( mensaje, receptor, //group,
 
   } else {
 
-    //Swal.fire( 'Mensaje vacío', 'No se puede enviar un mensaje vacío', 'error' );
+    //Swal.fire( 'Mensaje vacío', 'No se puede enviar un message vacío', 'error' );
 
   }
 
