@@ -12,8 +12,6 @@ export const Conversation = ({ users, messages, user, receptor, conexion, messag
   const [imagenRespuesta, setImagenRespuesta] = useState( '' );
   const [nombreMessageRespuesta, setNombreMessageRespuesta] = useState( '' );
 
-
-
   //This useEffect is to scroll down the chat when a new message is sent
   useEffect( () => {
     messageEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
