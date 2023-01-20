@@ -27,8 +27,8 @@ export const Conversation = ({ users, messages, user, receptor, conexion, messag
   }, []);
 
   return (
-    <div className="col-md-6 col-lg-7 col-xl-8 row-10"
-      id="panelChat">
+    <div className="col-md-6 col-lg-7 col-xl-8 row-10" id="panelChat">
+        <div name="this is the conversation page"></div>
       <div className="divNameUser">
         <h3 className="h3NameUser">
           <button className="botonTransparente divObjectsSend align-items-center">
