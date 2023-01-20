@@ -17,6 +17,7 @@ export const setUpChat = ( user, setUsers, setMessages, setMessagesDESC, //setMy
   axios.get( `${baseUrl}chats/user/${user.id}` )
     .then( res => {
       setUsers( res.data );
+      console.log( res.data );
     });
 
  

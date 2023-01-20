@@ -37,7 +37,7 @@ export const Chat = () => {
 
   useEffect( () => {
 
-    async function getReceptor() {
+    async function getMessages() {
 
 
 
@@ -81,13 +81,13 @@ export const Chat = () => {
 
   }
 
-  getReceptor();
+  getMessages();
 
   }, []);
 
   useEffect( () => {
 
-    if ( user ) {
+    if ( user !== null ) {
 
       console.log(user);
 

@@ -4,11 +4,11 @@ export const photoProfile = ( receptor, users, tam ) => {
 
   let imagen = '';
 
-  if ( receptor !== -1 ) {
+  if ( receptor !== null ) {
 
-    //users.forEach( ( user ) => {
+    users.forEach( ( user ) => {
 
-      if ( users.id === receptor ) {
+      if ( user.id === receptor.id ) {
 
         imagen =
           <img src="https://i.imgur.com/hepj9ZS.png"
@@ -19,7 +19,7 @@ export const photoProfile = ( receptor, users, tam ) => {
 
       }
 
-    //});
+    });
 
   }
 

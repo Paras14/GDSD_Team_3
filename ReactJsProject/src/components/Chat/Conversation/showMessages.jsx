@@ -20,7 +20,7 @@ export const Messages = ({ messages, user, receptor, //group,
     <div>
       {
         messages.length !== 0 && messages.map( ( mensaje, index ) => (
-          ( ( mensaje.user_receiver === receptor ) || ( mensaje.emitter === receptor ) ) //&& mensaje.id_grupo_receptor !== 1
+          ( ( mensaje.user_receiver === receptor.id ) || ( mensaje.emitter === receptor.id ) ) //&& mensaje.id_grupo_receptor !== 1
             ? <div className={`d-flex flex-row ${getOrientation( user, mensaje )}`}
               id={mensaje.id}
               key = {index}>

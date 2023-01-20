@@ -4,6 +4,7 @@ import { photoProfile } from '../format/photoProfile';
 import { formatDate } from '../format/formatDate';
 import { formatMessage } from '../format/formatMessage';
 import { setConection } from '../format/setConection';
+import { useNavigate } from 'react-router-dom';
 //import { setMiembrosGrupo } from '../format/setMiembrosGrupo';
 //import { getGrupo } from '../format/getGroup';
 
@@ -13,6 +14,8 @@ export const Chats = ({ users, messagesBuscar, receptor, //group,
     messages, recienEnviado }) => {
 
   const users2 = [];
+
+  const navigate = useNavigate();
 
   const nombreEmisorOrId = ( men ) => {
 
@@ -33,13 +36,13 @@ export const Chats = ({ users, messagesBuscar, receptor, //group,
 
   };
 
-  const putUsers2 = ( men ) => {
+  const putUsers2 = ( user ) => {
 
-    if ( messagesBuscar.length === messages.length || recienEnviado ) {
+    //if ( messagesBuscar.length === messages.length || recienEnviado ) {
 
-      users2.push( ( men.user_receiver !== null && men.user_emitter !== user.id ? men.user_emitter : men.user_receiver ) );
+      users2.push( user.id );
 
-    }
+    //}
 
     return <div></div>;
 
@@ -64,24 +67,24 @@ export const Chats = ({ users, messagesBuscar, receptor, //group,
 
   };
 
-  const changeChat = ( men ) => {
+  const changeChat = ( user ) => {
 
     setResponder( false );
     document.querySelector( '#botonResponder' ).classList.add( 'ocultar' );
 
-    if ( document.getElementById( `${receptor}` ) !== null ) {
+    if ( document.getElementById( `${receptor.id}` ) !== null ) {
 
-      document.getElementById( `${receptor}` ).classList.remove( 'chatSeleccionado' );
+      document.getElementById( `${receptor.id}` ).classList.remove( 'chatSeleccionado' );
 
     }
-    document.getElementById( `${nombreEmisorOrId( men )}` ).classList.add( 'chatSeleccionado' );
-    if ( men.user_receiver !== null //&& men.id_grupo_receptor === null 
+    document.getElementById( `${user.id}` ).classList.add( 'chatSeleccionado' );
+    if ( user !== null //&& men.id_grupo_receptor === null 
         ) {
 
-      setReceptor( men.user_emitter !== user.id ? men.user_emitter : men.user_receiver );
-      setConection( men.user_emitter !== user.id ? men.user_emitter : men.user_receiver, users, setConexion );
+      setReceptor( user );
+      setConection( user.id , users, setConexion );
       //setGroup({});
-      document.title = `Chateando con ${men.user_emitter !== user.id ? men.user_emitter : men.user_receiver}`;
+      document.title = `Chating with ${user.username}`;
 
     } /* else if ( men.nombre_usuario_receptor === null && men.id_grupo_receptor !== null ) {
 
@@ -92,6 +95,9 @@ export const Chats = ({ users, messagesBuscar, receptor, //group,
 
     } */
     setMessage( '' );
+    navigate('/chat/' + user.id);
+    //window.location.reload();
+
 
   };
 
@@ -102,34 +108,36 @@ export const Chats = ({ users, messagesBuscar, receptor, //group,
         height= "400px">
         <ul className="list-unstyled mb-0">
           {
-            ( users.length !== 0 && messagesBuscar.length !== 0 ) && messagesBuscar.reverse().map( ( men, index ) => (
+            ( users.length !== 0 && messagesBuscar.length !== 0 ) && users.map( (user, index) => ( //&& messagesBuscar.reverse().map( ( men, index ) => (
 
-              ( ( users2.indexOf( men.user_receiver ) === -1 ) && ( users2.indexOf( men.user_emitter ) === -1 ) //&& ( users2.indexOf( men.id_grupo_receptor ) === -1 ) 
-              )
-                ? <li className="p-2 border-bottom"
+              //( ( users2.indexOf( men.user_receiver ) === -1 ) && ( users2.indexOf( men.user_emitter ) === -1 ) //&& ( users2.indexOf( men.id_grupo_receptor ) === -1 ) 
+              //)
+                <li className="p-2 border-bottom"
                   key={index}>
                   <button className={'d-flex justify-content-between botonNaranja btn-chat-seleccionado-hover'}
-                    id = {`${nombreEmisorOrId( men )}`}
-                    onClick={() => changeChat( men )}>
+                    id = {`${user.id}`}
+                    onClick={() => changeChat( user )}>
                     <div className="d-flex flex-row">
+                      {console.log("users2: " +users2)}
+                      {console.log("messagesBuscar: " + messagesBuscar)}
                       <div className="align-items-center divObjectsSend margen-foto-chat-perfil">
-                        {photoProfile( men.user_receiver === null ? '' : ( men.user_emitter !== user.id ? men.user_emitter : men.user_receiver ), users, 60 )}
+                        {photoProfile( user.id, users, 60 )}
                       </div>
                       <div className="pt-1">
-                        {putUsers2( men )}
-                        <p className="fw-bold mb-0">{nombreEmisor( men )}</p>
-                        <p className="small text-muted">{formatMessage( men.text === null ? 'imagen' : men.text )}</p>
+                        {putUsers2( user )}
+                        <p className="fw-bold mb-0">{user.username}</p>
+                        <p className="small text-muted">Chat with</p>
                       </div>
                     </div>
                     <div className="pt-1">
                       <p className="small text-muted mb-1 textoTransparente textoDerecha tamnyoHora">&nbsp;</p>
                       <p className="small text-muted mb-1 textoTransparente textoDerecha tamnyoHora">&nbsp;</p>
-                      <p className="small text-muted mb-1 textoDerecha tamnyoHora">{formatDate( men.createdAt )}</p>
+                      <p className="small text-muted mb-1 textoDerecha tamnyoHora"></p>
                     </div>
                   </button>
                 </li>
-                : <div key={index}></div> )
-            )
+                //: <div key={index}></div> )
+            ))
           }
 
         </ul>

@@ -41,10 +41,6 @@ exports.findAllConversationsFromUser = (req, res) => {
     db.sequelize.query("SELECT * FROM users u WHERE u.id IN (SELECT DISTINCT user_receiver FROM chats WHERE user_emitter = :user UNION SELECT DISTINCT user_emitter FROM chats WHERE user_receiver = :user)", {
         replacements: { user: userid },
         type: db.sequelize.QueryTypes.SELECT,
-        raw: true,
-        plain: true,
-        nest: true,
-        distinct: true
       })
         .then(users => {
           res.send(users);

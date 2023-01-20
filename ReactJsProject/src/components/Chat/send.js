@@ -39,11 +39,11 @@ export const submit = async ( message, receptor, //group,
         document.querySelector( '#botonResponder' ).classList.add( 'ocultar' );
 
       } else {*/
-
+        console.log("Enviando: " + message)
         const token = localStorage.getItem( 'token' );
 
         axios.post( URI, { user_emitter: user.id, user_receiver: receptor, text: message },
-          { headers: { Authorization: `${token}` } });
+          { headers: { Authorization: `Bearer ${token}` } });
 
       //}
 

@@ -75,7 +75,7 @@ export const Conversation = ({ users, messages, user, receptor, conexion, messag
             <div id="imagenUser">
               {photoProfile( receptor, users, 80 )}
             </div>
-            <b><div id="labelNameUser">{ receptor }</div></b>
+            <b><div id="labelNameUser">{ receptor.username }</div></b>
           </button>
           {conexion}
         </h3>

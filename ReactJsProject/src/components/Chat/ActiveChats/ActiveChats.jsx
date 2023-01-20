@@ -26,7 +26,7 @@ setIniciandoChat, messagesDESC, setResponder, messagesBuscar, setMessagesBuscar,
 
   useEffect( () => {
 
-    if ( receptor === -1 //&& group.nombre === undefined 
+    if ( receptor === null //&& group.nombre === undefined 
     ) {
 
       const messages = [];
@@ -42,19 +42,12 @@ setIniciandoChat, messagesDESC, setResponder, messagesBuscar, setMessagesBuscar,
 
       const firstMessage = messages[0];
 
-      /*if ( firstMessage.id_grupo_receptor !== null ) {
-
-        setReceptor( '' );
-        setMiembrosGrupo( firstMessage.id_grupo_receptor, setConfigurationGroups, myGroups, users, user, setGroup, setReceptor, setConection );
-        setGroup( getGrupo( firstMessage.id_grupo_receptor, myGroups ) );
-        document.title = `Chateando en ${getGrupo( firstMessage.id_grupo_receptor, myGroups ).nombre}`;
-
-      } else */ if ( firstMessage.user_receiver !== null ) {
+      if ( firstMessage.user_receiver !== null ) {
 
         setConection( firstMessage.user_receiver !== user.id ? firstMessage.user_receiver : firstMessage.user_emitter, users, setConexion );
         setReceptor( firstMessage.user_receiver !== user.id ? firstMessage.user_receiver : firstMessage.user_emitter );
         //setGroup({});
-        document.title = `Chateando con ${firstMessage.user_receiver !== user.id ? firstMessage.user_receiver : firstMessage.user_emitter}`;
+        document.title = `Chating with ${receptor.username}`;
 
       }
 
@@ -66,7 +59,7 @@ setIniciandoChat, messagesDESC, setResponder, messagesBuscar, setMessagesBuscar,
 
     } else {
 
-      if ( receptor !== -1 //&& group.nombre === undefined 
+      if ( receptor !== null //&& group.nombre === undefined 
       ) {
 
         //setGroup({});
@@ -85,9 +78,9 @@ setIniciandoChat, messagesDESC, setResponder, messagesBuscar, setMessagesBuscar,
 
       });
 
-      if ( document.getElementById( `${receptor}` ) !== null ) {
+      if ( document.getElementById( `${receptor.id}` ) !== null ) {
 
-        document.getElementById( `${receptor}` ).classList.add( 'chatSeleccionado' );
+        document.getElementById( `${receptor.id}` ).classList.add( 'chatSeleccionado' );
 
       }
 
@@ -121,6 +114,7 @@ setIniciandoChat, messagesDESC, setResponder, messagesBuscar, setMessagesBuscar,
 
   useEffect( () => {
 
+    /*
     if ( buscar !== '' ) {
 
       axios.post( `${baseUrl}chats/chat_by_entry/`, { buscar, nombre_user: user.nombre })
@@ -140,9 +134,11 @@ setIniciandoChat, messagesDESC, setResponder, messagesBuscar, setMessagesBuscar,
 
     } else {
 
+      */
       setMessagesBuscar( messages );
 
-    }
+    //}
+
 
   }, [buscar]);
 
