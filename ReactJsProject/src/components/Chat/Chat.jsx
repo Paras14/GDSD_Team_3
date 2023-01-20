@@ -35,150 +35,102 @@ export const Chat = () => {
   //const [myGroups, setMyGroups] = useState([]);
   const [messagesBuscar, setMessagesBuscar] = useState([]);
 
+
+  //With this function we revise if the iser is loged or not, and then, it saves the receptor user in the state.
   useEffect( () => {
 
     async function getReceptor() {
+      //Check if login
+      if ( !isauthorized ) {
+        navigate( '/signIn' );
+      } else {
+        //Name of document
+        document.title = 'Chat';        
+        //Get user from local storage
+        setUser( JSON.parse( localStorage.getItem( 'user' ) ) );
 
-
-
-    if ( !isauthorized ) {
-
-      navigate( '/signIn' );
-
-    } else {
-
-      document.title = 'Chat';
-
-      setUser( JSON.parse( localStorage.getItem( 'user' ) ) );
-
-      if ( receptorActual !== undefined ) {
-
-        console.log("llamada a backend con " + receptorActual);
-        /*axios.get( `${baseUrl}users/${receptorActual}` ).then( ( response ) => {
-
-          console.log(response.data);
-          setReceptor( response.data.id );
+        //Get receptor from url:
+        //If receptor is not null, we call the API to get the receptor user and we put as true the state iniciandoChat
+        if ( receptorActual !== undefined ) {
+          const receptor = await axios.get( `${baseUrl}users/${receptorActual}` );
+          setReceptor( receptor.data.id );
           setIniciandoChat( true );
           document.title = `Chating with ${receptorActual}`;
-
-        }).catch( ( error ) => {
-          console.log( error );
-        });
-        */
-        const receptor = await axios.get( `${baseUrl}users/${receptorActual}` );
-        console.log(receptor.data);
-        setReceptor( receptor.data.id );
-        setIniciandoChat( true );
-        document.title = `Chating with ${receptorActual}`;
-
-        
-
+        }
       }
-
     }
-
-    
-
-  }
 
   getReceptor();
-
   }, []);
 
+  //With this function we call the API to get the messages between the user loged and the receptor
   useEffect( () => {
 
-    if ( user ) {
+    async function getConversationsAndMessages() {
+      //If the user is logged we get the info about all the conversations and the messages with the current receptor
+      if (user) {
 
-      console.log(user);
-
-      setUpChat( user, setUsers, setMessages, setMessagesDESC, //setMyGroups, 
-        setMessagesBuscar );
-
-        axios.get( `${baseUrl}chats/conversation/`, {
-          params: {
-            userid1: user.id,
-            userid2: receptorActual
-          }
-        }).then( ( response ) => {
-
-          setMessages( response.data );
-          setMessagesBuscar( response.data );
-          console.log(response.data);
-
-        }).catch( ( error ) => {
-          console.log( error );
-        });
-
+        //With this function we get the info about all the conversations that the user logged has
+        setUpChat( user, setUsers, setMessages, setMessagesDESC, setMessagesBuscar);
+  
+        //Here we get all the messages between the user logged and the receptor
+          const messaggesFronTheCoversationBetweenUserLoggedAndreceptor = await axios.get( `${baseUrl}chats/conversation/`, {
+            params: {
+              userid1: user.id,
+              userid2: receptorActual
+            }
+          });
+          
+          setMessages(messaggesFronTheCoversationBetweenUserLoggedAndreceptor.data);
+          setMessagesBuscar( messaggesFronTheCoversationBetweenUserLoggedAndreceptor.data );
+          console.log(messaggesFronTheCoversationBetweenUserLoggedAndreceptor.data);
+      }
     }
+    getConversationsAndMessages();
 
   }, [user]);
 
+
+  //With this function we get the messages between the user loged and the receptor and all the conversations of the user logged but
+  //when the messages and the users change it updates the socket client
   useEffect( () => {
 
-    socket.on( 'messages', () => {
+    async function getConversationsAndMessagesUpdatingTheSocketClient() {
 
-      if ( user !== null ) {
-
-
-          setUpChat( user, setUsers, setMessages, setMessagesDESC, //setMyGroups, 
-            setMessagesBuscar, false );
-
-            axios.get( `${baseUrl}chats/conversation/`, {
-              params: {
-                userid1: user.id,
-                userid2: receptorActual
-              }
-            }).then( ( response ) => {
-
-              setMessages( response.data );
-              setMessagesBuscar( response.data );
-              console.log(response.data);
-
-            }).catch( ( error ) => {
-              console.log( error );
-            });
-
-      }
-
-    });
-
-
-    return () => {
-
-      socket.off();
-
-    };
-
-  }, [messages, users]);
-
-  useEffect( () => {
-
-    if ( messages.length !== 0 //&& myGroups.length !== 0 
-        && user !== null ) {
-
-      //const idGroups = [];
-      setMessagesBuscar( messages );
-
-      /*myGroups.forEach( ( group ) => {
-
-        idGroups.push( group.id );
-
-      });*/
-
-      messages.forEach( ( message ) => {
-
-        //if ( message.id_grupo_receptor !== 1 ) {
-
-          setConMessages( true );
-
-        //}
-
+      //Opens a channel to the server
+      socket.on( 'messages', async () => {
+        //If the user is logged we get the info about all the conversations and the messages with the current receptor
+        if (user) {
+          //With this function we get the info about all the conversations that the user logged has
+          setUpChat( user, setUsers, setMessages, setMessagesDESC, setMessagesBuscar, false);
+          const messaggesFronTheCoversationBetweenUserLoggedAndreceptor = await axios.get( `${baseUrl}chats/conversation/`, {
+                params: {
+                  userid1: user.id,
+                  userid2: receptorActual
+                }
+              });
+              
+          setMessages( messaggesFronTheCoversationBetweenUserLoggedAndreceptor.data );
+          setMessagesBuscar( messaggesFronTheCoversationBetweenUserLoggedAndreceptor.data );
+          console.log(messaggesFronTheCoversationBetweenUserLoggedAndreceptor.data);
+        }
+  
       });
+  
+  
+      return () => {
+  
+        socket.off();
+  
+      };
+  
 
     }
 
-  }, [messages, //myGroups, 
-    user]);
+    getConversationsAndMessagesUpdatingTheSocketClient();
+    
+  }, [messages, users]);
+
 
 
   return (
