@@ -1,30 +1,70 @@
+//import Input from '@material-ui/core/Input';
 import React, { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
+import axios from 'axios';
+import { Global } from '../../../helpers/Global.js';
+//import { infoGroup } from '../infoGroups/infoGroups';
 import { photoProfile } from '../format/photoProfile';
+//import { mostrarPosibilidadesEnviar } from '../attach/attach';
 import { submit } from '../send';
 import { Messages } from './showMessages';
+//import { infoUser } from '../infoUser/infoUser';
 
-//We xport all this info to the Chat.jsx file
-export const Conversation = ({ users, messages, user, receptor, conexion, message, setMessage, setReceptor, setConexion, responder, setResponder, setRecienEnviado }) => {
+export const Conversation = ({ users, messages, user, receptor, conexion, message, setMessage, //group, myGroups, setGroup, 
+    setReceptor, setConexion, responder, setResponder, setRecienEnviado }) => {
 
+  const baseUrl = Global.baseUrl;
   const messageEndRef = useRef( null );
   const [idMessageRespuesta, setIdMessageRespuesta] = useState( '' );
   const [messageRespuesta, setMessageRespuesta] = useState( '' );
   const [imagenRespuesta, setImagenRespuesta] = useState( '' );
   const [nombreMessageRespuesta, setNombreMessageRespuesta] = useState( '' );
 
-
-
-  //This useEffect is to scroll down the chat when a new message is sent
   useEffect( () => {
+
     messageEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
-  }, [messages, user, receptor, conexion, message, setMessage]);
 
+  }, [messages, user, receptor, conexion, message, setMessage, //group
+]);
 
-
-  //This useEffect is to scroll down the chat when a new message is sent
   useEffect( () => {
+
+    //document.getElementById( 'div-buscar-juegos-header' ).classList.add( 'ocultar' );
+    //document.getElementById( 'input-buscar-juegos-header' ).classList.add( 'ocultar' );
+
     messageEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
-  }, []);
+
+  });
+
+  /*const setMiembrosGrupo = ( id ) => {
+
+    if ( group !== {} && receptor === '' ) {
+
+      axios.get( `${baseUrl}participantsGroups/users/${id}` )
+        .then( res => {
+
+          infoGroup( myGroups, id, res.data, user, setGroup, setReceptor, setConexion );
+
+        });
+
+    } else if ( group.id === undefined && receptor !== '' ) {
+
+      infoUser( users, receptor, user, setGroup, setReceptor );
+
+    }
+
+  };*/
+
+  const cancelarRespuesta = () => {
+
+    setResponder( false );
+    setIdMessageRespuesta( '' );
+    setMessageRespuesta( '' );
+    setImagenRespuesta( '' );
+    setNombreMessageRespuesta( '' );
+    document.querySelector( '#botonResponder' ).classList.add( 'ocultar' );
+
+  };
 
   return (
     <div className="col-md-6 col-lg-7 col-xl-8 row-10"
@@ -70,7 +110,21 @@ export const Conversation = ({ users, messages, user, receptor, conexion, messag
           placeholder="Type a message here..."
           onChange={( e ) => setMessage( e.target.value )}
         />
-        
+        <div className="ocultar"
+          id="botonResponder">
+          <button className="ms-3 botonTransparente divObjectsSend align-items-center"
+            onClick={() => cancelarRespuesta()}>
+            <svg xmlns="http://www.w3.org/2000/svg"
+              width="25"
+              height="25"
+              fill="currentColor"
+              className="bi bi-x responseIcon"
+              viewBox="0 0 16 16">
+              <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+            </svg>
+            Responder
+          </button>
+        </div>
         <button className="btn ms-1 text-muted divObjectsSend align-items-center"
          ><i className="fas fa-paperclip clipIcon"></i></button>
         <button className="ms-3 botonTransparente divObjectsSend align-items-center"
