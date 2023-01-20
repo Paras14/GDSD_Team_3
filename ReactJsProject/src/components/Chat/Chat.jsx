@@ -19,13 +19,11 @@ export const Chat = () => {
   const [receptor, setReceptor] = useState( null );
   const [conexion, setConexion] = useState( '' );
   const [message, setMessage] = useState( '' );
-  //const [configurationGroups, setConfigurationGroups] = useState( '' );
   const [user, setUser] = useState( null );
   const [conMessages, setConMessages] = useState( false );
   const [iniciandoChat, setIniciandoChat] = useState( false );
   const [responder, setResponder] = useState( false );
   const [recienEnviado, setRecienEnviado] = useState( false );
-  //const [group, setGroup] = useState({});
   const [messagesDESC, setMessagesDESC] = useState([]);
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
@@ -50,7 +48,7 @@ export const Chat = () => {
         //If receptor is not null, we call the API to get the receptor user and we put as true the state iniciandoChat
         if ( receptorActual !== undefined ) {
           const receptor = await axios.get( `${baseUrl}users/${receptorActual}` );
-          setReceptor( receptor.data.id );
+          setReceptor( receptor.data );
           setIniciandoChat( true );
           document.title = `Chating with ${receptorActual}`;
         }
@@ -194,7 +192,7 @@ export const Chat = () => {
           <div className="mt-5 centrar">
             <div className="mt-5 centrar">
                 <div className="mt-5">
-                <h1 className="mt-5">Find a user to chat with</h1>
+                <h1 className="mt-5">Risto is loading your chats...</h1>
                 <div className="dropdown centrar mt-5">
                     <button className="botonTransparente3"
                     type="button"

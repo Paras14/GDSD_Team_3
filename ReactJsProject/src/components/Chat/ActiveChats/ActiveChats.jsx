@@ -20,9 +20,9 @@ setIniciandoChat, messagesDESC, setResponder, messagesBuscar, setMessagesBuscar,
 
   useEffect( () => {
 
-    socket.emit( 'connected', user.nombre );
+    socket.emit( 'connected', user.username );
 
-  }, [user.nombre]);
+  }, [user.username]);
 
   useEffect( () => {
 

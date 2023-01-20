@@ -23,7 +23,15 @@ export const submit = async ( message, receptor, //group,
     console.log("Enviando: " + message + " a " + receptor.username + " con id " + receptor.id);
     const token = localStorage.getItem( 'token' );
 
-    axios.post( URI, { user_emitter: user.id, user_receiver: receptor.id, text: message }, { headers: { 'Authorization': `Bearer ${token}` } } )   
+    axios.post( URI, { user_emitter: user.id, user_receiver: receptor.id, text: message }, { headers: { 'Authorization': `Bearer ${token}` } } ).then( ( res ) => {
+      
+      console.log("Respuesta del POST " + JSON.stringify(res.data) );
+
+    } ).catch( ( err ) => {
+
+      console.log( err );
+
+    } );
 
     
     setMessage( '' );

@@ -24,7 +24,7 @@ export const Messages = ({ messages, user, receptor, //group,
           return new Date( a.createdAt ) - new Date( b.createdAt );
     
         }).map( ( mensaje, index ) => (
-          ( ( mensaje.user_receiver === receptor.id ) || ( mensaje.emitter === receptor.id ) ) //&& mensaje.id_grupo_receptor !== 1
+          ( ( mensaje.user_receiver === receptor.id ) || ( mensaje.user_emitter === receptor.id ) ) //&& mensaje.id_grupo_receptor !== 1
             ? <div className={`d-flex flex-row ${getOrientation( user, mensaje )}`}
               id={mensaje.id}
               key = {index}>

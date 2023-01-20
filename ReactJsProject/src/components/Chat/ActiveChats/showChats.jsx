@@ -84,10 +84,10 @@ export const Chats = ({ users, messagesBuscar, receptor, //group,
       document.title = `Chating with ${user.username}`;
 
     } 
-    
+
     setMessage( '' );
     navigate('/chat/' + user.id);
-    //window.location.reload();
+    window.location.reload();
 
 
   };
