@@ -54,14 +54,7 @@ numberofplaces:
 DELETE A RESERVATION
 This is the URL to delete a reservation and you should send a JSON like this. 
 @return: it will return a JSON with a message of success or not.
-delete("/reservations/:reservationId") 
-{
-reservationId:
-userId:
-restaurantId:
-date:
-numberofplaces:
-}
+delete("/reservations/:reservationId")
 
 @return:
 {
@@ -75,7 +68,7 @@ This is a URL to see all the reservations of a user.
 get("/reservations/user/:userId")
 
 @return:
-{
+[]
 {
 reservationId:
 userId:
@@ -85,7 +78,7 @@ numberofpeople:
 },
 {...},
 ...
-}
+]
 ===========================================================================================
 ===========================================================================================
 GET A LIST OF RESRVATIONS OF A MANAGER (RESTAURANT)

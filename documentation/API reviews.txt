@@ -1,0 +1,159 @@
+API Reviews
+
+===========================================================================================
+CREATE A REVIEW
+To create a review, you need to send a POST request to the following URL.
+Rating: 1-5
+quickService: boolean
+deliciousFood: boolean
+politeBehavior: boolean
+valueForMoney: boolean
+@return: You will recieve a JSON with the review created.
+
+post("reviews")
+{
+    "userId":
+    "restaurantId":
+    "rating":
+    "quickService":
+    "deliciousFood":
+    "politeBehavior":
+    "valueForMoney": 
+    "comment":
+}
+
+@return:
+{
+    "reviewId":
+    "userId":
+    "restaurantId":
+    "rating":
+    "quickService":
+    "deliciousFood":
+    "politeBehavior":
+    "valueForMoney": 
+    "comment":
+}
+===========================================================================================
+===========================================================================================
+DELETE A REVIEW
+To delete a review, you need to send a DELETE request to the following URL. You will recieve a message with a confirmation of the deletion or not.
+delete("reviews/{reviewId}")
+
+@return:
+{
+    "message":
+}
+
+===========================================================================================
+===========================================================================================
+UPDATE A REVIEW
+To update a review, you need to send a PUT request to the following URL. You will recieve a JSON with the review updated.
+put("reviews/{reviewId}")
+{
+    "reviewId":
+    "userId":
+    "restaurantId":
+    "rating":
+    "quickService":
+    "deliciousFood":
+    "politeBehavior":
+    "valueForMoney": 
+    "comment":
+}
+
+@return:
+{
+    "reviewId":
+    "userId":
+    "restaurantId":
+    "rating":
+    "quickService":
+    "deliciousFood":
+    "politeBehavior":
+    "valueForMoney": 
+    "comment":
+}
+===========================================================================================
+===========================================================================================
+GET A REVIEW
+To get a review, you need to send a GET request to the following URL. You will recieve a JSON with the review.
+get("reviews/{reviewId}")
+
+@return:
+{
+    "reviewId":
+    "userId":
+    "restaurantId":
+    "rating":
+    "quickService":
+    "deliciousFood":
+    "politeBehavior":
+    "valueForMoney": 
+    "comment":
+}
+===========================================================================================
+==========================================================================================
+GET A LIST OF REVIEWS OF A USER
+To get a list of reviews of a user, you need to send a GET request to the following URL. You will recieve a JSON with the list of reviews.
+get("reviews/users/{userId}")
+@return:
+[
+    {
+        "reviewId":
+        "userId":
+        "restaurantId":
+        "rating":
+        "quickService":
+        "deliciousFood":
+        "politeBehavior":
+        "valueForMoney": 
+        "comment":
+    },
+    {
+        "reviewId":
+        "userId":
+        "restaurantId":
+        "rating":
+        "quickService":
+        "deliciousFood":
+        "politeBehavior":
+        "valueForMoney": 
+        "comment":
+    },
+    ...
+]
+===========================================================================================
+===========================================================================================
+GET A LIST OF REVIEWS OF A RESTAURANT
+To get a list of reviews of a restaurant, you need to send a GET request to the following URL. You will recieve a JSON with the list of reviews.
+
+get("reviews/restaurants/{restaurantId}")
+
+@return:
+[
+    {
+        "reviewId":
+        "userId":
+        "restaurantId":
+        "rating":
+        "quickService":
+        "deliciousFood":
+        "politeBehavior":
+        "valueForMoney": 
+        "comment":
+    },
+    {
+        "reviewId":
+        "userId":
+        "restaurantId":
+        "rating":
+        "quickService":
+        "deliciousFood":
+        "politeBehavior":
+        "valueForMoney": 
+        "comment":
+    },
+    ...
+]
+===========================================================================================
