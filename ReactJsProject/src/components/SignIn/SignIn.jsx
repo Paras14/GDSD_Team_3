@@ -49,55 +49,81 @@ function SignIn() {
   };
 
   return (
-    <Container>
-      <h1 className="text-center my-4 py-4">Please Login Here!</h1>
+    <div className="container mt-4">
+      <div className=" rounded shadow" style={{backgroundColor : "#AED0FF"}}>
+        <p className="py-2 fs-1 fw-bold text-center" >Log in</p>
+      </div>
 
-      <Form onSubmit={handleSubmit}>
-        <Row>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter email"
-              name="email"
-              onChange={handleEmailChange}
-            />
-            <Form.Text className="text-muted">
-              We'll never share your email with anyone else.
-            </Form.Text>
-          </Form.Group>
+      <div className="rounded shadow bg-white">
+        <div className="container">
+          <br></br>
+          <Form onSubmit={handleSubmit}>
+            <div className="row">
+              <div className="col-3"></div>
+              <div className="col-6">
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Email address</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Enter email"
+                    name="email"
+                    onChange={handleEmailChange}
+                  />
+                  <Form.Text className="text-muted">
+                    We'll never share your email with anyone else.
+                  </Form.Text>
+                </Form.Group>
+              </div>
+              <div className="col-3"></div>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              name="password"
-              onChange={handlePasswordChange}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicCheckbox">
-            <Form.Check type="checkbox" label="Check me out" />
-          </Form.Group>
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
-          <div className="my-4">
-            <p className="text-end">
-              <span className="mx-2">Yet not Register?</span>
-              <Button
-                onClick={() => {
-                  navigate("/userType");
-                }}
-              >
-                Register
-              </Button>
+              <div className="col-3"></div>
+              <div className="col-6">
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                    onChange={handlePasswordChange}
+                  />
+                </Form.Group>
+              </div>
+              <div className="col-3"></div>
+
+
+              <div className="col-3"></div>
+              <div className="col-6">
+                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                  Log in
+                </Button>
+                <div className="my-4">
+                  <p className="text-end">
+                    <span className="mx-2">Not registered yet?</span>
+                    <Button
+                      onClick={() => {
+                        navigate("/userType");
+                      }}
+                    >
+                      Register
+                    </Button>
             </p>
           </div>
-        </Row>
-      </Form>
-      {message !== "" && <div>{message}</div>}
-    </Container>
+
+              </div>
+              <div className="col-3"></div>
+            </div>
+          </Form> 
+
+        </div>
+        {message !== "" && <div>{message}</div>}
+      </div>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+    </div>
   );
 }
 

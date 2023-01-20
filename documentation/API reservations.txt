@@ -1,0 +1,125 @@
+
+API
+
+
+
+
+RESERVATIONS
+
+
+===========================================================================================
+CREATE A RESERVATION
+This is the URL to make a new reservation and you should send a JSON like this. 
+@return: it will return a JSON with the full reservation created with a reservationID.
+post("/reservations") 
+{
+userId:
+restaurantId:
+date:
+numberofplaces:
+}
+
+@return:
+{
+reservationId:
+userId:
+restaurantId:
+date:
+numberofplaces:
+}
+===========================================================================================
+===========================================================================================
+UPDATE A RESERVATION
+This is the URL to update a reservation and you should send a JSON like this. 
+@return: it will return a JSON with the full reservation updated.
+put("/reservations/:reservationId") 
+{
+reservationId:
+userId:
+restaurantId:
+date:
+numberofplaces:
+}
+
+@return:
+{
+reservationId:
+userId:
+restaurantId:
+date:
+numberofplaces:
+}
+===========================================================================================
+===========================================================================================
+DELETE A RESERVATION
+This is the URL to delete a reservation and you should send a JSON like this. 
+@return: it will return a JSON with a message of success or not.
+delete("/reservations/:reservationId")
+
+@return:
+{
+message: "..."
+}
+===========================================================================================
+===========================================================================================
+GET A LIST OF RESERVATIONS OF A USER
+This is a URL to see all the reservations of a user. 
+@return: you will recieve a list of all reservations of a user like this.
+get("/reservations/user/:userId")
+
+@return:
+[
+{
+reservationId:
+userId:
+restaurantId:
+date:
+numberofpeople:
+},
+{...},
+...
+]
+===========================================================================================
+===========================================================================================
+GET A LIST OF RESRVATIONS OF A MANAGER (RESTAURANT)
+This is a URL where a manager can see all the reservations that are in the future of his restaurant
+@return: you will recieve a list of all reservations of a restaurant like this.
+get("/reservations/manager/:managerid")
+
+@return:
+{
+{
+reservationId:
+userId:
+restaurantId:
+date:
+numberofpeople:
+},
+{...},
+...
+}
+===========================================================================================
+===========================================================================================
+GET A RESERVATION
+This is a URL to see all the reservations of a user. 
+@return: you will recieve a list of all reservations of a user like this.
+get("/reservations/:reservationId")
+
+@return:
+{
+{
+reservationId:
+userId:
+restaurantId:
+date:
+numberofpeople:
+},
+{...},
+...
+}
+===========================================================================================
+
+
+
+
+
