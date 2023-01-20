@@ -26,7 +26,7 @@ import RestaurantTabDetails from "./components/RestaurantTabDetails";
 
 const App = () => {
   return (
-    <div>
+    <div className="bg-light">
       <Router>
         <Routes>
           <Route
