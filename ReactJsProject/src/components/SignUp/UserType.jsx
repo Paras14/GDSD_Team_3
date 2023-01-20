@@ -1,38 +1,41 @@
 import React from "react";
-import { Container, Button } from "react-bootstrap";
+import { Container, Button,Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 function UserType() {
   const navigate = useNavigate();
   return (
-    <Container>
-      <h1 className="text-center my-4 py-4">
-        Want to become a Customer or Restaurent!!
-      </h1>
-      <div className="d-flex justify-content-center justify-items-center flex-column text-center">
-        <div className="my-4">
-          <p className="fs-4 text-center">Register Yourself as Customer?</p>
-          <Button
-            onClick={() => {
-              navigate("/customerSignUp");
-            }}
-          >
-            Register
-          </Button>
-        </div>
-        <p className="text-uppercase fs-1 text-info fst-italic text-center">or</p>
-        <div>
-          <p className="fs-4 text-center">Register Yourself as Restaurent?</p>
-          <Button
-            onClick={() => {
-              navigate("/signUp");
-            }}
-          >
-            Register
-          </Button>
-        </div>
+    <div className="container mt-4">
+      <div className=" rounded shadow" style={{backgroundColor : "#AED0FF"}}>
+        <p className="py-2 fs-1 fw-bold text-center" >Register as a costumer or as a restaurant</p>
       </div>
-    </Container>
+
+      
+
+      <div class="d-flex justify-content-evenly">
+        <Card  className="m-2">
+          <Card.Img variant="top" src="https://media.istockphoto.com/id/1356348368/photo/multiracial-friends-group-taking-selfie-portrait-outside-happy-multi-cultural-people-smiling.jpg?b=1&s=170667a&w=0&k=20&c=5t-v3ptbSMCymqn8O4oIs9uZrQskQGHzt_8AQBuwIx8="
+          style={{ width: "auto", height: "400px" }}/>
+          <Card.Body>
+            <Card.Title>Costumer</Card.Title>
+            <Button variant="primary" onClick={() => {navigate("/customerSignUp");}}>Register as a costumer</Button>
+          </Card.Body>
+        </Card>
+      
+        <Card  className="m-2">
+          <Card.Img variant="top" src="https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8cmVzdGF1cmFudHxlbnwwfHwwfHw%3D&w=1000&q=80"
+          style={{ width: "auto", height: "400px" }}/>
+          <Card.Body>
+            <Card.Title>Restaurant</Card.Title>
+            <Button variant="primary" onClick={() => {navigate("/signUp");}}>Register as a restaurant</Button>
+          </Card.Body>
+        </Card>
+      </div>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+    </div>
   );
 }
 

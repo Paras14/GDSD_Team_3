@@ -59,7 +59,7 @@ const Navbar = () => {
                 navigate("/signIn");
               }}
             >
-              SignIn
+              Log in
             </button>
             <button
               className="btn btn-light"
