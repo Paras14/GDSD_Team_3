@@ -1,13 +1,10 @@
 module.exports = app => {
-    const reservations = require("../controllers/reservations.controller");
+    const reservations = require("../controllers/reservation.controller");
   
     var router = require("express").Router();
   
     // Create a new Reservation
     router.post("/", reservations.create);
-  
-    // Retrieve all Reservations
-    router.get("/", reservations.findAll);
   
     // Retrieve a single Reservation with id
     router.get("/:id", reservations.findOne);
@@ -30,4 +27,4 @@ module.exports = app => {
 
   
     app.use('/reservations', router);
-  }
+  };
