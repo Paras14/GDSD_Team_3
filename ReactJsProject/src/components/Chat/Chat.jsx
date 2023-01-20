@@ -134,7 +134,7 @@ export const Chat = () => {
 
 
   return (
-    user === null //|| users.length === 0 || messages.length === 0 || messagesDESC.length === 0 // || myGroups.length === 0
+    user === null 
       ? <div></div>
       : conMessages || iniciandoChat
         ? <div className="row justify-content-center">

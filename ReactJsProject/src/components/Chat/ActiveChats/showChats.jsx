@@ -70,7 +70,7 @@ export const Chats = ({ users, messagesBuscar, receptor, //group,
   const changeChat = ( user ) => {
 
     setResponder( false );
-    document.querySelector( '#botonResponder' ).classList.add( 'ocultar' );
+    //document.querySelector( '#botonResponder' ).classList.add( 'ocultar' );
 
     if ( document.getElementById( `${receptor.id}` ) !== null ) {
 
