@@ -68,7 +68,7 @@ This is a URL to see all the reservations of a user.
 get("/reservations/user/:userId")
 
 @return:
-[]
+[
 {
 reservationId:
 userId:

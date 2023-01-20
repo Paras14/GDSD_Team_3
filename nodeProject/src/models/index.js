@@ -36,5 +36,8 @@ db.user.belongsTo(db.rol);
 db.chat.belongsTo(db.user, {foreignKey: 'user_emitter'});
 db.chat.belongsTo(db.user, {foreignKey: 'user_receiver'});
 
+db.review.belongsTo(db.user);
+db.review.belongsTo(db.restaurant);
+
 module.exports = db;
 
