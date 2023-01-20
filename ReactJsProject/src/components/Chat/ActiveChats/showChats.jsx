@@ -70,7 +70,6 @@ export const Chats = ({ users, messagesBuscar, receptor, //group,
   const changeChat = ( user ) => {
 
     setResponder( false );
-    //document.querySelector( '#botonResponder' ).classList.add( 'ocultar' );
 
     if ( document.getElementById( `${receptor.id}` ) !== null ) {
 
@@ -78,22 +77,14 @@ export const Chats = ({ users, messagesBuscar, receptor, //group,
 
     }
     document.getElementById( `${user.id}` ).classList.add( 'chatSeleccionado' );
-    if ( user !== null //&& men.id_grupo_receptor === null 
-        ) {
+    if ( user !== null ) {
 
       setReceptor( user );
       setConection( user.id , users, setConexion );
-      //setGroup({});
       document.title = `Chating with ${user.username}`;
 
-    } /* else if ( men.nombre_usuario_receptor === null && men.id_grupo_receptor !== null ) {
-
-      setReceptor( '' );
-      setGroup( getGrupo( men.id_grupo_receptor, myGroups ) );
-      setMiembrosGrupo( men.id_grupo_receptor, setConfigurationGroups, myGroups, users, user, setGroup, setReceptor, setConexion );
-      document.title = `Chateando en ${getGrupo( men.id_grupo_receptor, myGroups ).nombre}`;
-
-    } */
+    } 
+    
     setMessage( '' );
     navigate('/chat/' + user.id);
     //window.location.reload();
@@ -126,7 +117,7 @@ export const Chats = ({ users, messagesBuscar, receptor, //group,
                       <div className="pt-1">
                         {putUsers2( user )}
                         <p className="fw-bold mb-0">{user.username}</p>
-                        <p className="small text-muted">Chat with</p>
+                        <p className="small text-muted">Chat with {user.username}</p>
                       </div>
                     </div>
                     <div className="pt-1">

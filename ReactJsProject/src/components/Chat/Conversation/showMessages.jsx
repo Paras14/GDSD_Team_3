@@ -19,7 +19,11 @@ export const Messages = ({ messages, user, receptor, //group,
   return (
     <div>
       {
-        messages.length !== 0 && messages.map( ( mensaje, index ) => (
+        messages.length !== 0 && messages.sort(( a, b ) => {
+
+          return new Date( a.createdAt ) - new Date( b.createdAt );
+    
+        }).map( ( mensaje, index ) => (
           ( ( mensaje.user_receiver === receptor.id ) || ( mensaje.emitter === receptor.id ) ) //&& mensaje.id_grupo_receptor !== 1
             ? <div className={`d-flex flex-row ${getOrientation( user, mensaje )}`}
               id={mensaje.id}
@@ -41,21 +45,7 @@ export const Messages = ({ messages, user, receptor, //group,
                   <p className="small text-muted mb-1 cols-4 tamnyoHora">{formatDate( mensaje.createdAt )}</p>
                   {setNombreAnterior( mensaje.user_emitter )}
                 </div>
-                 <li className=" d-none nav-item">
-                    <button className="btn nav-link"
-                      id="navbarDropdownBtnChat"
-                      aria-expanded="false"
-                      //onClick={() => mostrarOpcionesMensaje( mensaje, user, users, myGroups, setResponder, setIdMensajeRespuesta, setMensajeRespuesta, setImagenRespuesta, setNombreMensajeRespuesta )}
-                      >
-                      <svg xmlns="http://www.w3.org/2000/svg"
-                        width="12"
-                        height="15"
-                        fill="currentColor"
-                        className="bi bi-three-dots-vertical">
-                        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                      </svg>
-                    </button>
-                  </li>
+                 
     
               </div>
             </div>

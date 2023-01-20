@@ -7,7 +7,7 @@ const Op = db.Sequelize.Op;
 exports.create = (req, res) => {
     // Validate request
     // checkAdmin(req,res);
-    if (!req.query.user_emitter || !req.query.user_receiver) {
+    if (!req.body.user_emitter || !req.body.user_receiver) {
       res.status(400).send({
         message: "Chat must have sender and receiver id"
       });
@@ -16,9 +16,9 @@ exports.create = (req, res) => {
   
     // Create a chat
     const chat = {
-        user_emitter: req.query.user_emitter,
-        user_receiver: req.query.user_receiver,
-        text: req.query.text
+        user_emitter: req.body.user_emitter,
+        user_receiver: req.body.user_receiver,
+        text: req.body.text
     };
   
     // Save Chat in the database

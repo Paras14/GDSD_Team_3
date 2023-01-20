@@ -8,9 +8,6 @@ import { useNavigate, useParams } from '../../../node_modules/react-router/dist/
 import socket from './Socket';
 import axios from 'axios';
 import { Global } from '../../helpers/Global.js';
-//import { Header } from '../components/header';
-//import { Footer } from '../components/footer';
-//import { IniciarChat } from '../components/chat/IniciarChat';
 
 export const Chat = () => {
 

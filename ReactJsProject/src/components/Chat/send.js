@@ -13,39 +13,17 @@ export const submit = async ( message, receptor, //group,
   if ( removeSpacesMessages( message ) ) {
 
     //Swal.showLoading();
-    if ( document.getElementById( `${receptor}` ) !== null ) {
+    if ( document.getElementById( `${receptor.id}` ) !== null ) {
 
-      document.getElementById( `${receptor}` ).classList.remove( 'chatSeleccionado' );
+      document.getElementById( `${receptor.id}` ).classList.remove( 'chatSeleccionado' );
 
     }
 
-      /*if ( responder ) {
+      
+    console.log("Enviando: " + message + " a " + receptor.username + " con id " + receptor.id);
+    const token = localStorage.getItem( 'token' );
 
-        if ( messageRespuesta !== '' ) {
-
-          axios.post( URI, { nombre_usuario_emisor: user.nombre, nombre_usuario_receptor: receptor, message: message, respuesta: idMessageRespuesta, messageRespuesta, nombreEmisorRespuesta: nombreMessageRespuesta });
-
-        } else {
-
-          axios.post( URI, { nombre_usuario_emisor: user.nombre, nombre_usuario_receptor: receptor, message: message, respuesta: idMessageRespuesta, imagenRespuesta: imagenRespuesta, nombreEmisorRespuesta: nombreMessageRespuesta });
-
-        }
-
-        setResponder( false );
-        setIdMessageRespuesta( '' );
-        setMessageRespuesta( '' );
-        setImagenRespuesta( '' );
-        setNombreMessageRespuesta( '' );
-        document.querySelector( '#botonResponder' ).classList.add( 'ocultar' );
-
-      } else {*/
-        console.log("Enviando: " + message)
-        const token = localStorage.getItem( 'token' );
-
-        axios.post( URI, { user_emitter: user.id, user_receiver: receptor, text: message },
-          { headers: { Authorization: `Bearer ${token}` } });
-
-      //}
+    axios.post( URI, { user_emitter: user.id, user_receiver: receptor.id, text: message }, { headers: { 'Authorization': `Bearer ${token}` } } )   
 
     
     setMessage( '' );
