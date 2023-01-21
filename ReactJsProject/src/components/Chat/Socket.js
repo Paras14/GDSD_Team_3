@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client';
 
-// const URI = 'https://swishgames.herokuapp.com';
+// const URI = 'http://100.25.37.72/api';
 
 const URI = 'ws://localhost:8080';
 

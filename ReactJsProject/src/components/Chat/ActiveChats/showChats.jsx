@@ -93,13 +93,15 @@ export const Chats = ({ users, messagesBuscar, receptor, //group,
   };
 
   return (
+    users.length !== 0 
+    ?
     <div className="table-wrapper-scroll-y my-custom-scrollbar panelChatUsers">
       <div data-mdb-perfect-scrollbar="true"
         position= "relative"
         height= "400px">
         <ul className="list-unstyled mb-0">
           {
-            ( users.length !== 0 && messagesBuscar.length !== 0 ) && users.map( (user, index) => ( //&& messagesBuscar.reverse().map( ( men, index ) => (
+            ( users.length !== 0  ) && users.map( (user, index) => ( //&& messagesBuscar.reverse().map( ( men, index ) => (
 
               //( ( users2.indexOf( men.user_receiver ) === -1 ) && ( users2.indexOf( men.user_emitter ) === -1 ) //&& ( users2.indexOf( men.id_grupo_receptor ) === -1 ) 
               //)
@@ -110,7 +112,7 @@ export const Chats = ({ users, messagesBuscar, receptor, //group,
                     onClick={() => changeChat( user )}>
                     <div className="d-flex flex-row">
                       {console.log("users2: " +users2)}
-                      {console.log("messagesBuscar: " + messagesBuscar)}
+                      
                       <div className="align-items-center divObjectsSend margen-foto-chat-perfil">
                         {photoProfile( user.id, users, 60 )}
                       </div>
@@ -130,6 +132,16 @@ export const Chats = ({ users, messagesBuscar, receptor, //group,
                 //: <div key={index}></div> )
             ))
           }
+
+        </ul>
+      </div>
+    </div>
+    :
+    <div className="table-wrapper-scroll-y my-custom-scrollbar panelChatUsers">
+      <div data-mdb-perfect-scrollbar="true"
+        position= "relative"
+        height= "400px">
+        <ul className="list-unstyled mb-0">
 
         </ul>
       </div>

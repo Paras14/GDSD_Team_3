@@ -20,15 +20,15 @@ export const Chat = () => {
   const [conexion, setConexion] = useState( '' );
   const [message, setMessage] = useState( '' );
   const [user, setUser] = useState( null );
-  const [conMessages, setConMessages] = useState( false );
+  //const [conMessages, setConMessages] = useState( false );
   const [iniciandoChat, setIniciandoChat] = useState( false );
   const [responder, setResponder] = useState( false );
   const [recienEnviado, setRecienEnviado] = useState( false );
   const [messagesDESC, setMessagesDESC] = useState([]);
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
-  //const [myGroups, setMyGroups] = useState([]);
   const [messagesBuscar, setMessagesBuscar] = useState([]);
+  const [firstChat, setFirstChat] = useState( false );
 
 
   //With this function we revise if the iser is loged or not, and then, it saves the receptor user in the state.
@@ -58,6 +58,16 @@ export const Chat = () => {
   getReceptor();
   }, []);
 
+  const isNotReceptorInUsers = ( receptor, users ) => {
+    let isNotReceptorInUsers = true;
+    users.forEach( user => {
+      if ( user.id === receptor.id ) {
+        isNotReceptorInUsers = false;
+      }
+    });
+    return isNotReceptorInUsers;
+  };
+
   //With this function we call the API to get the messages between the user loged and the receptor
   useEffect( () => {
 
@@ -67,6 +77,13 @@ export const Chat = () => {
 
         //With this function we get the info about all the conversations that the user logged has
         setUpChat( user, setUsers, setMessages, setMessagesDESC, setMessagesBuscar);
+
+        console.log( 'Trying to set up chat' );
+
+        const conversations = await axios.get( `${baseUrl}chats/user/${user.id}` );
+          
+        setUsers( conversations.data );
+        console.log( conversations.data );
   
         //Here we get all the messages between the user logged and the receptor
           const messaggesFronTheCoversationBetweenUserLoggedAndreceptor = await axios.get( `${baseUrl}chats/conversation/`, {
@@ -79,11 +96,22 @@ export const Chat = () => {
           setMessages(messaggesFronTheCoversationBetweenUserLoggedAndreceptor.data);
           setMessagesBuscar( messaggesFronTheCoversationBetweenUserLoggedAndreceptor.data );
           console.log(messaggesFronTheCoversationBetweenUserLoggedAndreceptor.data);
+
+          console.log( "receptor: ", receptor );
+        if ( receptor !== null && isNotReceptorInUsers( receptor, users ) ) {
+          setUsers( users => [...users, receptor] );
+
+          //If the receptor is not in the users state we put as true the state firstChat
+          setFirstChat( true );
+
+        }
+          
+        
       }
     }
     getConversationsAndMessages();
 
-  }, [user]);
+  }, [user, receptor]);
 
 
   //With this function we get the messages between the user loged and the receptor and all the conversations of the user logged but
@@ -131,7 +159,7 @@ export const Chat = () => {
   return (
     user === null 
       ? <div></div>
-      : conMessages || iniciandoChat
+      : firstChat || iniciandoChat
         ? <div className="row justify-content-center">
           <section className="botonTransparente mt-5">
             <div className="container py-5 botonTransparente" >
@@ -203,14 +231,14 @@ export const Chat = () => {
                       navigate( '/' );
                     }}
                     >
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        width="150"
-                        height="150"
-                        fill="currentColor"
-                        className="bi bi-plus-lg"
+                    
+                    <svg xmlns="http://www.w3.org/2000/svg" 
+                        width="150" 
+                        height="150" 
+                        fill="currentColor" 
+                        className="bi bi-house" 
                         viewBox="0 0 16 16">
-                        <path fillRule="evenodd"
-                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                        <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"/>
                     </svg>
                     </button>
                 </div>

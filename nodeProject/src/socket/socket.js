@@ -6,7 +6,7 @@ const socket = (io) => {
 
         let username;
         const URIUsers = 'http://localhost:8080/users/'
-        //const URIUsers = 'https://swishgames.herokuapp.com/api/users/'
+        //const URIUsers = 'http://100.25.37.72/api/users/'
 
         socket.on('connected', (name) => {
             username = name
