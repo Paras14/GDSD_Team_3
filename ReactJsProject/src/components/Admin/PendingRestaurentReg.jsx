@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
-function PendingRestaurentReg() {
+function PendingRestaurantReg() {
   const navigate = useNavigate();
   const arrow = <FontAwesomeIcon icon={faArrowRight} />;
   const pendingData = [
@@ -52,4 +52,4 @@ function PendingRestaurentReg() {
   );
 }
 
-export default PendingRestaurentReg;
+export default PendingRestaurantReg;

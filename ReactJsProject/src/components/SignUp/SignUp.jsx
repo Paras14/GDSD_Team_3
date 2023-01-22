@@ -7,9 +7,8 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
 import { Global } from "../../helpers/Global.js";
-
 
 const baseUrl = Global.baseUrl;
 
@@ -31,10 +30,12 @@ const schema = Yup.object().shape({
     }),
   city: Yup.string().required(),
   state: Yup.string().required(),
+  address: Yup.string().required(),
   zip: Yup.string().required(),
   telefonenumber: Yup.string().required(),
   file: Yup.mixed().required(),
   restaurenttype: Yup.mixed().required(),
+  description: Yup.string().required(),
   terms: Yup.bool().required().oneOf([true], "terms must be accepted"),
 });
 
@@ -66,29 +67,31 @@ function SignUp() {
         description: "",
         image: values.file,
         restaurantCategoryId: values.restaurenttype,
-        userId:""      
+        userId: "",
       };
 
       setSubmitting(true);
       console.log("User is: " + JSON.stringify(user));
-      axios.post(baseUrl + 'users/', user)
-      .then(function (response) {
-        console.log("Reached Restaurant save part: " + response.data.id);
-        restaurant.userId = response.data.id;
-        console.log("Restaurant is: " + JSON.stringify(restaurant));
-        axios.post(baseUrl + 'restaurants/', restaurant)
-        .then(function (response){
-          navigate("/restaurentRegistration");
-          setSubmitting(false);
+      axios
+        .post(baseUrl + "users/", user)
+        .then(function (response) {
+          console.log("Reached Restaurant save part: " + response.data.id);
+          restaurant.userId = response.data.id;
+          console.log("Restaurant is: " + JSON.stringify(restaurant));
+          axios
+            .post(baseUrl + "restaurants/", restaurant)
+            .then(function (response) {
+              navigate("/restaurentRegistration");
+              setSubmitting(false);
+            })
+            .catch(function (error) {
+              axios.delete(baseUrl + "users/" + response.data.id);
+              console.log(error);
+            });
         })
-        .catch(function(error){
-          axios.delete(baseUrl + 'users/' + response.data.id);
+        .catch(function (error) {
           console.log(error);
         });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
       // Make the API call
       // const response = await fetch("http://localhost:8080/users/", {
       //   method: "POST",
@@ -100,7 +103,7 @@ function SignUp() {
       // if (response.ok) {
       //   navigate("/restaurentRegistration");
       //   setSubmitting(false);
-      // } else { 
+      // } else {
       //   // Set errors if the response is not successful
       //   setErrors({ submit: data.message });
       //   setSubmitting(false);
@@ -135,10 +138,12 @@ function SignUp() {
           reenterpassword: "",
           city: "",
           state: "",
+          address: "",
           zip: "",
           telefonenumber: "",
           file: null,
           restaurenttype: "",
+          description: "",
           terms: false,
         }}
       >
@@ -292,7 +297,7 @@ function SignUp() {
             <Row className="mb-3">
               <Form.Group
                 as={Col}
-                md="6"
+                md="4"
                 controlId="validationFormik103"
                 className="position-relative"
               >
@@ -312,7 +317,7 @@ function SignUp() {
               </Form.Group>
               <Form.Group
                 as={Col}
-                md="6"
+                md="4"
                 controlId="validationFormik104"
                 className="position-relative"
               >
@@ -327,6 +332,26 @@ function SignUp() {
                 />
                 <Form.Control.Feedback type="invalid" tooltip>
                   {errors.state}
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group
+                as={Col}
+                md="4"
+                controlId="validationFormik108"
+                className="position-relative"
+              >
+                <Form.Label>Address</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Address"
+                  name="address"
+                  value={values.address}
+                  onChange={handleChange}
+                  isInvalid={!!errors.address}
+                />
+                <Form.Control.Feedback type="invalid" tooltip>
+                  {errors.address}
                 </Form.Control.Feedback>
               </Form.Group>
             </Row>
@@ -393,19 +418,36 @@ function SignUp() {
                 </Form.Control.Feedback>
               </Form.Group>
             </Row>
-            <Form.Group className="position-relative mb-3">
-              <Form.Label>Upload image Url</Form.Label>
-              <Form.Control
-                type="url"
-                required
-                name="file"
-                onChange={handleChange}
-                isInvalid={!!errors.file}
-              />
-              <Form.Control.Feedback type="invalid" tooltip>
-                {errors.file}
-              </Form.Control.Feedback>
-            </Form.Group>
+            <Row>
+              <Form.Group className="position-relative mb-3" as={Col} md="6">
+                <Form.Label>Upload image Url</Form.Label>
+                <Form.Control
+                  type="url"
+                  required
+                  name="file"
+                  onChange={handleChange}
+                  isInvalid={!!errors.file}
+                />
+                <Form.Control.Feedback type="invalid" tooltip>
+                  {errors.file}
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group className="position-relative mb-3" as={Col} md="6">
+                <Form.Label>Description</Form.Label>
+                <Form.Control
+                  type="text"
+                  required
+                  name="description"
+                  onChange={handleChange}
+                  isInvalid={!!errors.description}
+                />
+                <Form.Control.Feedback type="invalid" tooltip>
+                  {errors.description}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Row>
+
             <Form.Group className="position-relative mb-3">
               <Form.Check
                 required

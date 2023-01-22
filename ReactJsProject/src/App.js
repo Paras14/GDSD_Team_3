@@ -3,7 +3,7 @@ import Navbar from "./components/HomePage/Navbar";
 import Cards from "./components/HomePage/Cards";
 // import SearchBar from "./components/HomePage/SearchBar";
 import ErrorPage from "./components/ErrorPage";
-import RestaurentDetails from "./components/HomePage/RestaurentDetails/RestaurentDetails";
+import RestaurantDetails from "./components/HomePage/RestaurentDetails/RestaurentDetails";
 import SignIn from "./components/SignIn/SignIn";
 import SignUp from "./components/SignUp/SignUp";
 import UserType from "./components/SignUp/UserType";
@@ -12,7 +12,7 @@ import RestaurentRegistration from "./components/SignUp/RestaurentRegistration";
 import AdminPanel from "./components/Admin/AdminPanel";
 import AdminPanelNavbar from "./components/Admin/AdminPanelNavbar";
 import PendingRestaurentReg from "./components/Admin/PendingRestaurentReg";
-import PendingRestaurentForm from "./components/Admin/PendingRestaurentForm";
+import PendingRestaurantForm from "./components/Admin/PendingRestaurentForm";
 import ListOfUsers from "./components/Admin/ListOfUsers";
 import PendingReviews from "./components/Admin/PendingReviews";
 import PendingReviewPost from "./components/Admin/PostReviews/PendingReviewPost";
@@ -23,6 +23,7 @@ import CustomerAfterRegister from "./components/SignUp/CustomerAfterRegister";
 import RedirectPage from "./components/SignIn/RedirectPage";
 import RestaurantUpperDetail from "./components/RestaurantUpperDetail";
 import RestaurantTabDetails from "./components/RestaurantTabDetails";
+import Footer from "./components/HomePage/Footer/Footer";
 
 const App = () => {
   return (
@@ -36,16 +37,18 @@ const App = () => {
                 <Navbar />
                 {/* <SearchBar /> */}
                 <Cards />
+                <Footer />
               </div>
             }
           />
-          <Route path="/restaurentDetails" element={<RestaurentDetails />} />
+          <Route path="/restaurantDetails" element={<RestaurantDetails />} />
           <Route
             path="/signIn"
             element={
               <div>
                 <Navbar />
                 <SignIn />
+                <Footer />
               </div>
             }
           />
@@ -55,6 +58,7 @@ const App = () => {
               <div>
                 <Navbar />
                 <SignUp />
+                <Footer />
               </div>
             }
           />
@@ -64,6 +68,7 @@ const App = () => {
               <div>
                 <Navbar />
                 <UserType />
+                <Footer />
               </div>
             }
           />
@@ -73,6 +78,7 @@ const App = () => {
               <div>
                 <Navbar />
                 <CustomerSignUp />
+                <Footer />
               </div>
             }
           />
@@ -82,6 +88,7 @@ const App = () => {
               <div>
                 <Navbar />
                 <RestaurentRegistration />
+                <Footer />
               </div>
             }
           />
@@ -91,6 +98,7 @@ const App = () => {
               <div>
                 <AdminPanelNavbar />
                 <AdminPanel />
+                <Footer />
               </div>
             }
           />
@@ -100,15 +108,17 @@ const App = () => {
               <div>
                 <AdminPanelNavbar />
                 <PendingRestaurentReg />
+                <Footer />
               </div>
             }
           />
           <Route
-            path="/pendingRestaurentForm"
+            path="/pendingRestaurantForm"
             element={
               <div>
                 <AdminPanelNavbar />
-                <PendingRestaurentForm />
+                <PendingRestaurantForm />
+                <Footer />
               </div>
             }
           />
@@ -118,6 +128,7 @@ const App = () => {
               <div>
                 <AdminPanelNavbar />
                 <ListOfUsers />
+                <Footer />
               </div>
             }
           />
@@ -127,6 +138,7 @@ const App = () => {
               <div>
                 <AdminPanelNavbar />
                 <PendingReviews />
+                <Footer />
               </div>
             }
           />
@@ -136,6 +148,7 @@ const App = () => {
               <div>
                 <AdminPanelNavbar />
                 <PendingReviewPost />
+                <Footer />
               </div>
             }
           />
@@ -145,6 +158,7 @@ const App = () => {
               <div>
                 <AdminPanelNavbar />
                 <ReviewCheckBox />
+                <Footer />
               </div>
             }
           />
@@ -154,6 +168,7 @@ const App = () => {
               <div>
                 <AdminPanel />
                 <ListOfUsers />
+                <Footer />
               </div>
             }
           />
@@ -163,6 +178,7 @@ const App = () => {
               <div>
                 <AdminPanelNavbar />
                 <ListOfRestaurants />
+                <Footer />
               </div>
             }
           />
@@ -172,6 +188,7 @@ const App = () => {
               <div>
                 <Navbar />
                 <Chat />
+                <Footer />
               </div>
             }
           />
@@ -181,6 +198,7 @@ const App = () => {
               <div>
                 <Navbar />
                 <Chat />
+                <Footer />
               </div>
             }
           />
@@ -190,6 +208,7 @@ const App = () => {
               <div>
                 <Navbar />
                 <CustomerAfterRegister />
+                <Footer />
               </div>
             }
           />
@@ -199,6 +218,7 @@ const App = () => {
               <div>
                 <RedirectPage />
                 <Cards />
+                <Footer />
               </div>
             }
           />
@@ -209,7 +229,7 @@ const App = () => {
                 <Navbar />
                 <RestaurantUpperDetail />
                 <RestaurantTabDetails />
-               
+                <Footer />
               </div>
             }
           />

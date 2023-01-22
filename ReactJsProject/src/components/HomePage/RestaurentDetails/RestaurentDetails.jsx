@@ -1,7 +1,7 @@
 import { Container, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-const RestaurentDetails = () => {
+const RestaurantDetails = () => {
   const navigate = useNavigate();
   return (
     <Container className="mb-4">
@@ -109,4 +109,4 @@ const RestaurentDetails = () => {
     </Container>
   );
 };
-export default RestaurentDetails;
+export default RestaurantDetails;

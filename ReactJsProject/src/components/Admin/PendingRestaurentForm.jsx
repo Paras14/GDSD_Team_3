@@ -1,10 +1,10 @@
 import React from "react";
 import { Container, Card, Row, Col, Button } from "react-bootstrap";
 
-function PendingRestaurentForm() {
-  const restaurentData = [
+function PendingRestaurantForm() {
+  const restaurantData = [
     {
-      restaurentName: "Restaurent 1",
+      restaurantName: "Restaurent 1",
       managerName: "Manager 1",
       managerEmail: "manager@gmail.com",
       city: "Fulda",
@@ -21,14 +21,14 @@ function PendingRestaurentForm() {
           PENDING RESTAURANT REGISTRATIONS
         </h1>
         <div>
-          {restaurentData.map((data) => {
+          {restaurantData.map((data) => {
             return (
               <div>
                 <Row className="mb-3">
                   <Card body as={Col} md="4">
                     <p>
-                      <span className="fs-4 p-2">Restaurent Name:</span>
-                      {data.restaurentName}
+                      <span className="fs-4 p-2">Restaurant Name:</span>
+                      {data.restaurantName}
                     </p>
                   </Card>
 
@@ -97,4 +97,4 @@ function PendingRestaurentForm() {
   );
 }
 
-export default PendingRestaurentForm;
+export default PendingRestaurantForm;
