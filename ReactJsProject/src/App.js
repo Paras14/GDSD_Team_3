@@ -26,6 +26,7 @@ import RestaurantTabDetails from "./components/RestaurantTabDetails";
 import Footer from "./components/HomePage/Footer/Footer";
 import ReservationDetails from "./components/HomePage/Reservation/ReservationDetails";
 import TableSelection from "./components/HomePage/Reservation/TableSelection";
+import FoodSelection from "./components/HomePage/Reservation/FoodSelection";
 
 const App = () => {
   return (
@@ -251,6 +252,16 @@ const App = () => {
               <div>
                 <Navbar />
                 <TableSelection />
+                <Footer />
+              </div>
+            }
+          />
+          <Route
+            path="/FoodSelection"
+            element={
+              <div>
+                <Navbar />
+                <FoodSelection />
                 <Footer />
               </div>
             }
