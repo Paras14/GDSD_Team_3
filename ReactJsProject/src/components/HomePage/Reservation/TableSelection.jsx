@@ -44,11 +44,19 @@ function TableSelection() {
             </ul>
           </Col>
         </Row>
-            
-             
-          
-         
         </Container>
+        <div className="col-lg-8"></div>
+        <div className="col-lg-2">
+        <Button
+          size="lg"
+          className="text-center"
+          onClick={() => {
+              navigate("/");
+          }}
+          >
+          Save Table
+        </Button>
+        </div>
       </Row>
       <br></br>
     </Container>
