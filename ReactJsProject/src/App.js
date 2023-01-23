@@ -24,6 +24,7 @@ import RedirectPage from "./components/SignIn/RedirectPage";
 import RestaurantUpperDetail from "./components/RestaurantUpperDetail";
 import RestaurantTabDetails from "./components/RestaurantTabDetails";
 import Footer from "./components/HomePage/Footer/Footer";
+import ReservationDetails from "./components/HomePage/Reservation/ReservationDetails";
 
 const App = () => {
   return (
@@ -229,6 +230,16 @@ const App = () => {
                 <Navbar />
                 <RestaurantUpperDetail />
                 <RestaurantTabDetails />
+                <Footer />
+              </div>
+            }
+          />
+          <Route
+            path="/ReservationDetails"
+            element={
+              <div>
+                <Navbar />
+                <ReservationDetails />
                 <Footer />
               </div>
             }
