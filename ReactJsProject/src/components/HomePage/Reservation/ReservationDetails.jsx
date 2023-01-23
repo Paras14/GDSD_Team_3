@@ -61,7 +61,7 @@ function ReservationDetails() {
               size="lg"
               className="text-center"
               onClick={() => {
-                  navigate("/");
+                  navigate("/ParkingSelection");
               }}
               >
               Parking
