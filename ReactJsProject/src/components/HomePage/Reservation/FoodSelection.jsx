@@ -38,7 +38,9 @@ function FoodSelection() {
           
         </Row>
         </Container>
-        <div className="col-lg-8"></div>
+        <div className="col-lg-8">
+        <textarea id="comments" name="comments" cols={80}>Additional Comments</textarea>
+        </div>
         <div className="col-lg-2">
         <Button
           size="lg"
