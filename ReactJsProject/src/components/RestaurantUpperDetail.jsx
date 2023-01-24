@@ -36,7 +36,7 @@ function RestaurantUpperDetail({restaurantDetail}) {
               size="lg"
               className="text-center"
               onClick={() => {
-                  navigate("/ReservationDetails");
+                  navigate("/chat/" + restaurantDetail.userId);
               }}
               >
               Chat with the manager
