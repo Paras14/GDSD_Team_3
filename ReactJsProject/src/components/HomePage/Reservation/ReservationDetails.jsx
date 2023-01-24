@@ -1,14 +1,22 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import { BuildingUp } from "react-bootstrap-icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { Global } from "../../../helpers/Global.js";
 
 import RestaurantPhoto from "../../RestaurantPhoto";
 
 function ReservationDetails() {
   const navigate = useNavigate();
+  const { restaurantId } = useParams();
+  const baseUrl = Global.baseUrl;
+  const [restaurantDetail, setRestaurantDetail] = useState(null);
+
   //   const arrow = <FontAwesomeIcon icon={faArrowRight} />;
-  const restaurantDetail = [
+ 
+/*  const restaurantDetail = [
     {
       name: "Restaurant 1",
       info: "The restaurant is located in the quiet streets of the historic old town of Fulda. A special experience: The cozy restaurant, in summer with a wonderful street terrace, friendly staff and delicious dishes from regional and Mediterranean cuisine.user1@gmail.com",
@@ -16,14 +24,30 @@ function ReservationDetails() {
         "https://media.istockphoto.com/id/1179449390/photo/3d-render-wooden-style-restaurant-cafe.jpg?b=1&s=612x612&w=0&k=20&c=pW8QGTAU93WYvnhMjX-jZw93fZvjkGUMNfPbBphKMFA=",
     },
   ];
+*/
+
+  useEffect(() => {
+
+    axios.get(`${baseUrl}restaurants/${restaurantId}`)
+    .then((response) => {
+      setRestaurantDetail(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  }, []);
+
   return (
+    restaurantDetail !== null
+    ?
     <Container>
       <Row>
         <h2 className="text-center p-4 fw-bold text-uppercase text-danger">
           Reservation Page
         </h2>
-        <RestaurantPhoto restaurantDetail={restaurantDetail[0]} />
-        <h4>{restaurantDetail[0].name}</h4>
+        <RestaurantPhoto restaurantDetail={restaurantDetail} />
+        <h4>{restaurantDetail.name}</h4>
       </Row>
       <Row>
         <Container>
@@ -66,7 +90,7 @@ function ReservationDetails() {
           </Row>
           <hr></hr>
           <Row>
-            <Col className="col-lg-4">
+            {/*<Col className="col-lg-4">
               <Button
                 size="lg"
                 className="text-center"
@@ -76,7 +100,7 @@ function ReservationDetails() {
               >
                 Select table
               </Button>
-            </Col>
+              </Col>*/}
             <Col className="col-lg-4">
               <Button
                 size="lg"
@@ -88,7 +112,7 @@ function ReservationDetails() {
                 Select Food
               </Button>
             </Col>
-            <Col className="col-lg-4">
+            {/*<Col className="col-lg-4">
               <Button
                 size="lg"
                 className="text-center"
@@ -98,7 +122,7 @@ function ReservationDetails() {
               >
                 Parking
               </Button>
-            </Col>
+              </Col>*/}
           </Row>
           <Row className="mt-4 text-center w-full m-2">
             <Button size="lg" variant="danger">
@@ -109,6 +133,8 @@ function ReservationDetails() {
       </Row>
       <br></br>
     </Container>
+    :
+    <div>Loading...</div>
   );
 }
 

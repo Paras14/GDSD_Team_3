@@ -237,7 +237,7 @@ const App = () => {
             }
           />
           <Route
-            path="/ReservationDetails"
+            path="/ReservationDetails/:restaurantId"
             element={
               <div>
                 <Navbar />
