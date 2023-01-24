@@ -38,7 +38,7 @@ function FoodSelection() {
           
         </Row>
         </Container>
-        <div className="col-lg-8">
+        <div className="col-lg-8 mt-2 mb-2">
         <textarea id="comments" name="comments" cols={80}>Additional Comments</textarea>
         </div>
         <div className="col-lg-2">
