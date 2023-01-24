@@ -7,8 +7,7 @@ function Footer() {
       <Container>
         <div>
           <p className="text-center fs-4">
-            &copy; CopyRight. <span className="fw-bold">Risto</span> All rights
-            reserved.
+            &copy; <span className="fw-bold">Risto.</span> Fulda University of Applied Sciences Software Engineering Project, Fall 2022 For Demonstration Only
           </p>
         </div>
       </Container>
