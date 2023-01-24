@@ -112,7 +112,7 @@ const CardDetails = () => {
                           <Card.Text>
                             {card.description}
                           </Card.Text>
-                          <Button variant="primary" onClick={() => {navigate("/RestaurantDetails_alt");}}>See more</Button>
+                          <Button variant="primary" onClick={() => {navigate("/RestaurantDetails/" + card.id);}}>See more</Button>
                         </Card.Body>
                       </Card>
               </Col>

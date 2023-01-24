@@ -1,10 +1,10 @@
 import photo from "../images/RestaurantUpperImage.jpg";
 
-const RestaurantPhoto = () => {
+const RestaurantPhoto = ({restaurantDetail}) => {
   return (
     <div>
       <img
-        src={photo}
+        src={restaurantDetail.image}
         alt="Restaurant Cover"
         style={{ width: "92%", height:"15em" , objectFit: 'cover'}}
       />

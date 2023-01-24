@@ -3,7 +3,33 @@ import { useNavigate } from "react-router-dom";
 import { Container, Button } from "react-bootstrap";
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-function RestaurantTabDetails() {
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Global } from "../helpers/Global.js";
+
+function RestaurantTabDetails({restaurantDetail}) {
+
+  const baseUrl = Global.baseUrl;
+  const [foods, setFoods] = useState([]);
+
+  useEffect(() => {
+    
+    if (restaurantDetail !== null) {
+
+      // Get foods from the restaurant
+      axios
+        .get(baseUrl + "foods/restaurant/" + restaurantDetail.id)
+        .then((response) => {
+          setFoods(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+    }
+
+  }, []);
+
     return (
     <Container>
       <Tabs
@@ -12,10 +38,16 @@ function RestaurantTabDetails() {
         className="mb-3"
       >
         <Tab eventKey="Info" title="Info">
-          <p>This is Restaurant Info</p>
+          <p>{ restaurantDetail.description }</p>
+          <p>Telephone: { restaurantDetail.telephone } </p>
+          <p>State: { restaurantDetail.state } </p>
+          <p>City: { restaurantDetail.city } </p>
+          <p>ZIP: { restaurantDetail.zip } </p>
         </Tab>
         <Tab eventKey="Menu" title="Menu">
-          <p> This is Menu</p>
+          <p> {foods.length !== 0 ?
+              foods.toString()
+            : "This restaurant has no uploaded menu." } </p>
         </Tab>
         <Tab eventKey="Review" title="Review">
           <p> This is the Review Section</p>

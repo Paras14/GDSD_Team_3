@@ -3,7 +3,7 @@ import Navbar from "./components/HomePage/Navbar";
 import Cards from "./components/HomePage/Cards";
 // import SearchBar from "./components/HomePage/SearchBar";
 import ErrorPage from "./components/ErrorPage";
-import RestaurantDetails from "./components/HomePage/RestaurentDetails/RestaurentDetails";
+import RestaurantDetails from "./components/RestaurantDetails";
 import SignIn from "./components/SignIn/SignIn";
 import SignUp from "./components/SignUp/SignUp";
 import UserType from "./components/SignUp/UserType";
@@ -227,12 +227,11 @@ const App = () => {
             }
           />
           <Route
-            path="/RestaurantDetails_alt"
+            path="/RestaurantDetails/:restaurantId"
             element={
               <div>
                 <Navbar />
-                <RestaurantUpperDetail />
-                <RestaurantTabDetails />
+                <RestaurantDetails />
                 <Footer />
               </div>
             }
