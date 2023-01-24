@@ -81,16 +81,20 @@ function CustomerSignUp() {
   };
 
   return (
-    <Container>
-      <h1 className="text-center my-4 py-4 text-uppercase">
-        Register YourSelf As a Customer!
-      </h1>
+   <div className="container mt-4 mb-5">
+      <div className=" rounded shadow" style={{backgroundColor : "#AED0FF"}}>
+        <p className="py-2 fs-1 fw-bold text-center" >Costumer registration</p>
+      </div>   
+      
+      <div className="rounded shadow bg-white pb-4">
+
+
       <Formik
         validationSchema={schema}
         onSubmit={handleSubmit}
         initialValues={{
-          firstName: "Noman",
-          lastName: "Ali",
+          firstName: "",
+          lastName: "",
           username: "",
           customeremail: "",
           password: "",
@@ -111,217 +115,221 @@ function CustomerSignUp() {
           isValid,
           errors,
         }) => (
-          <Form noValidate onSubmit={handleSubmit}>
-            <Row className="mb-3">
-              <Form.Group
-                as={Col}
-                md="4"
-                controlId="validationFormik101"
-                className="position-relative"
-              >
-                <Form.Label>First name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="firstName"
-                  onBlur={handleBlur}
-                  value={values.firstName}
-                  onChange={handleChange}
-                  isValid={touched.firstName && !errors.firstName}
-                />
-                <Form.Control.Feedback tooltip>
-                  Looks good!
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group
-                as={Col}
-                md="4"
-                controlId="validationFormik102"
-                className="position-relative"
-              >
-                <Form.Label>Last name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="lastName"
-                  onBlur={handleBlur}
-                  value={values.lastName}
-                  onChange={handleChange}
-                  isValid={touched.lastName && !errors.lastName}
-                />
+          <div className="container">
+            <br></br>
+            <Form noValidate onSubmit={handleSubmit}>
+              <div className="row px-5 mx-5">
+                <div className="col-md-4 py-3">
+                  <Form.Group
+                    controlId="validationFormik101"
+                    className="position-relative"
+                    >
+                      <Form.Label>First name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="firstName"
+                        onBlur={handleBlur}
+                        value={values.firstName}
+                        onChange={handleChange}
+                        isValid={touched.firstName && !errors.firstName}
+                      />
+                      <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+                    </Form.Group>
 
-                <Form.Control.Feedback tooltip>
-                  Looks good!
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationFormikUsername2">
-                <Form.Label>Username</Form.Label>
-                <InputGroup hasValidation>
-                  <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-                  <Form.Control
-                    type="text"
-                    placeholder="Username"
-                    aria-describedby="inputGroupPrepend"
-                    name="username"
-                    value={values.username}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    isInvalid={!!errors.username}
-                  />
-                  <Form.Control.Feedback type="invalid" tooltip>
-                    {errors.username}
-                  </Form.Control.Feedback>
-                </InputGroup>
-              </Form.Group>
-            </Row>
+                </div>
+                <div className="col-md-4 py-3">
+                    <Form.Group
+                    controlId="validationFormik102"
+                    className="position-relative"
+                    >
+                      <Form.Label>Last name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="lastName"
+                        onBlur={handleBlur}
+                        value={values.lastName}
+                        onChange={handleChange}
+                        isValid={touched.lastName && !errors.lastName}
+                      />
 
-            <Row className="mb-3">
-              <Form.Group
-                as={Col}
-                md="4"
-                controlId="validationFormik110"
-                className="position-relative"
-              >
-                <Form.Label>Customer Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Enter Your Email"
-                  name="customeremail"
-                  value={values.customeremail}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  isInvalid={!!errors.customeremail}
-                />
+                      <Form.Control.Feedback tooltip>
+                        Looks good!
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                </div>
+                <div className="col-md-4 py-3">
+                  <Form.Group controlId="validationFormikUsername2">
+                    <Form.Label>Username</Form.Label>
+                    <InputGroup hasValidation>
+                      <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
+                      <Form.Control
+                        type="text"
+                        placeholder="Username"
+                        aria-describedby="inputGroupPrepend"
+                        name="username"
+                        value={values.username}
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        isInvalid={!!errors.username}
+                      />
+                      <Form.Control.Feedback type="invalid" tooltip>
+                        {errors.username}
+                      </Form.Control.Feedback>
+                    </InputGroup>
+                  </Form.Group>
+                </div>
+                <div className="col-md-4 py-3">
+                  <Form.Group
+                  controlId="validationFormik110"
+                  className="position-relative"
+                  >
+                    <Form.Label>Customer Email</Form.Label>
+                    <Form.Control
+                      type="email"
+                      placeholder="Enter Your Email"
+                      name="customeremail"
+                      value={values.customeremail}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      isInvalid={!!errors.customeremail}
+                    />
 
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.customeremail}
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group
-                as={Col}
-                md="4"
-                controlId="validationFormik110"
-                className="position-relative"
-              >
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Enter Password"
-                  name="password"
-                  value={values.password}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  isInvalid={!!errors.password}
-                />
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {errors.customeremail}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </div>
+                <div className="col-md-4 py-3">
+                  <Form.Group
+                  controlId="validationFormik110"
+                  className="position-relative"
+                  >
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Enter Password"
+                      name="password"
+                      value={values.password}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      isInvalid={!!errors.password}
+                    />
 
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.password}
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group
-                as={Col}
-                md="4"
-                controlId="validationFormik111"
-                className="position-relative"
-              >
-                <Form.Label>Re-Enter Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Re-Enter Password"
-                  name="reenterpassword"
-                  value={values.reenterpassword}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  isInvalid={!!errors.reenterpassword}
-                />
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.reenterpassword}
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Row>
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {errors.password}
+                    </Form.Control.Feedback>
+                  </Form.Group>                  
+                </div>
+                <div className="col-md-4 py-3">
+                  <Form.Group
+                  controlId="validationFormik111"
+                  className="position-relative"
+                  >
+                    <Form.Label>Re-Enter Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Re-Enter Password"
+                      name="reenterpassword"
+                      value={values.reenterpassword}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      isInvalid={!!errors.reenterpassword}
+                    />
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {errors.reenterpassword}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </div>
+                <div className="col-md-6 py-3">
+                  <Form.Group
+                  controlId="validationFormik103"
+                  className="position-relative"
+                  >
+                    <Form.Label>City</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="City"
+                      name="city"
+                      value={values.city}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      isInvalid={!!errors.city}
+                    />
 
-            <Row className="mb-3">
-              <Form.Group
-                as={Col}
-                md="6"
-                controlId="validationFormik103"
-                className="position-relative"
-              >
-                <Form.Label>City</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="City"
-                  name="city"
-                  value={values.city}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  isInvalid={!!errors.city}
-                />
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {errors.city}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </div>
+                <div className="col-md-3 py-3">
+                  <Form.Group
+                  controlId="validationFormik104"
+                  className="position-relative"
+                  >
+                    <Form.Label>State</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="State"
+                      name="state"
+                      value={values.state}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      isInvalid={!!errors.state}
+                    />
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {errors.state}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </div>
+                <div className="col-md-3 py-3">
+                  <Form.Group
+                  controlId="validationFormik105"
+                  className="position-relative"
+                  >
+                    <Form.Label>ZipCode</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Zip"
+                      name="zip"
+                      value={values.zip}
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      isInvalid={!!errors.zip}
+                    />
 
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.city}
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group
-                as={Col}
-                md="3"
-                controlId="validationFormik104"
-                className="position-relative"
-              >
-                <Form.Label>State</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="State"
-                  name="state"
-                  value={values.state}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  isInvalid={!!errors.state}
-                />
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.state}
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group
-                as={Col}
-                md="3"
-                controlId="validationFormik105"
-                className="position-relative"
-              >
-                <Form.Label>ZipCode</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Zip"
-                  name="zip"
-                  value={values.zip}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  isInvalid={!!errors.zip}
-                />
-
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.zip}
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Row>
-
-            <Form.Group className="position-relative mb-3">
-              <Form.Check
-                required
-                name="terms"
-                label="Agree to terms and conditions"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                isInvalid={!!errors.terms}
-                feedback={errors.terms}
-                feedbackType="invalid"
-                id="validationFormik106"
-                feedbackTooltip
-              />
-            </Form.Group>
-            <Button type="submit">Submit form</Button>
-          </Form>
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {errors.zip}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </div>
+                <div className="col-md-7 py-3">
+                  <Form.Group className="position-relative mb-3">
+                    <Form.Check
+                      required
+                      name="terms"
+                      label="Agree to terms and conditions"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      isInvalid={!!errors.terms}
+                      feedback={errors.terms}
+                      feedbackType="invalid"
+                      id="validationFormik106"
+                      feedbackTooltip
+                    />
+                  </Form.Group>
+                </div>
+                <div className="col-md-7 pb-3">
+                  <Button type="submit">Register</Button>
+                </div>
+              </div>              
+            </Form>
+          </div>
         )}
-      </Formik>
-    </Container>
+        </Formik>
+      
+        
+      </div>
+   </div>
   );
 }
 

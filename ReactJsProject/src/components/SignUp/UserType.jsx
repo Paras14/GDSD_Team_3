@@ -13,7 +13,7 @@ function UserType() {
       
 
       <div class="d-flex justify-content-evenly">
-        <Card  className="m-2">
+        <Card  className="m-2 shadow">
           <Card.Img variant="top" src="https://media.istockphoto.com/id/1356348368/photo/multiracial-friends-group-taking-selfie-portrait-outside-happy-multi-cultural-people-smiling.jpg?b=1&s=170667a&w=0&k=20&c=5t-v3ptbSMCymqn8O4oIs9uZrQskQGHzt_8AQBuwIx8="
           style={{ width: "auto", height: "400px" }}/>
           <Card.Body>
@@ -22,7 +22,7 @@ function UserType() {
           </Card.Body>
         </Card>
       
-        <Card  className="m-2">
+        <Card  className="m-2 shadow">
           <Card.Img variant="top" src="https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8cmVzdGF1cmFudHxlbnwwfHwwfHw%3D&w=1000&q=80"
           style={{ width: "auto", height: "400px" }}/>
           <Card.Body>
