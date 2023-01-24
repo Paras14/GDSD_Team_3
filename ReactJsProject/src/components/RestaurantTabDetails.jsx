@@ -20,6 +20,9 @@ function RestaurantTabDetails() {
         <Tab eventKey="Review" title="Review">
           <p> This is the Review Section</p>
         </Tab>
+        <Tab eventKey="Parking" title="Parking">
+          <p> This Restaurant has Parking Facilities Section</p>
+        </Tab>
       </Tabs>
       </Container>
     );
