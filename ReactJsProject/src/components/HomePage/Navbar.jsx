@@ -38,23 +38,25 @@ const Navbar = () => {
             { user !== null 
               ? 
               <div className="align-self-center d-flex text-light">
-              <p className="fs-4"> {element}</p>
-            <p className="ms-2 fs-4">{ user !== null ? user.username : "User" }</p>
-            <button
-              className="btn btn-light ms-4 fw-light text-uppercase"
-              onClick={() => {
-                localStorage.clear();
-                navigate("/");
-                window.location.reload();
-              }}
-            >
-              Logout
-            </button>
+                    <button class="btn btn-outline-light me-2" type="button">{element}<span className="ps-2">{ user !== null ? user.username : "User"}</span></button>
+            <div className="bg-light rounded">
+              <button
+                className="btn btn-outline-secondary"
+                onClick={() => {
+                  localStorage.clear();
+                  navigate("/");
+                  window.location.reload();
+                }}
+              >
+                Logout
+              </button>
+            </div>
+            
             </div>
               :
               <div className="align-self-center">
               <button
-              className="btn btn-light mx-2"
+              className="btn btn-outline-light mx-2"
               onClick={() => {
                 navigate("/signIn");
               }}
