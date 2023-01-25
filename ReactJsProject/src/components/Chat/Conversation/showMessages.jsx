@@ -28,7 +28,7 @@ export const Messages = ({ messages, user, receptor, //group,
             ? <div className={`d-flex flex-row ${getOrientation( user, mensaje )}`}
               id={mensaje.id}
               key = {index}>
-              <div className={`d-flex flex-row ${getOrigenMensaje( user, mensaje )} ${getMargen( mensaje, nombreAnterior )}`}>
+              <div className={`d-flex flex-row shadow ${getOrigenMensaje( user, mensaje )} ${getMargen( mensaje, nombreAnterior )}`}>
                 <div className="pt-1 tamañoMaximoMensaje">
                   {/*( group !== {} && receptor === '' && mensaje.nombre_usuario_emisor !== user.nombre && mensaje.nombre_usuario_emisor !== nombreAnterior && !mensaje.administracion )
                     ? <p className="fw-bold mb-0">{mensaje.nombre_usuario_emisor}</p>

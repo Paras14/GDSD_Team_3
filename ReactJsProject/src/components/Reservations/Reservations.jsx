@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { isAuthorized } from '../../helpers/isAuthorized';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Global } from '../../helpers/Global.js';
 import ReservationCard from './ReservationCard';
@@ -11,7 +11,7 @@ import ReservationCard from './ReservationCard';
 const Reservations = () => {
     const isauthorized = isAuthorized();
     const [user, setUser] = useState(null);
-    const navigate = Navigate();
+    const navigate = useNavigate();
     const [reservations, setReservations] = useState([]);
     const baseUrl = Global.baseUrl;
 
@@ -23,36 +23,52 @@ const Reservations = () => {
             console.log("isauthorized");
             setUser(JSON.parse(localStorage.getItem("user")));
 
-            // get reservations from the server
-            axios
-                .get(`${baseUrl}reservations/user/${user.id}`)
-                .then((res) => {
-                    console.log(res);
-                    setReservations(res.data);
-                })
-                .catch((err) => console.log(err));
-
         } else {
             navigate("/signIn");
         }
 
     }, []);
 
+    useEffect(() => {
+        
+        if (user) {
+            console.log("user", user);
+            // get reservations from the server
+            axios
+            .get(`${baseUrl}reservations/user/${user.id}`)
+            .then((res) => {
+                console.log(res);
+                setReservations(res.data);
+            })
+            .catch((err) => console.log(err));
+        }
+
+    }, [user]);
+
 
 
     return (
-        reservations.length > 0 ?
-            reservations.map((reservation) => {
-                return (
-                    <div>
+        reservations.length !== 0 ?
+            <div className="container mt-4 mb-5 pb-3">
+
+                <div className=" rounded shadow" style={{backgroundColor : "#AED0FF"}}>
+                    <p className="py-2 fs-1 fw-bold text-center" >Reservations</p>
+                </div>
+            {reservations.map((reservation) => (
+            
+                    
                         <ReservationCard
                             reservation={reservation}
                         />
-                    </div>
-                );
-            })
+                
+                ))
+            }
+            </div>
             :
-            <div>
+            <div className="container mt-4 mb-5">
+                <div className=" rounded shadow" style={{backgroundColor : "#AED0FF"}}>
+                    <p className="py-2 fs-1 fw-bold text-center" >Reservations</p>
+                </div>
                 <h2>You don't have any reservations</h2>
             </div>
     );
