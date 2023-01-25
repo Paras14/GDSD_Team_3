@@ -120,372 +120,391 @@ function SignUp() {
   };
 
   return (
-    <Container>
-      <h1 className="text-center my-4 py-4  text-uppercase">
-        Register YourSelf As a Restaurent!
-      </h1>
-      <Formik
-        method="POST"
-        validationSchema={schema}
-        onSubmit={handleSubmit}
-        initialValues={{
-          restaurentname: "Chinese Restaurent",
-          managerfirstname: "Ali",
-          managerlastname: "",
-          username: "",
-          managermail: "",
-          password: "",
-          reenterpassword: "",
-          city: "",
-          state: "",
-          address: "",
-          zip: "",
-          telefonenumber: "",
-          file: null,
-          restaurenttype: "",
-          description: "",
-          terms: false,
-        }}
-      >
-        {({
-          handleSubmit,
-          handleChange,
-          handleBlur,
-          values,
-          touched,
-          isValid,
-          errors,
-        }) => (
-          <Form noValidate onSubmit={handleSubmit}>
-            <Row className="mb-3">
-              <Form.Group
-                as={Col}
-                md="3"
-                controlId="validationFormik101"
-                className="position-relative"
-              >
-                <Form.Label>Restaurant Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="restaurentname"
-                  value={values.restaurentname}
-                  onChange={handleChange}
-                  isValid={touched.restaurentname && !errors.restaurentname}
-                />
-                <Form.Control.Feedback tooltip>
-                  Looks good!
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group
-                as={Col}
-                md="3"
-                controlId="validationFormik102"
-                className="position-relative"
-              >
-                <Form.Label>Manager First Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="managerfirstname"
-                  value={values.managerfirstname}
-                  onChange={handleChange}
-                  isValid={touched.managerfirstname && !errors.managerfirstname}
-                />
+    <div className="container mt-4 mb-5">
+      <div className=" rounded shadow bg-success text-white text-uppercase">
+        <p className="py-2 fs-1 fw-bold text-center">Restaurant registration</p>
+      </div>
 
-                <Form.Control.Feedback tooltip>
-                  Looks good!
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group
-                as={Col}
-                md="3"
-                controlId="validationFormik102"
-                className="position-relative"
-              >
-                <Form.Label>Manager Last Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="managerlastname"
-                  value={values.managerlastname}
-                  onChange={handleChange}
-                  isValid={touched.managerlastname && !errors.managerlastname}
-                />
+      <div className="rounded shadow bg-white pb-4">
+        <Formik
+          method="POST"
+          validationSchema={schema}
+          onSubmit={handleSubmit}
+          initialValues={{
+            restaurentname: "",
+            managerfirstname: "",
+            managerlastname: "",
+            username: "",
+            managermail: "",
+            password: "",
+            reenterpassword: "",
+            city: "",
+            state: "",
+            address: "",
+            zip: "",
+            telefonenumber: "",
+            file: null,
+            restaurenttype: "",
+            description: "",
+            terms: false,
+          }}
+        >
+          {({
+            handleSubmit,
+            handleChange,
+            handleBlur,
+            values,
+            touched,
+            isValid,
+            errors,
+          }) => (
+            <div className="container">
+              <br></br>
+              <Form noValidate onSubmit={handleSubmit}>
+                <div className="row px-5 mx-5">
+                  <div className="col-md-3 py-3">
+                    <Form.Group
+                      controlId="validationFormik101"
+                      className="position-relative"
+                    >
+                      <Form.Label>Restaurant Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="restaurentname"
+                        value={values.restaurentname}
+                        onChange={handleChange}
+                        isValid={
+                          touched.restaurentname && !errors.restaurentname
+                        }
+                      />
+                      <Form.Control.Feedback tooltip>
+                        Looks good!
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-3 py-3">
+                    <Form.Group
+                      controlId="validationFormik102"
+                      className="position-relative"
+                    >
+                      <Form.Label>Manager First Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="managerfirstname"
+                        value={values.managerfirstname}
+                        onChange={handleChange}
+                        isValid={
+                          touched.managerfirstname && !errors.managerfirstname
+                        }
+                      />
 
-                <Form.Control.Feedback tooltip>
-                  Looks good!
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="3" controlId="validationFormikUsername2">
-                <Form.Label>Username</Form.Label>
-                <InputGroup hasValidation>
-                  <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-                  <Form.Control
-                    type="text"
-                    placeholder="Username"
-                    aria-describedby="inputGroupPrepend"
-                    name="username"
-                    value={values.username}
-                    onChange={handleChange}
-                    isInvalid={!!errors.username}
-                  />
-                  <Form.Control.Feedback type="invalid" tooltip>
-                    {errors.username}
-                  </Form.Control.Feedback>
-                </InputGroup>
-              </Form.Group>
-            </Row>
-            <Row className="mb-3">
-              <Form.Group
-                as={Col}
-                md="4"
-                controlId="validationFormik110"
-                className="position-relative"
-              >
-                <Form.Label>Manager Email</Form.Label>
-                <Form.Control
-                  type="mail"
-                  placeholder="Enter Email"
-                  name="managermail"
-                  value={values.managermail}
-                  onChange={handleChange}
-                  isInvalid={!!errors.managermail}
-                />
+                      <Form.Control.Feedback tooltip>
+                        Looks good!
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-3 py-3">
+                    <Form.Group
+                      controlId="validationFormik102"
+                      className="position-relative"
+                    >
+                      <Form.Label>Manager Last Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="managerlastname"
+                        value={values.managerlastname}
+                        onChange={handleChange}
+                        isValid={
+                          touched.managerlastname && !errors.managerlastname
+                        }
+                      />
 
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.managermail}
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group
-                as={Col}
-                md="4"
-                controlId="validationFormik110"
-                className="position-relative"
-              >
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Enter Password"
-                  name="password"
-                  value={values.password}
-                  onChange={handleChange}
-                  isInvalid={!!errors.password}
-                />
+                      <Form.Control.Feedback tooltip>
+                        Looks good!
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-3 py-3">
+                    <Form.Group controlId="validationFormikUsername2">
+                      <Form.Label>Username</Form.Label>
+                      <InputGroup hasValidation>
+                        <InputGroup.Text id="inputGroupPrepend">
+                          @
+                        </InputGroup.Text>
+                        <Form.Control
+                          type="text"
+                          placeholder="Username"
+                          aria-describedby="inputGroupPrepend"
+                          name="username"
+                          value={values.username}
+                          onChange={handleChange}
+                          isInvalid={!!errors.username}
+                        />
+                        <Form.Control.Feedback type="invalid" tooltip>
+                          {errors.username}
+                        </Form.Control.Feedback>
+                      </InputGroup>
+                    </Form.Group>
+                  </div>
 
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.password}
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group
-                as={Col}
-                md="4"
-                controlId="validationFormik111"
-                className="position-relative"
-              >
-                <Form.Label>Re-Enter Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Re-Enter Password"
-                  name="reenterpassword"
-                  value={values.reenterpassword}
-                  onChange={handleChange}
-                  isInvalid={!!errors.reenterpassword}
-                />
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.reenterpassword}
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Row>
-            <Row className="mb-3">
-              <Form.Group
-                as={Col}
-                md="4"
-                controlId="validationFormik103"
-                className="position-relative"
-              >
-                <Form.Label>City</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="City"
-                  name="city"
-                  value={values.city}
-                  onChange={handleChange}
-                  isInvalid={!!errors.city}
-                />
+                  <div className="col-md-4 py-3">
+                    <Form.Group
+                      controlId="validationFormik110"
+                      className="position-relative"
+                    >
+                      <Form.Label>Manager Email</Form.Label>
+                      <Form.Control
+                        type="mail"
+                        placeholder="Enter Email"
+                        name="managermail"
+                        value={values.managermail}
+                        onChange={handleChange}
+                        isInvalid={!!errors.managermail}
+                      />
 
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.city}
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group
-                as={Col}
-                md="4"
-                controlId="validationFormik104"
-                className="position-relative"
-              >
-                <Form.Label>State</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="State"
-                  name="state"
-                  value={values.state}
-                  onChange={handleChange}
-                  isInvalid={!!errors.state}
-                />
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.state}
-                </Form.Control.Feedback>
-              </Form.Group>
+                      <Form.Control.Feedback type="invalid" tooltip>
+                        {errors.managermail}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-4 py-3">
+                    <Form.Group
+                      controlId="validationFormik110"
+                      className="position-relative"
+                    >
+                      <Form.Label>Password</Form.Label>
+                      <Form.Control
+                        type="password"
+                        placeholder="Enter Password"
+                        name="password"
+                        value={values.password}
+                        onChange={handleChange}
+                        isInvalid={!!errors.password}
+                      />
 
-              <Form.Group
-                as={Col}
-                md="4"
-                controlId="validationFormik108"
-                className="position-relative"
-              >
-                <Form.Label>Address</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Address"
-                  name="address"
-                  value={values.address}
-                  onChange={handleChange}
-                  isInvalid={!!errors.address}
-                />
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.address}
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Row>
-            <Row className="mb-3">
-              <Form.Group
-                as={Col}
-                md="4"
-                controlId="validationFormik105"
-                className="position-relative"
-              >
-                <Form.Label>Restaurant Telephone</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="Enter Number"
-                  name="telefonenumber"
-                  value={values.telefonenumber}
-                  onChange={handleChange}
-                  isInvalid={!!errors.telefonenumber}
-                />
+                      <Form.Control.Feedback type="invalid" tooltip>
+                        {errors.password}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-4 py-3">
+                    <Form.Group
+                      controlId="validationFormik111"
+                      className="position-relative"
+                    >
+                      <Form.Label>Re-Enter Password</Form.Label>
+                      <Form.Control
+                        type="password"
+                        placeholder="Re-Enter Password"
+                        name="reenterpassword"
+                        value={values.reenterpassword}
+                        onChange={handleChange}
+                        isInvalid={!!errors.reenterpassword}
+                      />
+                      <Form.Control.Feedback type="invalid" tooltip>
+                        {errors.reenterpassword}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </div>
 
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.telefonenumber}
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group
-                as={Col}
-                md="4"
-                controlId="validationFormik105"
-                className="position-relative"
-              >
-                <Form.Label>ZipCode</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Zip"
-                  name="zip"
-                  value={values.zip}
-                  onChange={handleChange}
-                  isInvalid={!!errors.zip}
-                />
+                  <div className="col-md-4 py-3">
+                    <Form.Group
+                      controlId="validationFormik103"
+                      className="position-relative"
+                    >
+                      <Form.Label>City</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="City"
+                        name="city"
+                        value={values.city}
+                        onChange={handleChange}
+                        isInvalid={!!errors.city}
+                      />
 
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.zip}
-                </Form.Control.Feedback>
-              </Form.Group>
+                      <Form.Control.Feedback type="invalid" tooltip>
+                        {errors.city}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-4 py-3">
+                    <Form.Group
+                      controlId="validationFormik104"
+                      className="position-relative"
+                    >
+                      <Form.Label>State</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="State"
+                        name="state"
+                        value={values.state}
+                        onChange={handleChange}
+                        isInvalid={!!errors.state}
+                      />
+                      <Form.Control.Feedback type="invalid" tooltip>
+                        {errors.state}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-4 py-3">
+                    <Form.Group
+                      controlId="validationFormik108"
+                      className="position-relative"
+                    >
+                      <Form.Label>Address</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter Address"
+                        name="address"
+                        value={values.address}
+                        onChange={handleChange}
+                        isInvalid={!!errors.address}
+                      />
+                      <Form.Control.Feedback type="invalid" tooltip>
+                        {errors.address}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </div>
 
-              <Form.Group
-                as={Col}
-                md="4"
-                controlId="validationFormik105"
-                className="position-relative"
-              >
-                <Form.Label>Restaurant Type</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Restaurent Type"
-                  name="restaurenttype"
-                  value={values.restaurenttype}
-                  onChange={handleChange}
-                  isInvalid={!!errors.restaurenttype}
-                />
+                  <div className="col-md-4 py-3">
+                    <Form.Group
+                      controlId="validationFormik105"
+                      className="position-relative"
+                    >
+                      <Form.Label>Restaurant Telephone</Form.Label>
+                      <Form.Control
+                        type="number"
+                        placeholder="Enter Number"
+                        name="telefonenumber"
+                        value={values.telefonenumber}
+                        onChange={handleChange}
+                        isInvalid={!!errors.telefonenumber}
+                      />
 
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.restaurenttype}
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Row>
-            <Row>
-              <Form.Group className="position-relative mb-3" as={Col} md="6">
-                <Form.Label>Upload image Url</Form.Label>
-                <Form.Control
-                  type="url"
-                  required
-                  name="file"
-                  onChange={handleChange}
-                  isInvalid={!!errors.file}
-                />
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.file}
-                </Form.Control.Feedback>
-              </Form.Group>
+                      <Form.Control.Feedback type="invalid" tooltip>
+                        {errors.telefonenumber}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-4 py-3">
+                    <Form.Group
+                      controlId="validationFormik105"
+                      className="position-relative"
+                    >
+                      <Form.Label>ZipCode</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Zip"
+                        name="zip"
+                        value={values.zip}
+                        onChange={handleChange}
+                        isInvalid={!!errors.zip}
+                      />
 
-              <Form.Group className="position-relative mb-3" as={Col} md="6">
-                <Form.Label>Description</Form.Label>
-                <Form.Control
-                  type="text"
-                  required
-                  name="description"
-                  onChange={handleChange}
-                  isInvalid={!!errors.description}
-                />
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.description}
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Row>
+                      <Form.Control.Feedback type="invalid" tooltip>
+                        {errors.zip}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-4 py-3">
+                    <Form.Group
+                      controlId="validationFormik105"
+                      className="position-relative"
+                    >
+                      <Form.Label>Restaurant Type</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter Restaurent Type"
+                        name="restaurenttype"
+                        value={values.restaurenttype}
+                        onChange={handleChange}
+                        isInvalid={!!errors.restaurenttype}
+                      />
 
-            <Form.Group className="position-relative mb-3">
-              <Form.Check
-                required
-                name="terms"
-                label="Agree to terms and conditions"
-                onChange={handleChange}
-                isInvalid={!!errors.terms}
-                feedback={errors.terms}
-                feedbackType="invalid"
-                id="validationFormik106"
-                feedbackTooltip
-              />
-            </Form.Group>
+                      <Form.Control.Feedback type="invalid" tooltip>
+                        {errors.restaurenttype}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </div>
 
-            <Button
-              type="submit"
-              disabled={
-                (values.restaurentname === "",
-                values.managername === "",
-                values.username === "",
-                values.managermail === "",
-                values.password === "",
-                values.reenterpassword === "",
-                values.city === "",
-                values.state === "",
-                values.telefonenumber === "",
-                values.zip === "",
-                values.restaurenttype === "",
-                values.file === null,
-                values.terms === false)
-              }
-            >
-              Submit form
-            </Button>
-          </Form>
-        )}
-      </Formik>
-    </Container>
+                  <div className="col-md-12 py-3">
+                    <Form.Group className="position-relative mb-3">
+                      <Form.Label>Upload image Url</Form.Label>
+                      <Form.Control
+                        type="url"
+                        required
+                        name="file"
+                        onChange={handleChange}
+                        isInvalid={!!errors.file}
+                      />
+                      <Form.Control.Feedback type="invalid" tooltip>
+                        {errors.file}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-12 pb-3">
+                    <Form.Group className="position-relative mb-3">
+                      <Form.Label>Description</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={3}
+                        required
+                        name="description"
+                        onChange={handleChange}
+                        isInvalid={!!errors.description}
+                      />
+                      <Form.Control.Feedback type="invalid" tooltip>
+                        {errors.description}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </div>
+
+                  <div className="col-md-12">
+                    <Form.Group className="position-relative mb-3">
+                      <Form.Check
+                        required
+                        name="terms"
+                        label="Agree to terms and conditions"
+                        onChange={handleChange}
+                        isInvalid={!!errors.terms}
+                        feedback={errors.terms}
+                        feedbackType="invalid"
+                        id="validationFormik106"
+                        feedbackTooltip
+                      />
+                    </Form.Group>
+                  </div>
+
+                  <Row className="text-uppercase fw-bold py-3">
+                    <Button
+                      className="text-uppercase fw-bold"
+                      type="submit"
+                      disabled={
+                        (values.restaurentname === "",
+                        values.managername === "",
+                        values.username === "",
+                        values.managermail === "",
+                        values.password === "",
+                        values.reenterpassword === "",
+                        values.city === "",
+                        values.state === "",
+                        values.telefonenumber === "",
+                        values.zip === "",
+                        values.restaurenttype === "",
+                        values.file === null,
+                        values.terms === false)
+                      }
+                    >
+                      Submit form
+                    </Button>
+                  </Row>
+                </div>
+              </Form>
+            </div>
+          )}
+        </Formik>
+      </div>
+    </div>
   );
 }
 

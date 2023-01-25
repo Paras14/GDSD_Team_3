@@ -26,7 +26,7 @@ db.restaurantCategory = require("./restaurantCategory.model")(sequelize, Sequeli
 db.user = require("./user.model")(sequelize, Sequelize);
 db.rol = require("./rol.model")(sequelize, Sequelize);
 db.chat = require("./chat.model")(sequelize, Sequelize);
-db.reservations = require("./reservation.model")(sequelize, Sequelize);
+db.reservation = require("./reservation.model")(sequelize, Sequelize);
 db.review = require("./reviews.model")(sequelize, Sequelize);
 
 
@@ -42,8 +42,7 @@ db.review.belongsTo(db.user);
 db.review.belongsTo(db.restaurant);
 
 
-db.reservations.belongsTo(db.user);
-db.reservations.belongsTo(db.restaurant);
+db.reservation.belongsTo(db.user);
+db.reservation.belongsTo(db.restaurant);
 
 module.exports = db;
-

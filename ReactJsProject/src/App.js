@@ -28,6 +28,7 @@ import ReservationDetails from "./components/HomePage/Reservation/ReservationDet
 import TableSelection from "./components/HomePage/Reservation/TableSelection";
 import FoodSelection from "./components/HomePage/Reservation/FoodSelection";
 import ParkingSelection from "./components/HomePage/Reservation/ParkingSelection";
+import ProfileComponent from "./components/profile/userprofile";
 
 const App = () => {
   return (
@@ -267,6 +268,16 @@ const App = () => {
             }
           />
           <Route
+            path="/profile"
+            element={
+              <div>
+                <Navbar />
+                <ProfileComponent />
+                <Footer />
+              </div>
+            }
+          />
+          <Route
             path="/ParkingSelection"
             element={
               <div>
@@ -277,6 +288,7 @@ const App = () => {
             }
           />
           <Route path="*" element={<ErrorPage />} />
+          
         </Routes>
       </Router>
     </div>

@@ -20,7 +20,7 @@ function CustomerAfterRegister() {
             navigate("/");
           }}
         >
-          Back To Home Page!!!
+          Back To Home Page!
         </Button>
       </Row>
     </Container>
