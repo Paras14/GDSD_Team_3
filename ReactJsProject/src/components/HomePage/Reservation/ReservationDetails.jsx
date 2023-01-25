@@ -5,7 +5,7 @@ import { BuildingUp } from "react-bootstrap-icons";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Global } from "../../../helpers/Global.js";
-import { isAuthorized } from '../../../helpers/isAuthorized.js';
+import { isAuthorized } from "../../../helpers/isAuthorized.js";
 import RestaurantPhoto from "../../RestaurantPhoto";
 
 function ReservationDetails() {
@@ -49,7 +49,6 @@ function ReservationDetails() {
       .then((res) => {
         console.log(res);
         navigate("/reservations");
-
       })
       .catch((err) => console.log(err));
   };
@@ -67,8 +66,8 @@ function ReservationDetails() {
 */
 
   useEffect(() => {
-    if ( !isauthorized ) {
-      navigate( '/signIn' );
+    if (!isauthorized) {
+      navigate("/signIn");
     }
     axios
       .get(`${baseUrl}restaurants/${restaurantId}`)
