@@ -30,15 +30,18 @@ const Reservations = () => {
     }, []);
 
     useEffect(() => {
-        console.log("user", user);
-        // get reservations from the server
-        axios
-        .get(`${baseUrl}reservations/user/${user.id}`)
-        .then((res) => {
-            console.log(res);
-            setReservations(res.data);
-        })
-        .catch((err) => console.log(err));
+        
+        if (user) {
+            console.log("user", user);
+            // get reservations from the server
+            axios
+            .get(`${baseUrl}reservations/user/${user.id}`)
+            .then((res) => {
+                console.log(res);
+                setReservations(res.data);
+            })
+            .catch((err) => console.log(err));
+        }
 
     }, [user]);
 
@@ -46,7 +49,11 @@ const Reservations = () => {
 
     return (
         reservations.length !== 0 ?
-            <div>
+            <div className="container mt-4 mb-5">
+
+                <div className=" rounded shadow" style={{backgroundColor : "#AED0FF"}}>
+                    <p className="py-2 fs-1 fw-bold text-center" >Reservations</p>
+                </div>
             {reservations.map((reservation) => (
             
                     
@@ -58,7 +65,10 @@ const Reservations = () => {
             }
             </div>
             :
-            <div>
+            <div className="container mt-4 mb-5">
+                <div className=" rounded shadow" style={{backgroundColor : "#AED0FF"}}>
+                    <p className="py-2 fs-1 fw-bold text-center" >Reservations</p>
+                </div>
                 <h2>You don't have any reservations</h2>
             </div>
     );

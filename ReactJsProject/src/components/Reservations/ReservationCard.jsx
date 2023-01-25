@@ -1,15 +1,16 @@
 import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import { formatDate } from '../Chat/format/formatDate';
 
 // this component displays the information of a reservation in the list of reservations of the user
 const ReservationCard = ({ reservation }) => {
 
     return (
-        <div>
+        <div className="rounded shadow bg-white mb-2">
             <Container>
                 <Row>
                     <Col>
-                        <h2>Reservation</h2>
+                        <h2>Reservation #{reservation.id}</h2>
                     </Col>
                 </Row>
                 <Row>
@@ -19,17 +20,12 @@ const ReservationCard = ({ reservation }) => {
                 </Row>
                 <Row>
                     <Col>
-                        <p>Date: {reservation.date}</p>
+                        <p>Date: { formatDate(reservation.date) }</p>
                     </Col>
                 </Row>
                 <Row>
                     <Col>
-                        <p>Hour: {reservation.hour}</p>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <p>Number of People: {reservation.count}</p>
+                        <p>Number of People: {reservation.numberofplaces}</p>
                     </Col>
                 </Row>
             </Container>
