@@ -138,7 +138,7 @@ exports.findAllFromRestaurant = (req, res) => {
   //Get all reservations from a manager
     exports.findAllFromManager = (req, res) => {
         const id = req.params.id;
-        Restaurant.findOne({ where: { managerId: id } }).then(data => {
+        Restaurant.findOne({ where: { userId: id } }).then(data => {
             Reservation.findAll({ where: { restaurantId: data.id } })
             .then(data => {
               res.send(data);

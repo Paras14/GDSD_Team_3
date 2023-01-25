@@ -190,5 +190,34 @@ exports.findByUser = (req, res) => {
   };      
 
   
+// // Find average Rating for a restaurant
+exports.getRestaurantAverageRatings = (req, res) => {
+    const restaurantId = req.query.restaurantId;
+    
+    Review.findAll({ where: { restaurantId: restaurantId } })
+      .then(data => {
+        if (data) {
+            var average = 0;
+            var n = Object.keys(data).length;
+            for( val in data){
+                average += parseFloat(data[val].rating);
+            }
+            average /= n;
+            res.status(200).send({
+                average: average
+              });
+        } else {
+          res.status(404).send({
+            message: `Cannot find Review with restaurant Id=${restaurantId}.`
+          });
+        }
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: "Error retrieving Review with restaurant Id=" + restaurantId
+        });
+      });
+  };
+  
 
 
