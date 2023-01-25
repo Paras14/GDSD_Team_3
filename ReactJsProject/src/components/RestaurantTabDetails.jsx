@@ -32,7 +32,7 @@ function RestaurantTabDetails({ restaurantDetail }) {
   return (
     <Container>
       <Tabs
-        defaultActiveKey="profile"
+        defaultActiveKey="Info"
         id="uncontrolled-tab-example"
         className="mb-3"
       >

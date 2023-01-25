@@ -158,7 +158,7 @@ function ReservationDetails() {
                 Select table
               </Button>
               </Col>*/}
-            {/* <Col className="col-lg-4">
+            <Col className="col-lg-4">
               <Button
                 size="lg"
                 className="text-center"
@@ -168,7 +168,7 @@ function ReservationDetails() {
               >
                 Select Food
               </Button>
-            </Col> */}
+            </Col> 
             {/*<Col className="col-lg-4">
               <Button
                 size="lg"
