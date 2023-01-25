@@ -10,10 +10,12 @@ import { useState } from "react";
 function showFoodItems(foodItem) {
   return (
     <FoodDetails
-      key={foodItem.foodId}
-      foodName={foodItem.foodName}
-      imgURL={foodItem.imgURL}
+      key={foodItem.id}
+      name={foodItem.name}
+      image={foodItem.image}
       ingredients={foodItem.ingredients}
+      price={foodItem.price}
+      displayInput={true}
     />
   );
 }
