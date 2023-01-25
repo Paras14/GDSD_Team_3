@@ -4,7 +4,7 @@ import { Global } from './Global';
 
 const baseUrl = Global.baseUrl;
 
-export const setUpChat = ( user, setUsers, setMessages, setMessagesDESC, //setMyGroups,
+export const setUpChat = ( user, setUsers, setMessages, setMessagesDESC,
     setMessagesSearch, start = true ) => {
 
   if ( start ) {

@@ -37,6 +37,7 @@ const Navbar = () => {
             { user !== null 
               ? 
               <div className="align-self-center d-flex text-light">
+
                 <button
                   className="btn btn-outline-light me-2"
                   onClick={() => {
@@ -45,7 +46,10 @@ const Navbar = () => {
                 >
                   Reservations
                 </button>
-                    <button class="btn btn-outline-light me-2" type="button">{element}<span className="ps-2">{ user !== null ? user.username : "User"}</span></button>
+
+                    <button class="btn btn-outline-light me-2" type="button" onClick={() => {
+                      navigate("/profile");
+                    }}>{element}<span className="ps-2">{ user !== null ? user.username : "User"}</span></button>
             <div className="bg-light rounded">
               <button
                 className="btn btn-outline-secondary"
