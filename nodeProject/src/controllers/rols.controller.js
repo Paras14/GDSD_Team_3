@@ -52,7 +52,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.query.id;
   
-    Restaurant.findByPk(id)
+    Rol.findByPk(id)
       .then(data => {
         if (data) {
           res.send(data);
