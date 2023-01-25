@@ -47,7 +47,7 @@ db.table.belongsTo(db.restaurant);
 
 db.reservation.belongsTo(db.user);
 db.reservation.belongsTo(db.restaurant); 
-db.reservation.belongsTo(db.table);
+//db.reservation.belongsTo(db.table);
 
 db.orderReservation.belongsTo(db.foods);
 db.orderReservation.belongsTo(db.reservation);

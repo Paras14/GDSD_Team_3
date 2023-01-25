@@ -59,12 +59,12 @@ function SignUp() {
 
       const restaurant = {
         name: values.restaurentname,
-        address: "",
+        address: values.address,
         city: values.city,
         state: values.state,
         zip: values.zip,
         telephone: values.telefonenumber,
-        description: "",
+        description: values.description,
         image: values.file,
         restaurantCategoryId: values.restaurenttype,
         userId: "",
