@@ -16,7 +16,6 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("useEffect");
     if (isauthorized) {
       console.log("isauthorized");
       setUser(JSON.parse(localStorage.getItem("user")));
@@ -38,6 +37,14 @@ const Navbar = () => {
             { user !== null 
               ? 
               <div className="align-self-center d-flex text-light">
+                <button
+                  className="btn btn-outline-light me-2"
+                  onClick={() => {
+                    navigate("/reservations");
+                  }}
+                >
+                  Reservations
+                </button>
                     <button class="btn btn-outline-light me-2" type="button">{element}<span className="ps-2">{ user !== null ? user.username : "User"}</span></button>
             <div className="bg-light rounded">
               <button
@@ -55,22 +62,23 @@ const Navbar = () => {
             </div>
               :
               <div className="align-self-center">
-              <button
-              className="btn btn-outline-light mx-2"
-              onClick={() => {
-                navigate("/signIn");
-              }}
-            >
-              Log in
-            </button>
-            <button
-              className="btn btn-light"
-              onClick={() => {
-                navigate("/userType");
-              }}
-            >
-              Register
-            </button>
+                
+                <button
+                  className="btn btn-outline-light mx-2"
+                  onClick={() => {
+                    navigate("/signIn");
+                  }}
+                >
+                  Log in
+                </button>
+                <button
+                  className="btn btn-light"
+                  onClick={() => {
+                    navigate("/userType");
+                  }}
+                >
+                  Register
+                </button>
             </div>
             }
             
