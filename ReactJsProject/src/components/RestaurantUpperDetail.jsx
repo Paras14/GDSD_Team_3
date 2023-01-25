@@ -7,21 +7,21 @@ import { Global } from "../helpers/Global.js";
 
 import RestaurantPhoto from "./RestaurantPhoto";
 
-function RestaurantUpperDetail({restaurantDetail}) {
+function RestaurantUpperDetail({ restaurantDetail }) {
   const navigate = useNavigate();
-//   const arrow = <FontAwesomeIcon icon={faArrowRight} />;
+  //   const arrow = <FontAwesomeIcon icon={faArrowRight} />;
 
-
-//const restaurantDetail = [
+  //const restaurantDetail = [
   //  { name: "Restaurant 1", info: "The restaurant is located in the quiet streets of the historic old town of Fulda. A special experience: The cozy restaurant, in summer with a wonderful street terrace, friendly staff and delicious dishes from regional and Mediterranean cuisine.user1@gmail.com"}];
   return (
     <Container>
-      {console.log("RestaurantUpperDetail: restaurantDetail: ", restaurantDetail)}
-    <br></br>
+      {console.log(
+        "RestaurantUpperDetail: restaurantDetail: ",
+        restaurantDetail
+      )}
+      <br></br>
       <Row>
-        <RestaurantPhoto
-          restaurantDetail={restaurantDetail}
-        />
+        <RestaurantPhoto restaurantDetail={restaurantDetail} />
       </Row>
       <br></br>
       <Row>
@@ -33,24 +33,24 @@ function RestaurantUpperDetail({restaurantDetail}) {
             <Col lg={4} md={3}></Col>
             <Col>
               <Button
-              size="lg"
-              className="text-center"
-              onClick={() => {
+                size="lg"
+                className="text-center"
+                onClick={() => {
                   navigate("/chat/" + restaurantDetail.userId);
-              }}
+                }}
               >
-              Chat with the manager
+                Chat with the manager
               </Button>
             </Col>
             <Col>
               <Button
-              size="lg"
-              className="text-center"
-              onClick={() => {
-                  navigate("/ReservationDetails");
-              }}
+                size="lg"
+                className="text-center"
+                onClick={() => {
+                  navigate("/ReservationDetails/" + restaurantDetail.id);
+                }}
               >
-              Make a reservation
+                Make a reservation
               </Button>
             </Col>
           </Row>

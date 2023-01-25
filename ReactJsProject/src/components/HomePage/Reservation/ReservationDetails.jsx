@@ -15,8 +15,8 @@ function ReservationDetails() {
   const [restaurantDetail, setRestaurantDetail] = useState(null);
 
   //   const arrow = <FontAwesomeIcon icon={faArrowRight} />;
- 
-/*  const restaurantDetail = [
+
+  /*  const restaurantDetail = [
     {
       name: "Restaurant 1",
       info: "The restaurant is located in the quiet streets of the historic old town of Fulda. A special experience: The cozy restaurant, in summer with a wonderful street terrace, friendly staff and delicious dishes from regional and Mediterranean cuisine.user1@gmail.com",
@@ -27,33 +27,35 @@ function ReservationDetails() {
 */
 
   useEffect(() => {
-
-    axios.get(`${baseUrl}restaurants/${restaurantId}`)
-    .then((response) => {
-      setRestaurantDetail(response.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-
+    axios
+      .get(`${baseUrl}restaurants/${restaurantId}`)
+      .then((response) => {
+        setRestaurantDetail(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
-  return (
-    restaurantDetail !== null
-    ?
+  // useEffect(() => {
+  //   fetch(`${baseUrl}restaurants/${restaurantId}`).then;
+  // }, []);
+
+  return restaurantDetail !== null ? (
     <Container>
       <Row>
         <h2 className="text-center p-4 fw-bold text-uppercase text-danger">
-          Reservation Page
+          {restaurantDetail.name}
         </h2>
         <RestaurantPhoto restaurantDetail={restaurantDetail} />
-        <h4>{restaurantDetail.name}</h4>
       </Row>
       <Row>
         <Container>
-          <Row>
+          <Row className="p-4">
             <Col className="col-lg-4">
-              <label for="reservation-date">Date and Hour:</label>
+              <label for="reservation-date" className="fw-bold text-center">
+                Date:
+              </label>
               <br />
               <input
                 type="date"
@@ -62,9 +64,11 @@ function ReservationDetails() {
                 required
               />
             </Col>
-            <Col className="col-lg-4">
+            <Col className="col-lg-4 ">
               <div>
-                <label for="appt">Choose a time for your Reservation:</label>
+                <label for="appt" className="fw-bold">
+                  Hour:
+                </label>
               </div>
               <input
                 type="time"
@@ -77,7 +81,9 @@ function ReservationDetails() {
             </Col>
             <Col className="col-lg-4">
               <div>
-                <label for="people_number">Number of People:</label>
+                <label for="people_number" className="fw-bold">
+                  Number of People:
+                </label>
               </div>
 
               <input
@@ -101,7 +107,7 @@ function ReservationDetails() {
                 Select table
               </Button>
               </Col>*/}
-            <Col className="col-lg-4">
+            {/* <Col className="col-lg-4">
               <Button
                 size="lg"
                 className="text-center"
@@ -111,7 +117,7 @@ function ReservationDetails() {
               >
                 Select Food
               </Button>
-            </Col>
+            </Col> */}
             {/*<Col className="col-lg-4">
               <Button
                 size="lg"
@@ -133,7 +139,7 @@ function ReservationDetails() {
       </Row>
       <br></br>
     </Container>
-    :
+  ) : (
     <div>Loading...</div>
   );
 }
