@@ -12,7 +12,23 @@ function ReservationDetails() {
   const navigate = useNavigate();
   const { restaurantId } = useParams();
   const baseUrl = Global.baseUrl;
+  const [date, setDate] = useState("");
+  const [hour, setHour] = useState("");
+  const [count, setCount] = useState("");
   const [restaurantDetail, setRestaurantDetail] = useState(null);
+
+  const postDataHandle = (e) => {
+    e.preventDefault();
+
+    axios
+      .post("https://jsonplaceholder.typicode.com/posts", {
+        date,
+        hour,
+        count,
+      })
+      .then((res) => console.log("Get the data:", res))
+      .catch((err) => console.log(err));
+  };
 
   //   const arrow = <FontAwesomeIcon icon={faArrowRight} />;
 
@@ -61,6 +77,8 @@ function ReservationDetails() {
                 type="date"
                 id="reservation-date"
                 name="reservation-date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
                 required
               />
             </Col>
@@ -76,6 +94,8 @@ function ReservationDetails() {
                 name="appt"
                 min="09:00"
                 max="21:00"
+                value={hour}
+                onChange={(e) => setHour(e.target.value)}
                 required
               />
             </Col>
@@ -90,6 +110,8 @@ function ReservationDetails() {
                 type="text"
                 id="people_number"
                 name="people_number"
+                value={count}
+                onChange={(e) => setCount(e.target.value)}
                 required
               />
             </Col>
@@ -131,7 +153,7 @@ function ReservationDetails() {
               </Col>*/}
           </Row>
           <Row className="mt-4 text-center w-full m-2">
-            <Button size="lg" variant="danger">
+            <Button size="lg" variant="danger" onClick={postDataHandle}>
               Book Now
             </Button>
           </Row>
