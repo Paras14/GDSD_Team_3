@@ -40,12 +40,12 @@ function ReservationDetails() {
       date: date + " " + hour + ":00",
       numberofplaces: count,
       restaurantId: restaurantId,
-      userId: user.id
-    }
+      userId: user.id,
+    };
 
     axios
       .post(`${baseUrl}reservations/`, reservation)
-      .then((res) => console.log(res) )
+      .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
 
@@ -93,6 +93,7 @@ function ReservationDetails() {
               </label>
               <br />
               <input
+                class="form-control"
                 type="date"
                 id="reservation-date"
                 name="reservation-date"
@@ -108,6 +109,7 @@ function ReservationDetails() {
                 </label>
               </div>
               <input
+                class="form-control"
                 type="time"
                 id="appt"
                 name="appt"
@@ -126,6 +128,7 @@ function ReservationDetails() {
               </div>
 
               <input
+                class="form-control"
                 type="text"
                 id="people_number"
                 name="people_number"
