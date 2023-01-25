@@ -2,34 +2,54 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import { StarFill, StarHalf } from "react-bootstrap-icons";
 import ReviewCheckBox from "./ReviewCheckBox2";
+import ReviewCards from "./ReviewCards";
+
+const responseObjReview = [{
+    reviewId:1,
+    userId: "Customer_1",
+    restaurantId: "Restaurant_1",
+    rating: 5,
+    quickService: true,
+    deliciousFood: true,
+    politeBehavior: true,
+    valueForMoney: true,
+    comment: "Exquisite Dining Experience"
+},
+{
+  reviewId:1,
+  userId: "Customer_2",
+  restaurantId: "Restaurant_1",
+  rating: 4,
+  quickService: false,
+  deliciousFood: true,
+  politeBehavior: true,
+  valueForMoney: false,
+  comment: "Nice"
+}];
+
+function showReviews(review){
+  return (
+    <ReviewCards
+    key = {review.reviewId}
+    userId = {review.userId}
+    rating = {review.rating}
+    quickService = {review.quickService}
+    deliciousFood = {review.deliciousFood}
+    politeBehavior = {review.politeBehavior}
+    valueForMoney = {review.valueForMoney}
+    comment = {review.comment}
+  />
+  );
+}
 
 function Review() {
   return (
-    <Container className="text-center mt-4">
+    <Container className="mt-4 mb-4">
       <div>
-        <h1 className="text-uppercase fs-1 text-uppercase"> review</h1>
+        <h1 className="text-uppercase fs-1 text-uppercase text-center"> review</h1>
       </div>
-      <div className="fs-3 text-warning">
-        <StarFill />
-        <StarFill />
-        <StarFill />
-        <StarFill />
-        <StarHalf />
-      </div>
-
-      <div className="mt-4">
-        <p className="fw-bold text-center">
-          Post by example_customer to example_restaurant: 16.12.2022 11:04
-        </p>
-
-        <form className="text-center">
-          <label className="mx-4 fw-bold">Customer Email</label>
-          <input type="email" placeholder="customer@gmail.com" disabled />
-        </form>
-      </div>
-
-      <div>
-        <ReviewCheckBox />
+      <div className="col-lg-10">
+      {responseObjReview.map(showReviews)}
       </div>
     </Container>
   );
