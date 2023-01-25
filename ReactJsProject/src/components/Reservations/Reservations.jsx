@@ -49,7 +49,7 @@ const Reservations = () => {
 
     return (
         reservations.length !== 0 ?
-            <div className="container mt-4 mb-5">
+            <div className="container mt-4 mb-5 pb-3">
 
                 <div className=" rounded shadow" style={{backgroundColor : "#AED0FF"}}>
                     <p className="py-2 fs-1 fw-bold text-center" >Reservations</p>

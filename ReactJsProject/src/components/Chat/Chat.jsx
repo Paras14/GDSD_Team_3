@@ -160,8 +160,8 @@ export const Chat = () => {
     user === null 
       ? <div></div>
       : firstChat || iniciandoChat
-        ? <div className="row justify-content-center">
-          <section className="botonTransparente mt-5">
+        ? <div className="row justify-content-center pb-5">
+          <section className="botonTransparente">
             <div className="container py-5 botonTransparente" >
               <div className="row botonTransparente">
                 <div className="col-md-12 botonTransparente">
