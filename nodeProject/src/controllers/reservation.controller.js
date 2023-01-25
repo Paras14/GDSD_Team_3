@@ -1,6 +1,7 @@
 const db = require("../models");
 const Reservation = db.reservation;
 const Restaurant = db.restaurant;
+const OrderReservation = db.orderReservation; 
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Reservation
@@ -151,3 +152,38 @@ exports.findAllFromRestaurant = (req, res) => {
             });
         });
         };
+
+
+
+//Adding code for managing orders for a reservation
+
+exports.addOrder = (req, res) => {
+      const id = req.body.id;
+      const foodQuantity = req.body.list; 
+      if(!req.body.id){
+        res.status(400).send({
+          message: "Reservation Id can not be empty!"
+        });
+        return;
+      }
+
+      let list = [];
+      for(i in foodQuantity){
+        let currentRow = {};
+        currentRow.reservationId = parseInt(id);
+        currentRow.foodId = parseInt(foodQuantity[i].foodId);
+        currentRow.quantity = parseInt(foodQuantity[i].quantity);
+        list.push(currentRow);
+      }
+      console.log(list);
+      OrderReservation.bulkCreate(list)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while creating the Reservation."
+        });
+      });
+};

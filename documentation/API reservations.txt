@@ -118,6 +118,46 @@ numberofpeople:
 ...
 }
 ===========================================================================================
+===========================================================================================
+ADD AN ORDER
+This is a URL to add an order to a reservation. 
+@return: you will recieve a list of all reservations of a user like this.
+post("/reservations/order/"){
+    {
+        reservationId:,
+        list: [
+            {
+                foodId: id1,
+                quantity: quantity1
+            },
+            {
+                foodId: id2,
+                quantity: quantity2
+            }   
+        ]
+    }
+}
+
+@return:
+{
+{
+        reservationId,
+        list:[
+            {
+                foodId: id1,
+                quantity: quantity1
+            },
+            {
+                foodId: id2,
+                quantity: quantity2
+            }   
+        ]
+        
+},
+{...},
+...
+}
+===========================================================================================
 
 
 
