@@ -120,47 +120,50 @@ function SignUp() {
   };
 
   return (
-    <Container>
-      <h1 className="text-center my-4 py-4  text-uppercase">
-        Register YourSelf As a Restaurent!
-      </h1>
-      <Formik
-        method="POST"
-        validationSchema={schema}
-        onSubmit={handleSubmit}
-        initialValues={{
-          restaurentname: "Chinese Restaurent",
-          managerfirstname: "Ali",
-          managerlastname: "",
-          username: "",
-          managermail: "",
-          password: "",
-          reenterpassword: "",
-          city: "",
-          state: "",
-          address: "",
-          zip: "",
-          telefonenumber: "",
-          file: null,
-          restaurenttype: "",
-          description: "",
-          terms: false,
-        }}
-      >
-        {({
-          handleSubmit,
-          handleChange,
-          handleBlur,
-          values,
-          touched,
-          isValid,
-          errors,
-        }) => (
-          <Form noValidate onSubmit={handleSubmit}>
-            <Row className="mb-3">
-              <Form.Group
-                as={Col}
-                md="3"
+    <div className="container mt-4 mb-5">
+      <div className=" rounded shadow" style={{backgroundColor : "#AED0FF"}}>
+        <p className="py-2 fs-1 fw-bold text-center" >Restaurant registration</p>
+      </div>
+
+      <div className="rounded shadow bg-white pb-4">
+        <Formik
+          method="POST"
+          validationSchema={schema}
+          onSubmit={handleSubmit}
+          initialValues={{
+            restaurentname: "",
+            managerfirstname: "",
+            managerlastname: "",
+            username: "",
+            managermail: "",
+            password: "",
+            reenterpassword: "",
+            city: "",
+            state: "",
+            address: "",
+            zip: "",
+            telefonenumber: "",
+            file: null,
+            restaurenttype: "",
+            description: "",
+            terms: false,
+          }}
+        >
+          {({
+            handleSubmit,
+            handleChange,
+            handleBlur,
+            values,
+            touched,
+            isValid,
+            errors,
+          }) => (
+            <div className="container">
+              <br></br>
+              <Form noValidate onSubmit={handleSubmit}>
+                <div className="row px-5 mx-5">
+                  <div className="col-md-3 py-3">
+                  <Form.Group
                 controlId="validationFormik101"
                 className="position-relative"
               >
@@ -176,9 +179,9 @@ function SignUp() {
                   Looks good!
                 </Form.Control.Feedback>
               </Form.Group>
-              <Form.Group
-                as={Col}
-                md="3"
+                  </div>
+                  <div className="col-md-3 py-3">
+                    <Form.Group
                 controlId="validationFormik102"
                 className="position-relative"
               >
@@ -195,9 +198,8 @@ function SignUp() {
                   Looks good!
                 </Form.Control.Feedback>
               </Form.Group>
-              <Form.Group
-                as={Col}
-                md="3"
+                  </div>
+                  <div className="col-md-3 py-3"><Form.Group
                 controlId="validationFormik102"
                 className="position-relative"
               >
@@ -214,7 +216,8 @@ function SignUp() {
                   Looks good!
                 </Form.Control.Feedback>
               </Form.Group>
-              <Form.Group as={Col} md="3" controlId="validationFormikUsername2">
+                  </div>
+                  <div className="col-md-3 py-3"><Form.Group controlId="validationFormikUsername2">
                 <Form.Label>Username</Form.Label>
                 <InputGroup hasValidation>
                   <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
@@ -231,12 +234,10 @@ function SignUp() {
                     {errors.username}
                   </Form.Control.Feedback>
                 </InputGroup>
-              </Form.Group>
-            </Row>
-            <Row className="mb-3">
-              <Form.Group
-                as={Col}
-                md="4"
+              </Form.Group></div>
+
+                  <div className="col-md-4 py-3">
+                  <Form.Group
                 controlId="validationFormik110"
                 className="position-relative"
               >
@@ -254,9 +255,9 @@ function SignUp() {
                   {errors.managermail}
                 </Form.Control.Feedback>
               </Form.Group>
-              <Form.Group
-                as={Col}
-                md="4"
+                  </div>
+                  <div className="col-md-4 py-3">
+                  <Form.Group
                 controlId="validationFormik110"
                 className="position-relative"
               >
@@ -274,9 +275,9 @@ function SignUp() {
                   {errors.password}
                 </Form.Control.Feedback>
               </Form.Group>
-              <Form.Group
-                as={Col}
-                md="4"
+                  </div>
+                  <div className="col-md-4 py-3">
+                  <Form.Group
                 controlId="validationFormik111"
                 className="position-relative"
               >
@@ -293,11 +294,10 @@ function SignUp() {
                   {errors.reenterpassword}
                 </Form.Control.Feedback>
               </Form.Group>
-            </Row>
-            <Row className="mb-3">
-              <Form.Group
-                as={Col}
-                md="4"
+                  </div>
+
+                  <div className="col-md-4 py-3">
+                  <Form.Group
                 controlId="validationFormik103"
                 className="position-relative"
               >
@@ -315,9 +315,9 @@ function SignUp() {
                   {errors.city}
                 </Form.Control.Feedback>
               </Form.Group>
-              <Form.Group
-                as={Col}
-                md="4"
+                  </div>   
+                  <div className="col-md-4 py-3">
+                  <Form.Group
                 controlId="validationFormik104"
                 className="position-relative"
               >
@@ -335,9 +335,9 @@ function SignUp() {
                 </Form.Control.Feedback>
               </Form.Group>
 
-              <Form.Group
-                as={Col}
-                md="4"
+                  </div>
+                  <div className="col-md-4 py-3">
+                  <Form.Group
                 controlId="validationFormik108"
                 className="position-relative"
               >
@@ -354,11 +354,10 @@ function SignUp() {
                   {errors.address}
                 </Form.Control.Feedback>
               </Form.Group>
-            </Row>
-            <Row className="mb-3">
-              <Form.Group
-                as={Col}
-                md="4"
+                  </div>
+
+                  <div className="col-md-4 py-3">
+                  <Form.Group
                 controlId="validationFormik105"
                 className="position-relative"
               >
@@ -376,9 +375,9 @@ function SignUp() {
                   {errors.telefonenumber}
                 </Form.Control.Feedback>
               </Form.Group>
-              <Form.Group
-                as={Col}
-                md="4"
+                  </div>
+                  <div className="col-md-4 py-3">
+                  <Form.Group
                 controlId="validationFormik105"
                 className="position-relative"
               >
@@ -396,10 +395,9 @@ function SignUp() {
                   {errors.zip}
                 </Form.Control.Feedback>
               </Form.Group>
-
-              <Form.Group
-                as={Col}
-                md="4"
+                  </div>
+                  <div className="col-md-4 py-3">
+                  <Form.Group
                 controlId="validationFormik105"
                 className="position-relative"
               >
@@ -417,9 +415,10 @@ function SignUp() {
                   {errors.restaurenttype}
                 </Form.Control.Feedback>
               </Form.Group>
-            </Row>
-            <Row>
-              <Form.Group className="position-relative mb-3" as={Col} md="6">
+                  </div>
+
+                  <div className="col-md-6 py-3">
+                  <Form.Group className="position-relative mb-3">
                 <Form.Label>Upload image Url</Form.Label>
                 <Form.Control
                   type="url"
@@ -432,8 +431,9 @@ function SignUp() {
                   {errors.file}
                 </Form.Control.Feedback>
               </Form.Group>
-
-              <Form.Group className="position-relative mb-3" as={Col} md="6">
+                  </div>
+                  <div className="col-md-6 py-3">
+                  <Form.Group className="position-relative mb-3">
                 <Form.Label>Description</Form.Label>
                 <Form.Control
                   type="text"
@@ -446,9 +446,10 @@ function SignUp() {
                   {errors.description}
                 </Form.Control.Feedback>
               </Form.Group>
-            </Row>
+                  </div>
 
-            <Form.Group className="position-relative mb-3">
+                  <div className="col-md-12">
+                  <Form.Group className="position-relative mb-3">
               <Form.Check
                 required
                 name="terms"
@@ -461,8 +462,10 @@ function SignUp() {
                 feedbackTooltip
               />
             </Form.Group>
+                  </div>
 
-            <Button
+                  <div className="col-md-12 py-3">
+                  <Button
               type="submit"
               disabled={
                 (values.restaurentname === "",
@@ -482,10 +485,15 @@ function SignUp() {
             >
               Submit form
             </Button>
-          </Form>
-        )}
-      </Formik>
-    </Container>
+                  </div>
+              </div>
+              </Form>
+            </div>
+          )}
+        </Formik>
+      </div>
+
+    </div>
   );
 }
 
