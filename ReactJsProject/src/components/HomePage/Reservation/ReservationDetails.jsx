@@ -46,7 +46,11 @@ function ReservationDetails() {
 
     axios
       .post(`${baseUrl}reservations/`, reservation)
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res);
+        navigate("/reservations");
+
+      })
       .catch((err) => console.log(err));
   };
 
