@@ -27,6 +27,8 @@ db.user = require("./user.model")(sequelize, Sequelize);
 db.rol = require("./rol.model")(sequelize, Sequelize);
 db.chat = require("./chat.model")(sequelize, Sequelize);
 db.reservations = require("./reservation.model")(sequelize, Sequelize);
+db.review = require("./reviews.model")(sequelize, Sequelize);
+
 
 db.foods.belongsTo(db.foodCategory);
 db.foods.belongsTo(db.restaurant);
@@ -36,6 +38,9 @@ db.user.hasOne(db.restaurant);
 db.user.belongsTo(db.rol);
 db.chat.belongsTo(db.user, {foreignKey: 'user_emitter'});
 db.chat.belongsTo(db.user, {foreignKey: 'user_receiver'});
+db.review.belongsTo(db.user);
+db.review.belongsTo(db.restaurant);
+
 
 db.reservations.belongsTo(db.user);
 db.reservations.belongsTo(db.restaurant);
