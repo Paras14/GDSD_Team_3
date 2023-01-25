@@ -21,12 +21,12 @@ function ReservationDetails() {
     e.preventDefault();
 
     axios
-      .post("https://jsonplaceholder.typicode.com/posts", {
+      .post(`${baseUrl}restaurants/`, {
         date,
         hour,
         count,
       })
-      .then((res) => console.log("Get the data:", res))
+      .then((res) => setRestaurantDetail("Get the data:", res))
       .catch((err) => console.log(err));
   };
 

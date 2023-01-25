@@ -1,9 +1,7 @@
 import React from "react";
-import { useEffect, useState } from "react";
+
 import { Button, Container, Row, Col } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-import { Global } from "../helpers/Global.js";
 
 import RestaurantPhoto from "./RestaurantPhoto";
 
