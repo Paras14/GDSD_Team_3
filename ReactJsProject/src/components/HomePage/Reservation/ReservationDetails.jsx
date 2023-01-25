@@ -105,7 +105,7 @@ function ReservationDetails() {
             <Col className="col-lg-4 ">
               <div>
                 <label for="appt" className="fw-bold">
-                  Hour:
+                  Time:
                 </label>
               </div>
               <input
