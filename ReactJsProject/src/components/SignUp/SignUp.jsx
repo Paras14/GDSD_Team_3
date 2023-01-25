@@ -417,7 +417,7 @@ function SignUp() {
               </Form.Group>
                   </div>
 
-                  <div className="col-md-6 py-3">
+                  <div className="col-md-12 py-3">
                   <Form.Group className="position-relative mb-3">
                 <Form.Label>Upload image Url</Form.Label>
                 <Form.Control
@@ -432,11 +432,12 @@ function SignUp() {
                 </Form.Control.Feedback>
               </Form.Group>
                   </div>
-                  <div className="col-md-6 py-3">
+                  <div className="col-md-12 pb-3">
                   <Form.Group className="position-relative mb-3">
                 <Form.Label>Description</Form.Label>
                 <Form.Control
-                  type="text"
+                  as="textarea"
+                  rows={3} 
                   required
                   name="description"
                   onChange={handleChange}
