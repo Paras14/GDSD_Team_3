@@ -29,6 +29,7 @@ import TableSelection from "./components/HomePage/Reservation/TableSelection";
 import FoodSelection from "./components/HomePage/Reservation/FoodSelection";
 import ParkingSelection from "./components/HomePage/Reservation/ParkingSelection";
 import ProfileComponent from "./components/profile/userprofile";
+import Reservations from "./components/Reservations/Reservations";
 
 const App = () => {
   return (
@@ -273,6 +274,16 @@ const App = () => {
               <div>
                 <Navbar />
                 <ProfileComponent />
+                <Footer />
+              </div>
+            }
+          />
+          <Route
+            path="/reservations"
+            element={
+              <div>
+                <Navbar />
+                <Reservations/>
                 <Footer />
               </div>
             }
