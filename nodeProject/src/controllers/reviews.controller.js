@@ -190,7 +190,7 @@ exports.findByUser = (req, res) => {
   };      
 
   
-// // Find average Rating for a restaurant
+// Find average Rating for a restaurant
 exports.getRestaurantAverageRatings = (req, res) => {
     const restaurantId = req.query.restaurantId;
     
