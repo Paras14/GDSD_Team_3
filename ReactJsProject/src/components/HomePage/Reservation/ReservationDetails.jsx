@@ -5,10 +5,11 @@ import { BuildingUp } from "react-bootstrap-icons";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Global } from "../../../helpers/Global.js";
-
+import { isAuthorized } from '../../../helpers/isAuthorized.js';
 import RestaurantPhoto from "../../RestaurantPhoto";
 
 function ReservationDetails() {
+  const isauthorized = isAuthorized();
   const navigate = useNavigate();
   const { restaurantId } = useParams();
   const baseUrl = Global.baseUrl;
@@ -62,6 +63,9 @@ function ReservationDetails() {
 */
 
   useEffect(() => {
+    if ( !isauthorized ) {
+      navigate( '/signIn' );
+    }
     axios
       .get(`${baseUrl}restaurants/${restaurantId}`)
       .then((response) => {
