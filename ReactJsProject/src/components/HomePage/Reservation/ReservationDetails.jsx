@@ -16,17 +16,36 @@ function ReservationDetails() {
   const [hour, setHour] = useState("");
   const [count, setCount] = useState("");
   const [restaurantDetail, setRestaurantDetail] = useState(null);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    document.title = `Reservation Details`;
+
+    // get user from local storage
+    const user = JSON.parse(localStorage.getItem("user"));
+    setUser(user);
+  }, []);
 
   const postDataHandle = (e) => {
     e.preventDefault();
 
+    console.log("date", date);
+    console.log("hour", hour);
+    console.log("count", count);
+    console.log("restaurantId", restaurantId);
+    console.log("user", user);
+
+    const reservation = {
+      date: date + " " + hour + ":00",
+      numberofplaces: count,
+      restaurantId: restaurantId,
+      userId: user.id
+    }
+
     axios
-      .post(`${baseUrl}restaurants/`, {
-        date,
-        hour,
-        count,
-      })
-      .then((res) => setRestaurantDetail("Get the data:", res))
+      .post(`${baseUrl}reservations/`, reservation)
+      .then((res) => console.log(res) )
       .catch((err) => console.log(err));
   };
 
@@ -153,7 +172,7 @@ function ReservationDetails() {
               </Col>*/}
           </Row>
           <Row className="mt-4 text-center w-full m-2">
-            <Button size="lg" variant="danger" onClick={postDataHandle}>
+            <Button size="lg" variant="success" onClick={postDataHandle}>
               Book Now
             </Button>
           </Row>
