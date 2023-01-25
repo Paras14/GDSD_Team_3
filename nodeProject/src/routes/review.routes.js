@@ -24,7 +24,10 @@ module.exports = app => {
 
     router.get("/restaurant/id/", reviews.findByRestaurant);
 
+    router.get("/restaurant/averageRating/", reviews.getRestaurantAverageRatings);
+
     router.get("/user/id/", reviews.findByUser);
+
 
   
     app.use('/reviews', router);
