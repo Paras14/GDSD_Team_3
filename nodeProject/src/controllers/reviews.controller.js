@@ -55,7 +55,7 @@ exports.findAll = (req, res) => {
 
 // // Find a single Restaurant with an id
 exports.findOne = (req, res) => {
-    const id = req.query.id;
+    const id = req.params.id;
   
     Review.findByPk(id)
       .then(data => {
@@ -102,7 +102,7 @@ exports.update = (req, res) => {
 
 // // Delete a Restaurant with the specified id in the request
 exports.delete = (req, res) => {
-    const id = req.query.id;
+    const id = req.params.id;
   
     Review.destroy({
       where: { id: id }
@@ -148,7 +148,7 @@ exports.deleteAll = (req, res) => {
 
 // // Find all single Restaurant with an id
 exports.findByRestaurant = (req, res) => {
-    const restaurantId = req.query.restaurantId;
+    const restaurantId = req.params.restaurantId;
     
     Review.findAll({ where: { restaurantId: restaurantId } })
       .then(data => {
@@ -169,7 +169,7 @@ exports.findByRestaurant = (req, res) => {
 
   // // Find all single User with an id
 exports.findByUser = (req, res) => {
-    const userId = req.query.userId;
+    const userId = req.params.userId;
 
     
     Review.findAll({ where: { userId: userId } })
@@ -192,7 +192,7 @@ exports.findByUser = (req, res) => {
   
 // Find average Rating for a restaurant
 exports.getRestaurantAverageRatings = (req, res) => {
-    const restaurantId = req.query.restaurantId;
+    const restaurantId = req.params.restaurantId;
     
     Review.findAll({ where: { restaurantId: restaurantId } })
       .then(data => {

@@ -62,7 +62,9 @@ function RestaurantTabDetails({ restaurantDetail }) {
           </p>
         </Tab>
         <Tab eventKey="Review" title="Review">
-          <Review />
+          <Review 
+            restaurantDetail={restaurantDetail}
+          />
         </Tab>
         <Tab eventKey="Parking" title="Parking">
           <p> This Restaurant has no Parking Facilities Section</p>

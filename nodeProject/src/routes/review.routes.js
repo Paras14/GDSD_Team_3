@@ -22,11 +22,11 @@ module.exports = app => {
   // Delete all Tutorials
     router.delete("/", checkToken, reviews.deleteAll);
 
-    router.get("/restaurant/id/", reviews.findByRestaurant);
+    router.get("/restaurant/:restaurantId", reviews.findByRestaurant);
 
-    router.get("/restaurant/averageRating/", reviews.getRestaurantAverageRatings);
+    router.get("/restaurant/averageRating/:restaurantId", reviews.getRestaurantAverageRatings);
 
-    router.get("/user/id/", reviews.findByUser);
+    router.get("/user/:userId", reviews.findByUser);
 
 
   
