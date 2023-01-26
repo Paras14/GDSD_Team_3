@@ -30,6 +30,7 @@ import FoodSelection from "./components/HomePage/Reservation/FoodSelection";
 import ParkingSelection from "./components/HomePage/Reservation/ParkingSelection";
 import ProfileComponent from "./components/profile/userprofile";
 import Reservations from "./components/Reservations/Reservations";
+import AddEditReview from "./components/Reservations/AddEditReview";
 
 const App = () => {
   return (
@@ -294,6 +295,16 @@ const App = () => {
               <div>
                 <Navbar />
                 <ParkingSelection />
+                <Footer />
+              </div>
+            }
+          />
+          <Route
+            path="/AddEditReview"
+            element={
+              <div>
+                <Navbar />
+                <AddEditReview />
                 <Footer />
               </div>
             }
