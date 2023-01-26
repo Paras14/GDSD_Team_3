@@ -31,29 +31,19 @@ const ReservationCard = ({ reservation }) => {
     return (
         restaurant !== null
         ?
-        <div className="rounded shadow bg-white mb-2">
-            <Container>
-                <Row>
-                    <Col>
-                        <h2>Reservation with code: #{reservation.id}</h2>
-                    </Col>
-                    
-                </Row>
-                <Row>
-                    <Col>
-                        <img
-                            src={restaurant.image}
-                            alt="restaurant"
-                            style={{ maxHeight:"120px" }}
-                        ></img>
-                    </Col>
-                    <Col className='align-self-left'>
-                        <p>Restaurant: <Link to={"/RestaurantDetails/" + restaurant.id}>{restaurant.name}</Link>
-                        </p>
-                        <p>Date: { formatDate(reservation.date) }</p>
-                        <p>Number of People: {reservation.numberofplaces}</p>
-                    </Col>
-                    <Col className="d-flex flex-row justify-content-center align-items-center">
+        <div>
+            <div class="card mb-3 shadow">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                    <img src={restaurant.image}
+                     class="img-fluid rounded-start" alt="Restaurant image"></img>
+                    </div>
+                    <div class="col-md-8">
+                        <h5 class="card-header ms-">Reservation: #{reservation.id}</h5>
+                    <div class="card-body">
+                        <h5 class="card-title ms-2 mb-4">Restaurant: <Link to={"/RestaurantDetails/" + restaurant.id}>{restaurant.name}</Link></h5>
+                        <p class="card-text">Date: <span className='fw-bold'>{ formatDate(reservation.date) }</span></p>
+                        <p class="card-text mb-4">Number of People: <span className='fw-bold'>{reservation.numberofplaces}</span></p>
                         <Button variant="primary" className='mx-1'
                             onClick={() => {
                                 navigate("/Chat/" + restaurant.userId);
@@ -71,10 +61,11 @@ const ReservationCard = ({ reservation }) => {
                                     .catch((err) => console.log(err));
                             }}
                         >Cancel</Button>
-                    </Col>
-                </Row>
-                
-            </Container>
+                    
+                    </div>
+                    </div>
+                </div>
+            </div>
         </div>
         :
         null

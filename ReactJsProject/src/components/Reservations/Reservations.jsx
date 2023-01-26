@@ -54,15 +54,19 @@ const Reservations = () => {
                 <div className=" rounded shadow" style={{backgroundColor : "#AED0FF"}}>
                     <p className="py-2 fs-1 fw-bold text-center" >Reservations</p>
                 </div>
-            {reservations.map((reservation) => (
-            
-                    
+
+                <div className="">
+
+                    {reservations.map((reservation) => (
+                        
+                        
                         <ReservationCard
-                            reservation={reservation}
+                        reservation={reservation}
                         />
-                
-                ))
-            }
+                        
+                        ))
+                    } 
+                </div>
             </div>
             :
             <div className="container mt-4 mb-5">
