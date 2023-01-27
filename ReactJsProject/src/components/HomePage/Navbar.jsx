@@ -62,6 +62,9 @@ const Navbar = () => {
                 Logout
               </button>
             </div>
+              <a href="/about" className="btn btn-secondary ms-2">
+                  About us
+              </a>
             
             </div>
               :
