@@ -50,6 +50,14 @@ const ReservationCard = ({ reservation }) => {
                             }}
                         >
                         Chat with manager</Button>
+                        <Button variant="success" className='mx-1'
+                            style={{backgroundColor: "#50c266", borderColor: "#50c266"}}
+                            onClick={() => {
+                                navigate("/EditReservation/" + reservation.id);
+                            }}
+                        >
+                        Edit
+                        </Button>
                         <Button variant="danger" className='mx-1'
                             onClick={() => {
                                 axios

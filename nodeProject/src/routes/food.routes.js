@@ -25,5 +25,8 @@ module.exports = app => {
    // Retrieve all Foods with same restaurant id
     router.get("/restaurant/:restaurantId", foods.findAllInRestaurant);
 
+    // Retrieve all Foods from a reservation id (NOT TO IMPLEMENT)
+    //router.get("/reservation/:reservationId", foods.findAllFromReservation);
+
     app.use('/foods', router);
   };

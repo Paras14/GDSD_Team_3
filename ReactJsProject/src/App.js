@@ -33,6 +33,7 @@ import Reservations from "./components/Reservations/Reservations";
 import AddEditReview from "./components/Reservations/AddEditReview";
 import AboutComponent from "./components/about/about";
 import TestGetAllReservations from "./components/TestGetallReservations";
+import EditReservationDetails from "./components/HomePage/Reservation/EditReservationDetails";
 
 const App = () => {
   return (
@@ -327,6 +328,16 @@ const App = () => {
               <div>
                 <Navbar />
                 <TestGetAllReservations />
+                <Footer />
+              </div>
+            }
+          />
+          <Route
+            path="/EditReservation/:reservationId"
+            element={
+              <div>
+                <Navbar />
+                <EditReservationDetails />
                 <Footer />
               </div>
             }
