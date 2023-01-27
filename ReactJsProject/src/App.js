@@ -31,7 +31,7 @@ import ParkingSelection from "./components/HomePage/Reservation/ParkingSelection
 import ProfileComponent from "./components/profile/userprofile";
 import Reservations from "./components/Reservations/Reservations";
 import AddEditReview from "./components/Reservations/AddEditReview";
-import TestGetAllReservations from "./components/TestGetallReservations";
+import AboutComponent from "./components/about/about";
 
 const App = () => {
   return (
@@ -286,6 +286,16 @@ const App = () => {
               <div>
                 <Navbar />
                 <Reservations/>
+                <Footer />
+              </div>
+            }
+          />
+          <Route
+            path="/about"
+            element={
+              <div>
+                <Navbar />
+                <AboutComponent/>
                 <Footer />
               </div>
             }

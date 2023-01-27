@@ -37,7 +37,6 @@ const CardDetails = () => {
 
       <div className="rounded shadow bg-white">
 
-        <p className="px-5 pt-4 fs-5" >Welcome to our restaurant finder and booking website!</p>
         <p className="px-5 py-2 fs-5" >Search for restaurants, make reservations, read reviews, chat with staff 
         and pre-order your meal all in one place. </p>
         <p className="px-5 pb-4 fs-5" >We hope you enjoy using our website and look forward to helping you find your next great meal!</p>

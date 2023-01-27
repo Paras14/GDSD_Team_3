@@ -76,13 +76,16 @@ const Navbar = () => {
                   Log in
                 </button>
                 <button
-                  className="btn btn-light"
+                  className="btn btn-light me-2"
                   onClick={() => {
                     navigate("/userType");
                   }}
                 >
                   Register
                 </button>
+                <a href="/about" className="btn btn-secondary">
+                  About us
+                </a>
             </div>
             }
             
