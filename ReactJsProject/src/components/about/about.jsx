@@ -4,11 +4,6 @@ import hassanIMG from './ID.png';
 
 const AboutComponent = () => {
 
-    const luisPage = () => {
-        window.location.assign('./Luis-site.html');
-      };
-    
-
 
 
     return (

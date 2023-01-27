@@ -32,6 +32,7 @@ import ProfileComponent from "./components/profile/userprofile";
 import Reservations from "./components/Reservations/Reservations";
 import AddEditReview from "./components/Reservations/AddEditReview";
 import AboutComponent from "./components/about/about";
+import TestGetAllReservations from "./components/TestGetallReservations";
 
 const App = () => {
   return (
