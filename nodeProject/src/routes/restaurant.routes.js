@@ -7,18 +7,18 @@ module.exports = app => {
     // Create a new Tutorial
     router.post("/", restaurants.create);
   
-    // Retrieve all Tutorials
-    router.get("/", restaurants.findAll);
-  // Retrieve a single Tutorial with id
-  router.get("/:id", restaurants.findOne);
+    // Retrieve all REstaurants with accepted petition
+    router.get("/", restaurants.findAllAccepted);
+    // Retrieve a single Tutorial with id
+    router.get("/:id", restaurants.findOne);
 
-  // Update a Tutorial with id
+    // Update a Restaurant with id
     router.put("/:id", restaurants.update);
 
-  // Delete a Tutorial with id
+    // Delete a Restaurant with id
     router.delete("/:id", restaurants.delete);
 
-  // Delete all Tutorials
+    // Delete all Restaurants
     router.delete("/", restaurants.deleteAll);
 
   

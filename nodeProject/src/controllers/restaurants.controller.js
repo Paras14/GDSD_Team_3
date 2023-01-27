@@ -1,7 +1,9 @@
+const { sequelize } = require("../models");
 const db = require("../models");
 const Restaurant = db.restaurant;
 const Op = db.Sequelize.Op;
-
+const petitionController = require("./restaurantRegistrationPetition.controller");
+const restaurantRegistrationPetition = db.restaurantRegistrationPetition;
 // Create and Save a new Restaurant
 exports.create = (req, res) => {
     // Validate request
@@ -12,7 +14,7 @@ exports.create = (req, res) => {
       });
       return;
     }
-  
+
     // Create a Restaurant
     const restaurant = {
         name: req.body.name,
@@ -28,10 +30,17 @@ exports.create = (req, res) => {
     };
 
     console.log(restaurant);
-  
+
+    
+    var restaurantID;
     // Save Restaurant in the database
     Restaurant.create(restaurant)
       .then(data => {
+        restaurantRegistrationPetition.create({
+          restaurantId: data.dataValues.id,
+          status: "pending",
+          message: ""
+        });
         res.send(data);
       })
       .catch(err => {
@@ -40,13 +49,15 @@ exports.create = (req, res) => {
             err.message || "Some error occurred while creating the Restaurant."
         });
       });
+
+
   };
 
 // Retrieve all Restaurants from the database.
-exports.findAll = (req, res) => {
+  exports.findAll = (req, res) => {
     const name = req.query.name;
     var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
-  
+
     Restaurant.findAll({ where: condition })
       .then(data => {
         res.send(data);
@@ -59,10 +70,35 @@ exports.findAll = (req, res) => {
       });
   };
 
+  // Find all restaurants with registration petition accepted
+  exports.findAllAccepted = (req, res) => {
+   
+    //query to get all restaurants with accepted petition
+    const query = `
+    SELECT restaurants.* 
+    FROM restaurants 
+    INNER JOIN restaurantRegistrationPetitions 
+    ON restaurants.id = restaurantRegistrationPetitions.restaurantId 
+    WHERE restaurantRegistrationPetitions.status = 'accepted';`;
+    
+    
+    sequelize.query(query, { type: sequelize.QueryTypes.SELECT})
+    .then(restaurants => {
+      res.send(restaurants);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving restaurants."
+      });
+
+    });
+  };
+
 // // Find a single Restaurant with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
-  
+
     Restaurant.findByPk(id)
       .then(data => {
         if (data) {
@@ -83,7 +119,7 @@ exports.findOne = (req, res) => {
 // Update a Restaurant by the id in the request
 exports.update = (req, res) => {
     const id = req.query.id;
-    
+
     Restaurant.update(req.query, {
       where: { id: id }
     })
@@ -108,7 +144,7 @@ exports.update = (req, res) => {
 // // Delete a Restaurant with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.query.id;
-  
+
     Restaurant.destroy({
       where: { id: id }
     })
@@ -148,6 +184,6 @@ exports.deleteAll = (req, res) => {
   };
 
 
-  
+
 
 

@@ -131,6 +131,7 @@ function SignUp() {
           validationSchema={schema}
           onSubmit={handleSubmit}
           initialValues={{
+            
             restaurentname: "",
             managerfirstname: "",
             managerlastname: "",
@@ -147,6 +148,7 @@ function SignUp() {
             restaurenttype: "",
             description: "",
             terms: false,
+            
           }}
         >
           {({

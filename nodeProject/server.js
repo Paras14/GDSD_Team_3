@@ -42,6 +42,7 @@ const rolRoute = require('./src/routes/rol.routes')(app);
 const chatRoute = require('./src/routes/chat.routes')(app);
 const reservationRoute = require('./src/routes/reservation.routes')(app);
 const reviewRoute = require('./src/routes/review.routes')(app);
+const restaurantRegistrationPetitionRoute = require('./src/routes/restaurantRegistrationPetition.routes')(app);
 
 app.use (cors({origin: "http://localhost:8080/"}));
 

@@ -1,0 +1,71 @@
+API PETITION RESTAURANT REGISTRATION   
+
+===========================================================================================
+Petition restaurant:
+{
+    petitionId: number,
+    restaurantId: number,
+    status: string,
+    message: string
+}
+
+Posible status:
+    - pending
+    - accepted
+    - rejected
+
+The message is only a reason if the petition is rejected that the restaurant will be able to see 
+
+===========================================================================================
+
+
+===========================================================================================
+
+Get all pending petitions:
+    @return: it returns all pending petitions
+    GET /admin/petitions/restaurant/pending
+    @return: 
+    [
+        {
+            petitionId: number,
+            restaurantId: number,
+            status: string,
+            message: string
+        },
+        ...
+    ]
+
+===========================================================================================
+
+Get all petitions:
+    @return: it returns all petitions
+    GET /admin/petitions/restaurant/all
+    @return: 
+    [
+        {
+            petitionId: number,
+            restaurantId: number,
+            status: string,
+            message: string
+        },
+        ...
+    ]
+
+===========================================================================================
+
+Update petition info.
+TO update the info of a petition, you need to send the petitionId, 
+the restaurantId, the status and the message int hte body:
+    @param: 
+    {
+        petitionId: number,
+        restaurantId: number,
+        status: string,
+        message: string
+    }
+    @return: it returns the petition updated
+    PUT /admin/petitions/restaurant/update
+    @return: 
+    {
+        message: string
+    }
