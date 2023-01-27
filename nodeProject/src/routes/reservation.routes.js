@@ -24,7 +24,16 @@ module.exports = app => {
     //Get a list of reservations of a restaurant
     router.get("/restaurant/:id", reservations.findAllFromRestaurant);
 
+    // Create new orders for a reservation
     router.post("/order/add", reservations.addOrder);
+
+    // Get a list of orders for a reservation
+    //router.get("/order/:id", reservations.findAllOrders);
+
+    // Delete all orders for a reservation
+    //router.delete("/order/delete/:id", reservations.deleteAllOrders);
+
+
   
     app.use('/reservations', router);
   };
