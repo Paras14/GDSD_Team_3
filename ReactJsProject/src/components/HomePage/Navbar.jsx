@@ -23,29 +23,47 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className=" bg-primary ">
-      <div className="container ">
-        <div className="d-flex justify-content-between ">
-          <div
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            <Logo fill="white" />
-          </div>
+    user !== null 
+      ?
+        <div className=" bg-primary ">
+          <div className="container ">
+            <div className="d-flex justify-content-between ">
+              <div
+                onClick={() => {
+                  if (user.rolId === 8) {
+                    navigate("/");
+                  } else if (user.rolId === 7) {
+                    navigate("/adminPanel");
+                  }
+                  
+                }}
+              >
+                <Logo fill="white" />
+              </div>
             
-            { user !== null 
-              ? 
+              {user.rolId === 7 ?
+              <div className="align-self-center">
+                <p className="text-light fs-3">Admin Panel</p>
+              </div>
+              :
+                null}
+             
               <div className="align-self-center d-flex text-light">
 
+                {user.rolId === 8 ?
+                
                 <button
-                  className="btn btn-outline-light me-2"
-                  onClick={() => {
-                    navigate("/reservations");
-                  }}
-                >
-                  Reservations
-                </button>
+                className="btn btn-outline-light me-2"
+                onClick={() => {
+                  navigate("/reservations");
+                }}
+              >
+                Reservations
+              </button>
+              :
+              null
+                }
+                
 
                     <button class="btn btn-outline-light me-2" type="button" onClick={() => {
                       navigate("/profile");
@@ -67,7 +85,20 @@ const Navbar = () => {
               </a>
             
             </div>
+            </div>
+            </div>
+          </div>
               :
+          <div className=" bg-primary ">
+          <div className="container ">
+            <div className="d-flex justify-content-between ">
+              <div
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                <Logo fill="white" />
+              </div>
               <div className="align-self-center">
                 
                 <button
@@ -90,11 +121,10 @@ const Navbar = () => {
                   About us
                 </a>
             </div>
-            }
-            
-        </div>
+            </div>
       </div>
     </div>
+          
   );
 };
 

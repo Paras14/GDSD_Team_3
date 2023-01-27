@@ -38,13 +38,20 @@ function SignIn() {
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("useremail", email);
           localStorage.setItem("user", JSON.stringify(response.data.user));
-          navigate("/");
+
+          if (response.data.user.rolId === 8) {
+            navigate("/");
+          } else if (response.data.user.rolId === 7) {
+            navigate("/adminPanel");
+          }
+          
           setMessage("You are successfully registered");
           window.location.reload();
         }
       })
       .catch((error) => {
         console.log(error);
+        setMessage("ERROR: Invalid email or password");
       });
   };
 
@@ -62,6 +69,7 @@ function SignIn() {
               <div className="col-3"></div>
               <div className="col-6">
                 <Form.Group className="mb-3" controlId="formBasicEmail">
+                {message !== "" && <div class="alert alert-danger" role="alert">{message}</div>}
                   <Form.Label>Email address</Form.Label>
                   <Form.Control
                     type="email"
@@ -117,7 +125,7 @@ function SignIn() {
           </Form> 
 
         </div>
-        {message !== "" && <div>{message}</div>}
+        
       </div>
       <br></br>
       <br></br>

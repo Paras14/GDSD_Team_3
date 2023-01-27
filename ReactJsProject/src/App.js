@@ -106,7 +106,7 @@ const App = () => {
             path="/adminPanel"
             element={
               <div>
-                <AdminPanelNavbar />
+                <Navbar />
                 <AdminPanel />
                 <Footer />
               </div>
