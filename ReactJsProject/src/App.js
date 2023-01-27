@@ -320,6 +320,16 @@ const App = () => {
               </div>
             }
           />
+          <Route
+            path="/TestGetAllReservations/:reservationId"
+            element={
+              <div>
+                <Navbar />
+                <TestGetAllReservations />
+                <Footer />
+              </div>
+            }
+          />
           <Route path="*" element={<ErrorPage />} />
           
         </Routes>
