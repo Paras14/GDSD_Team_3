@@ -31,6 +31,7 @@ import ParkingSelection from "./components/HomePage/Reservation/ParkingSelection
 import ProfileComponent from "./components/profile/userprofile";
 import Reservations from "./components/Reservations/Reservations";
 import AddEditReview from "./components/Reservations/AddEditReview";
+import TestGetAllReservations from "./components/TestGetallReservations";
 
 const App = () => {
   return (
@@ -305,6 +306,16 @@ const App = () => {
               <div>
                 <Navbar />
                 <AddEditReview />
+                <Footer />
+              </div>
+            }
+          />
+          <Route
+            path="/TestGetAllReservations/:reservationId"
+            element={
+              <div>
+                <Navbar />
+                <TestGetAllReservations />
                 <Footer />
               </div>
             }
