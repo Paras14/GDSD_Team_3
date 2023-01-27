@@ -31,7 +31,7 @@ const AboutComponent = () => {
                 <hr></hr>
             </div>
             <p className='fw-bold fs-2 px-5 text-center mt-4'>Meet our team</p>
-            <div className='row'>
+            <div className='d-flex flex-row'>
                 <div className='col-6'>
                     <p className='fw-bold fs-4 px-5 text-center'>Frontend team</p>
                     
@@ -45,7 +45,7 @@ const AboutComponent = () => {
                             <div class="card-body">
                                 <h5 class="card-title ms-2">Noman</h5>
                                 <p class="card-text">Frontend leader.</p>
-                                <a className='btn btn-primary' href="/about/luis">See more</a>
+                                <a className='btn btn-primary' href="http://team3gdsdweb.s3-website-us-east-1.amazonaws.com/personal_webpages/Noman.html">See more</a>
                             </div>
                             </div>
                         </div>
@@ -61,7 +61,7 @@ const AboutComponent = () => {
                             <div class="card-body">
                                 <h5 class="card-title ms-2">Paras</h5>
                                 <p class="card-text">Team leader and member from the bakend team.</p>
-                                <a className='btn btn-primary' href="/about/luis">See more</a>
+                                <a className='btn btn-primary' href="http://team3gdsdweb.s3-website-us-east-1.amazonaws.com/personal_webpages/Paras-CV.html">See more</a>
                             </div>
                             </div>
                         </div>
@@ -77,7 +77,7 @@ const AboutComponent = () => {
                             <div class="card-body">
                                 <h5 class="card-title ms-2">Hassan</h5>
                                 <p class="card-text">Member from the frontend team.</p>
-                                <a className='btn btn-primary' href="/about/luis">See more</a>
+                                <a className='btn btn-primary' href="http://team3gdsdweb.s3-website-us-east-1.amazonaws.com/personal_webpages/aboutHassan.html">See more</a>
                             </div>
                             </div>
                         </div>
@@ -98,7 +98,7 @@ const AboutComponent = () => {
                             <div class="card-body">
                                 <h5 class="card-title ms-2">Luis</h5>
                                 <p class="card-text">Team leader and member from the backend team.</p>
-                                <a className='btn btn-primary' onClick={luisPage}>See more</a>
+                                <a className='btn btn-primary' href="http://team3gdsdweb.s3-website-us-east-1.amazonaws.com/personal_webpages/Luis-site.html">See more</a>
                             </div>
                             </div>
                         </div>
@@ -114,7 +114,7 @@ const AboutComponent = () => {
                             <div class="card-body">
                                 <h5 class="card-title ms-2">Jesús</h5>
                                 <p class="card-text">Backend leader.</p>      
-                                <a className='btn btn-primary' href="">See more</a>
+                                <a className='btn btn-primary' href="http://team3gdsdweb.s3-website-us-east-1.amazonaws.com/personal_webpages/ABOUT_Jesus.html">See more</a>
                             </div>
                             </div>
                         </div>
@@ -130,7 +130,7 @@ const AboutComponent = () => {
                             <div class="card-body">
                                 <h5 class="card-title ms-2">Vichitar</h5>
                                 <p class="card-text">Member from the backend team.</p>
-                                <a className='btn btn-primary' href="/about/luis">See more</a>
+                                <a className='btn btn-primary' href="http://team3gdsdweb.s3-website-us-east-1.amazonaws.com/personal_webpages/Vichitar_About_Page.html">See more</a>
                             </div>
                             </div>
                         </div>
