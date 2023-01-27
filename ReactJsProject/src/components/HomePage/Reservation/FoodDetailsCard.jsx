@@ -17,7 +17,9 @@ function FoodDetails(props) {
         </Col>
         {props.displayInput ?
           <Col className="col-lg-3">
-          <input type="number" id="food-quantity" name="food-quantity" step="1"/>
+          <input type="number" id="food-quantity" name="food-quantity" step="1"
+            min="0" value={props.count} onChange={(e) => props.setCount(e.target.value)} required
+          />
           </Col>
           : null
         }
