@@ -56,14 +56,14 @@ Get all petitions:
 Update petition info.
 TO update the info of a petition, you need to send the petitionId, 
 the restaurantId, the status and the message int hte body:
-    @param: 
+    @body: 
     {
         petitionId: number,
         restaurantId: number,
         status: string,
         message: string
     }
-    @return: it returns the petition updated
+    @return: it returns a message
     PUT /admin/petitions/restaurant/update
     @return: 
     {

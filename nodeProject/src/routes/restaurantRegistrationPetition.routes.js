@@ -13,7 +13,7 @@ module.exports = app => {
     router.get("/pending", checkAdmin, restaurantResgistrationPetition.getPendingPetitions);
 
     // Update a petition
-    router.put("/", checkAdmin, restaurantResgistrationPetition.update);
+    router.put("/update", checkAdmin, restaurantResgistrationPetition.update);
 
-    app.use('/admin/petitions', router);
+    app.use('/admin/petitions/restaurant', router);
 };

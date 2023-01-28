@@ -1,0 +1,67 @@
+API PETITION REVIEW POSTING
+
+===========================================================================================
+Review Petition{
+    petitionId: number,
+    restaurantId: number,
+    status: string,
+    message: string
+}
+
+Posible status
+    - accepted
+    - rejected
+    - pending
+
+The message is only a reason if the petition is rejected, the user will be able to see 
+===========================================================================================
+
+Get all petitoins: 
+    @return: it returns all petitions
+    GET /admin/petitions/review/all
+    @return:
+        [
+            {
+                "id": number,
+                "restaurantId": number,
+                "status": string,
+                "message": string
+            },
+            ...
+        ]
+
+===========================================================================================
+
+Get all pending petitions:
+    @return: it returns all pending petitions
+    GET /admin/petitions/review/pending
+    @return:
+        [
+            {
+                "id": number,
+                "restaurantId": number,
+                "status": string,
+                "message": string
+            },
+            ...
+        ]
+
+===========================================================================================
+
+Update petition info.
+TO update the info of a petition, you need to send the petitionId, 
+the restaurantId, the status and the message int hte body:
+    @body:
+        {
+            "petitionId": number,
+            "restaurantId": number,
+            "status": string,
+            "message": string
+        }
+    
+    @return; it returns a message
+    PUT /admin/petitions/review/update
+    @return:
+        {
+            "message": string
+        }
