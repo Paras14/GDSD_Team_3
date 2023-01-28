@@ -31,6 +31,7 @@ db.review = require("./reviews.model")(sequelize, Sequelize);
 db.orderReservation = require('./orderReservation.model')(sequelize, Sequelize);
 db.table = require('./table.model')(sequelize, Sequelize);
 db.restaurantRegistrationPetition = require('./restaurantRegistrationPetition.model')(sequelize, Sequelize);
+db.parking = require('./parking.model')(sequelize, Sequelize);
 
 
 db.foods.belongsTo(db.foodCategory);
@@ -45,9 +46,12 @@ db.review.belongsTo(db.user);
 db.review.belongsTo(db.restaurant);
 
 db.table.belongsTo(db.restaurant);
+db.reservation.belongsToMany(db.table, {through:'reservationTable'});
+db.parking.belongsTo(db.restaurant);
+db.reservation.belongsToMany(db.parking, {through:'reservationParking'});
 
 db.reservation.belongsTo(db.user);
-db.reservation.belongsTo(db.restaurant); 
+db.reservation.belongsTo(db.restaurant);
 //db.reservation.belongsTo(db.table);
 
 db.orderReservation.belongsTo(db.foods);

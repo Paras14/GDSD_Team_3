@@ -1,7 +1,11 @@
+const e = require("express");
+const { table } = require("../models");
 const db = require("../models");
 const Reservation = db.reservation;
 const Restaurant = db.restaurant;
 const OrderReservation = db.orderReservation; 
+const Table = require('./table.controller');
+const Parking = require('./parking.controller');
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Reservation
@@ -20,20 +24,105 @@ exports.create = (req, res) => {
         date: req.body.date,
         numberofplaces: req.body.numberofplaces,
         userId: req.body.userId,
-        restaurantId: req.body.restaurantId
+        restaurantId: req.body.restaurantId,
+        table: req.body.table,
+        parking: req.body.parking
     };
-  
-    // Save Reservation in the database
-    Reservation.create(reservation)
-      .then(data => {
-        res.send(data);
+    
+    Table.checkFree(req, res)
+      .then((out) => {
+        const req = out.req;
+        const res = out.res;
+        console.log("reached table.then");
+        console.log(req.body);
+        Parking.checkFree(req, res)
+          .then((out) => {
+              const req = out.req;
+              const res = out.res;
+              // Save Reservation in the database
+              const reservation = {};
+              reservation.date = req.body.date;
+              reservation.numberofplaces = req.body.numberofplaces;
+              reservation.userId = req.body.userId;
+              reservation.restaurantId = req.body.restaurantId;
+              console.log(reservation);
+              db.reservation.create(reservation)
+              .then(async (data) => {
+                //res.send(data);
+                let tables = [];
+                let parkings = [];
+                
+
+                //create list of tables to update
+                for(i in req.body.table){
+                  let current = req.body.table[i];
+                  current.status = 1;
+                  tables.push(current);
+                }
+                console.log(tables);
+                //create list of parkings to update
+                for(i in req.body.parking){
+                  let current = req.body.parking[i];
+                  current.status = 1;
+                  parkings.push(current);
+                }
+                console.log(parkings);
+                data.table = tables;
+                data.parking = parkings;
+                //update status of tables
+                data.table = await db.table.bulkCreate(tables, { updateOnDuplicate: ["status"] })
+                  .catch(err => {
+                    res.status(500).send({
+                      message:
+                        err.message || "Some error occurred while updating the tables."
+                    });
+                  });
+
+                //update status of parkings
+                data.parking = await db.parking.bulkCreate(parkings, { updateOnDuplicate: ["status"] })
+                  .catch(err => {
+                    res.status(500).send({
+                      message:
+                        err.message || "Some error occurred while updating the parkings."
+                    });
+                  });
+
+                  res.send(data);
+              })
+              .catch(err => {
+                res.status(500).send({
+                  message:
+                    err.message || "Some error occurred while creating the Reservation."
+                });
+              });
+              
+              
+          })
+          .catch((err) => {
+            res.status(500).send({
+              message:
+                err.message || "Some error occurred while creating the Reservation."
+            });
+          });
       })
-      .catch(err => {
+      .catch((err) => {
         res.status(500).send({
           message:
             err.message || "Some error occurred while creating the Reservation."
         });
       });
+      
+    // Save Reservation in the database
+    // Reservation.create(reservation)
+    //   .then(data => {
+    //     res.send(data);
+    //   })
+    //   .catch(err => {
+    //     res.status(500).send({
+    //       message:
+    //         err.message || "Some error occurred while creating the Reservation."
+    //     });
+    //   });
   };
 
 exports.update = (req, res) => {
@@ -187,3 +276,5 @@ exports.addOrder = (req, res) => {
         });
       });
 };
+
+exports.findOrders

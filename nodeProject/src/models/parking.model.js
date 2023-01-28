@@ -1,6 +1,6 @@
 
 module.exports = (sequelize, datatypes) => {
-    const Table = sequelize.define("table", {
+    const Parking = sequelize.define("parking", {
     id: {
     type: datatypes.INTEGER,
     autoIncrement: true,
@@ -13,6 +13,6 @@ module.exports = (sequelize, datatypes) => {
         type: datatypes.BOOLEAN
     }
     });
-    return Table;
+    return Parking;
     
 };
