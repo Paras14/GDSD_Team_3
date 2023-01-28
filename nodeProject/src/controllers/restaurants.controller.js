@@ -4,7 +4,10 @@ const Restaurant = db.restaurant;
 const Op = db.Sequelize.Op;
 const petitionController = require("./restaurantRegistrationPetition.controller");
 const restaurantRegistrationPetition = db.restaurantRegistrationPetition;
-// Create and Save a new Restaurant
+
+
+
+// Create and Save a new Restaurant and a petition
 exports.create = (req, res) => {
     // Validate request
     console.log(req.body);
@@ -31,8 +34,6 @@ exports.create = (req, res) => {
 
     console.log(restaurant);
 
-    
-    var restaurantID;
     // Save Restaurant in the database
     Restaurant.create(restaurant)
       .then(data => {

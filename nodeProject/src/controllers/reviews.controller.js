@@ -1,6 +1,8 @@
+const { sequelize } = require("../models");
 const db = require("../models");
 const Review = db.review;
 const Op = db.Sequelize.Op;
+const reviewPetitionDB = db.reviewPetition;
 
 // Create and Save a new Review
 exports.create = (req, res) => {
@@ -28,6 +30,11 @@ exports.create = (req, res) => {
     // Save Review in the database
     Review.create(review)
       .then(data => {
+        reviewPetitionDB.create({
+          reviewId: data.dataValues.id,
+          status: "pending",
+          message: ""
+        });
         res.send(data);
       })
       .catch(err => {
@@ -52,6 +59,27 @@ exports.findAll = (req, res) => {
         });
       });
   };
+
+exports.findAllAccepted = (req, res) => {
+  const query = `
+    SELECT reviews.* 
+    FROM reviews 
+    INNER JOIN reviewPetitions 
+    ON reviews.id = reviewPetitions.reviewId 
+    WHERE reviewPetitions.status = 'accepted';`;
+
+    sequelize.query(query, { type: sequelize.QueryTypes.SELECT})
+    .then(reviews => {
+      res.send(reviews);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving reviews."
+      });
+    });
+};
+
 
 // // Find a single Restaurant with an id
 exports.findOne = (req, res) => {
@@ -166,6 +194,14 @@ exports.findByRestaurant = (req, res) => {
         });
       });
   };
+
+exports.findByRestaurantAccepted = (req, res) => {
+    const restaurantId = req.params.restaurantId;
+    //TODO: encuentra todas las reviews hechas a un restaurante Aprovadas.
+    //Hay que habklar con chatgpt para preguntarle la query y luego 
+    //en el router cambiar el metodo a este
+    //Y finalmente comprobar que funciona
+};
 
   // // Find all single User with an id
 exports.findByUser = (req, res) => {

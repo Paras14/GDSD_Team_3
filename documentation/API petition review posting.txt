@@ -65,3 +65,19 @@ the restaurantId, the status and the message int hte body:
         {
             "message": string
         }
+
+===========================================================================================
+
+Get all accepted petitions from a restaurant:
+    @return: it returns all accepted petitions from a restaurant
+    GET /admin/petitions/review/accepted/:restaurantId
+    @return:
+        [
+            {
+                "id": number,
+                "restaurantId": number,
+                "status": string,
+                "message": string
+            },
+            ...
+        ]
