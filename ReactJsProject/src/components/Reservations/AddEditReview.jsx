@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 import ReviewCheckBox from "./ReviewCheckBox2";
-import {StarRating, rating} from "../starRatings";
+import StarRating from "../starRatings";
+
+// let quickService, deliciousFood, politeBehavior, valueForMoney;
 
 function AddEditReview() {
+  const [rating, setRating] = useState(0);
   return (
     <Container className="mt-4 mb-4">
       <div>
@@ -12,7 +15,7 @@ function AddEditReview() {
       <div className="col-lg-10 mt-4">
         <div className="text-center mb-4 p-4">
             How many stars would you like to give?&emsp;
-            <StarRating />
+            <StarRating rating={rating} setRating = {setRating}/>
             <p>This is rating value: {rating}</p>
         </div>
         <div className="text-center">
