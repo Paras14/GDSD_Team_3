@@ -1,9 +1,9 @@
 const db = require("../models");
-const restaurantRegistrationPetition = db.restaurantResgistrationPetition;
+const reviewPetitionDB = db.reviewPetition;
 const Op = db.Sequelize.Op;
 
 exports.getPendingPetitions = (req, res) => {
-    restaurantRegistrationPetition.findAll({where: {status: "pending"}})
+    reviewPetitionDB.findAll({where: {status: "pending"}})
     .then(data => {
         res.send(data);
     })
@@ -15,7 +15,7 @@ exports.getPendingPetitions = (req, res) => {
 }
 
 exports.getAllPetitions = (req, res) => {
-    restaurantRegistrationPetition.findAll()
+    reviewPetitionDB.findAll()
     .then(data => {
         res.send(data);
     })
@@ -28,7 +28,7 @@ exports.getAllPetitions = (req, res) => {
 
 exports.update = (req, res) => {
     const id = req.body.id;
-    restaurantRegistrationPetition.update(req.body, {
+    reviewPetitionDB.update(req.body, {
         where: { id: id }
     })
     .then(num => {
@@ -47,19 +47,18 @@ exports.update = (req, res) => {
             message: "Error updating Petition with id=" + id
         });
     });
+}
 
-    exports.create = (idRestaurant) => {
-        restaurantRegistrationPetition.create({
-            restaurantId: idRestaurant,
-            status: "pending",
-            message: ""
-        })
-        .then(data => {
-            console.log(data);
-        })
-        .catch(err => {
-            console.log("Error creating the restaurant petiton");
-        });
-    }
-
+exports.create = (idReview) => {
+    reviewPetitionDB.create({
+        reviewId: idReview,
+        status: "pending",
+        message: ""
+    })
+    .then(data => {
+        console.log(data);
+    })
+    .catch(err => {
+        console.log(err);
+    })
 }
