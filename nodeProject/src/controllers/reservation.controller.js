@@ -45,7 +45,6 @@ exports.create = (req, res) => {
               reservation.numberofplaces = req.body.numberofplaces;
               reservation.userId = req.body.userId;
               reservation.restaurantId = req.body.restaurantId;
-              console.log(reservation);
               db.reservation.create(reservation)
               .then(async (data) => {
                 //res.send(data);
@@ -59,18 +58,22 @@ exports.create = (req, res) => {
                   current.status = 1;
                   tables.push(current);
                 }
-                console.log(tables);
+                
+
                 //create list of parkings to update
                 for(i in req.body.parking){
                   let current = req.body.parking[i];
                   current.status = 1;
                   parkings.push(current);
                 }
-                console.log(parkings);
+                
                 data.table = tables;
                 data.parking = parkings;
-                //update status of tables
-                data.table = await db.table.bulkCreate(tables, { updateOnDuplicate: ["status"] })
+                
+                const output = {};
+                output.reservation = data;
+                
+                output.table = await db.table.bulkCreate(tables, { updateOnDuplicate: ["status"] })
                   .catch(err => {
                     res.status(500).send({
                       message:
@@ -79,7 +82,7 @@ exports.create = (req, res) => {
                   });
 
                 //update status of parkings
-                data.parking = await db.parking.bulkCreate(parkings, { updateOnDuplicate: ["status"] })
+                output.parking = await db.parking.bulkCreate(parkings, { updateOnDuplicate: ["status"] })
                   .catch(err => {
                     res.status(500).send({
                       message:
@@ -87,7 +90,7 @@ exports.create = (req, res) => {
                     });
                   });
 
-                  res.send(data);
+                  res.send(output);
               })
               .catch(err => {
                 res.status(500).send({
