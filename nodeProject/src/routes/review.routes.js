@@ -23,7 +23,7 @@ module.exports = app => {
   // Delete all Reviews
   router.delete("/", checkToken, reviews.deleteAll);
 
-  router.get("/restaurant/:restaurantId", reviews.findByRestaurant);
+  router.get("/restaurant/:restaurantId", reviews.findByRestaurantAccepted);
 
   router.get("/restaurant/averageRating/:restaurantId", reviews.getRestaurantAverageRatings);
 

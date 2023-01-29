@@ -14,11 +14,11 @@ function PendingRestaurantReg() {
 
   useEffect(() => {
     axios
-      .get("/admin/petitions/review/all/")
+      .get("/admin/petitions/restaurant/pending")
       .then((res) => {
         setPendingData(res.data);
         if (res === 0) {
-          return <p>There is no Pinding Requests for Review</p>;
+          return <p>There is no Pending Requests for Review</p>;
         }
       })
       .catch((err) => console.log(err));

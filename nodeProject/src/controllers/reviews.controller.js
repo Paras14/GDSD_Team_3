@@ -197,11 +197,29 @@ exports.findByRestaurant = (req, res) => {
 
 exports.findByRestaurantAccepted = (req, res) => {
     const restaurantId = req.params.restaurantId;
-    //TODO: encuentra todas las reviews hechas a un restaurante Aprovadas.
-    //Hay que habklar con chatgpt para preguntarle la query y luego 
     //en el router cambiar el metodo a este
     //Y finalmente comprobar que funciona
+    
+    const query = `
+    SELECT reviews.*
+    FROM reviews
+    INNER JOIN reviewPetitions
+    ON reviews.id = reviewPetitions.reviewId
+    WHERE reviewPetitions.status = 'accepted' 
+    AND reviews.restaurantId = ${restaurantId};`;
+
+    sequelize.query(query, { type: sequelize.QueryTypes.SELECT})
+    .then(reviews => {
+      res.send(reviews);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving reviews."
+      });
+    });
 };
+
 
   // // Find all single User with an id
 exports.findByUser = (req, res) => {
