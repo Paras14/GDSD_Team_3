@@ -11,10 +11,10 @@ function ListOfUsers() {
 
   useEffect(() => {
     axios
-      .get("/localhost:3000/admin/petitions/review")
+      .get("https://admin/petitions/review/all/")
       .then((res) => {
         setPendingUsers(res.data);
-        if (res.data.name === 0 && res.data.email === 0) {
+        if (res.data.name === "" && res.data.email === "") {
           return <p>There is no Users for review</p>;
         } else {
           return null;
