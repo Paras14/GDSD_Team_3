@@ -36,6 +36,7 @@ function ReviewCheckBox(props) {
           />
           <label>Value For Money</label>
         </div>
+        <div className="text-center">What drove your decision?</div>
         <div className="text-center mt-4">
             Other <textarea id="comments" name="comments" cols={20} value={props.other}
             onChange={
