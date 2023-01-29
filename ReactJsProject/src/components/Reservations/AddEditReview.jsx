@@ -3,10 +3,21 @@ import { Container } from "react-bootstrap";
 import ReviewCheckBox from "./ReviewCheckBox2";
 import StarRating from "../starRatings";
 
-// let quickService, deliciousFood, politeBehavior, valueForMoney;
-
 function AddEditReview() {
   const [rating, setRating] = useState(0);
+  const [quickService, setQuickService] = useState(false);
+  const [deliciousFood, setDeliciousFood] = useState(false);
+  const [politeBehavior, setPoliteBehavior] = useState(false);
+  const [valueForMoney, setValueForMoney] = useState(false);
+  const [other, setOther] = useState('');
+  const handleFinish = (e) => {
+    e.preventDefault();
+    console.log(quickService);
+    console.log(deliciousFood);
+    console.log(politeBehavior);
+    console.log(valueForMoney);
+    console.log(other);
+  }
   return (
     <Container className="mt-4 mb-4">
       <div>
@@ -21,11 +32,17 @@ function AddEditReview() {
         <div className="text-center">
             What drove your decision?
         </div>
-        <ReviewCheckBox />
-        <div className="text-center mt-4">
-            Other <textarea id="comments" name="comments" cols={20}>
-          </textarea>
-        </div>
+        <ReviewCheckBox quickService={quickService} setQuickService={setQuickService} 
+        deliciousFood={deliciousFood} setDeliciousFood={setDeliciousFood}
+        politeBehavior={politeBehavior} setPoliteBehavior={setPoliteBehavior}
+        valueForMoney={valueForMoney} setValueForMoney={setValueForMoney}
+        other = {other} setOther={setOther}
+        />
+        <button 
+        onClick={
+          handleFinish
+        }
+        >Submit</button>
       </div>
     </Container>
   );

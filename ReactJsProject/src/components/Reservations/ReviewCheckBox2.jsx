@@ -1,28 +1,47 @@
 import { Container, Row, Button } from "react-bootstrap";
 
-function ReviewCheckBox() {
+function ReviewCheckBox(props) {
   return (
     <Container>
       <Row className="d-flex text-center">
         <div md="6" className="mt-4">
-          <input type="checkbox" className="mx-2 quick-service-bool" checked />
+          <input type="checkbox" className="mx-2 quick-service-bool" checked={props.quickService} 
+            onChange = {
+              () => props.setQuickService(!props.quickService)
+            }
+          />
           <label>Quick Service</label>
-          {/* {props.quickService = document.querySelector('.quick-service-bool').checked} */}
         </div>
         <div md="6" className="mt-4">
-          <input type="checkbox" className="mx-2 delicious-food-bool" checked />
+          <input type="checkbox" className="mx-2 delicious-food-bool" checked={props.deliciousFood}
+            onChange = {
+              () => props.setDeliciousFood(!props.deliciousFood)
+            }
+          />
           <label>Delicious Food</label>
-          {/* {props.deliciousFood = document.querySelector('.delicious-food').checked} */}
         </div>
         <div md="6" className="mt-4">
-          <input type="checkbox" className="mx-2 polite-behaviour-bool" checked />
+          <input type="checkbox" className="mx-2 polite-behaviour-bool" checked={props.politeBehavior}
+            onChange = {
+              () => props.setPoliteBehavior(!props.politeBehavior)
+            }
+          />
           <label>Polite Behaviour</label>
-          {/* {props.politeBehavior = document.querySelector('.polite-behaviour-bool').checked} */}
         </div>
         <div md="6" className="mt-4">
-          <input type="checkbox" className="mx-2 value-for-money" />
+          <input type="checkbox" className="mx-2 value-for-money" checked={props.valueForMoney}
+            onChange = {
+              () => props.setValueForMoney(!props.valueForMoney)
+            }
+          />
           <label>Value For Money</label>
-          {/* {props.valueForMoney = document.querySelector('.value-for-money').checked} */}
+        </div>
+        <div className="text-center mt-4">
+            Other <textarea id="comments" name="comments" cols={20} value={props.other}
+            onChange={
+              (e) => props.setOther(e.target.value)
+            }>
+          </textarea>
         </div>
       </Row>
     </Container>
