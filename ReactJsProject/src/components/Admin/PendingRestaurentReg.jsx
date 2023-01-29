@@ -3,18 +3,34 @@ import { Button, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 
 function PendingRestaurantReg() {
   const navigate = useNavigate();
+  const [pendingData, setPendingData] = useState([]);
   const arrow = <FontAwesomeIcon icon={faArrowRight} />;
-  const pendingData = [
-    { name: "Restaurent 1", email: "senoman.ali7383@gmail.com" },
-    { name: "Restaurent 2", email: "paras@gmail.com" },
-    { name: "Restaurent 3", email: "vachitar@gmail.com" },
-    { name: "Restaurent 4", email: "hassan@gmail.com" },
-    { name: "Restaurent 5", email: "louis@gmail.com" },
-    { name: "Restaurent 6", email: "jesus@gmail.com" },
-  ];
+
+  useEffect(() => {
+    axios
+      .get("/admin/petitions/review/all/")
+      .then((res) => {
+        setPendingData(res.data);
+        if (res === 0) {
+          return <p>There is no Pinding Requests for Review</p>;
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  // const pendingData = [
+  //   { name: "Restaurent 1", email: "senoman.ali7383@gmail.com" },
+  //   { name: "Restaurent 2", email: "paras@gmail.com" },
+  //   { name: "Restaurent 3", email: "vachitar@gmail.com" },
+  //   { name: "Restaurent 4", email: "hassan@gmail.com" },
+  //   { name: "Restaurent 5", email: "louis@gmail.com" },
+  //   { name: "Restaurent 6", email: "jesus@gmail.com" },
+  // ];
   return (
     <Container>
       <div>
