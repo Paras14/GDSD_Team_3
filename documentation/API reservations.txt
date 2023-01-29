@@ -26,6 +26,30 @@ userId:
 restaurantId:
 date:
 numberofplaces:
+table: [
+            {
+                id:
+                number:
+                restaurantId:
+            },
+            {
+                id:
+                number:
+                restaurantId:
+            }
+        ]
+parking: [
+            {
+                id:
+                number:
+                restaurantId:
+            },
+            {
+                id:
+                number:
+                restaurantId:
+            }
+        ]
 }
 ===========================================================================================
 ===========================================================================================
