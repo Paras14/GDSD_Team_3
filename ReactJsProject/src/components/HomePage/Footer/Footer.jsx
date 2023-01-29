@@ -6,7 +6,8 @@ function Footer() {
     <div>
       <br></br>
       <br></br>
-      <div className="bg-primary p-2 text-white position-fixed fixed-bottom">
+      <div className="bg-primary p-2 text-white"> 
+      {/* position-fixed fixed-bottom */}
         <Container>
           <div>
             <p className="text-center fs-4">
