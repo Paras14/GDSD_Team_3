@@ -23,34 +23,34 @@ function ReservationDetails() {
   const [foodCounts, setFoodCounts] = useState([]);
 
   useEffect(() => {
-    
-    async function getUserRestaurantAndFood() {
-
-        // Update the document title using the browser API
-        document.title = `Reservation Details`;
-
-        // get user from local storage
-        const user = JSON.parse(localStorage.getItem("user"));
-        setUser(user);
-
-        // get restaurant details
-        const restaurant = await axios.get(`${baseUrl}restaurants/${restaurantId}`);
-        setRestaurantDetail(restaurant.data);
-
-        // get food details
-        const foods = await axios.get(`${baseUrl}foods/restaurant/${restaurantId}`);
-        console.log(foods.data);
-        setFoods(foods.data);
-        setFoodCounts(foods.data.map(food => 0));
-    }
-
-
     if (!isauthorized) {
-        navigate("/signIn");
+      navigate("/signIn");
     } else {
-        getUserRestaurantAndFood();
+      getUserRestaurantAndFood();
     }
+    async function getUserRestaurantAndFood() {
+      // Update the document title using the browser API
+      document.title = `Reservation Details`;
 
+      // get user from local storage
+      const user = JSON.parse(localStorage.getItem("user"));
+      setUser(user);
+      console.log(user);
+
+      // get restaurant details
+      const restaurant = await axios.get(
+        `${baseUrl}restaurants/${restaurantId}`
+      );
+      setRestaurantDetail(restaurant.data);
+
+      // get food details
+      const foods = await axios.get(
+        `${baseUrl}foods/restaurant/${restaurantId}`
+      );
+      console.log(foods.data);
+      setFoods(foods.data);
+      setFoodCounts(foods.data.map((food) => 0));
+    }
   }, []);
 
   function showFoodItems(foodItem) {
@@ -64,9 +64,9 @@ function ReservationDetails() {
         displayInput={true}
         count={foodCounts[foods.indexOf(foodItem)]}
         setCount={(count) => {
-            const newFoodCounts = [...foodCounts];
-            newFoodCounts[foods.indexOf(foodItem)] = count;
-            setFoodCounts(newFoodCounts);
+          const newFoodCounts = [...foodCounts];
+          newFoodCounts[foods.indexOf(foodItem)] = count;
+          setFoodCounts(newFoodCounts);
         }}
       />
     );
@@ -95,24 +95,26 @@ function ReservationDetails() {
 
         // if there is food in the restaurant
         if (foods.length > 0) {
-            // We need to create a list of orders for the foods of the reservation that have a count > 0
-            const list = foods
-                .filter(food => foodCounts[foods.indexOf(food)] > 0)
-                .map(food => ({
-                    foodId: food.id,
-                    quantity: foodCounts[foods.indexOf(food)]
-                }));
+          // We need to create a list of orders for the foods of the reservation that have a count > 0
+          const list = foods
+            .filter((food) => foodCounts[foods.indexOf(food)] > 0)
+            .map((food) => ({
+              foodId: food.id,
+              quantity: foodCounts[foods.indexOf(food)],
+            }));
 
-            const orders = {
-                id: res.data.id,
-                list: list
-            }
+          const orders = {
+            id: res.data.id,
+            list: list,
+          };
 
-            // We create the orders
-            axios.post(`${baseUrl}reservations/order/add`, orders).then(res => {
-                console.log(res);
-            }).catch(err => console.log(err));
-            
+          // We create the orders
+          axios
+            .post(`${baseUrl}reservations/order/add`, orders)
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => console.log(err));
         }
 
         navigate("/reservations");
@@ -195,34 +197,33 @@ function ReservationDetails() {
             </Col>
           </Row>
           <hr></hr>
-          
-            
-        {foods.length > 0 
-        ?
-        <Row>
-            <label for="select_food" className="fw-bold">
+
+          {foods.length > 0 ? (
+            <Row>
+              <label for="select_food" className="fw-bold">
                 Select Food:
-            </label>
-            <br />
-            <br />
-            <Row>{foods.map(showFoodItems)}</Row>
-            <div className="col-lg-8 mt-2 mb-2">
-            <textarea id="comments" name="comments" cols={80} placeholder="Additional Comments">
-                
-            </textarea>
+              </label>
+              <br />
+              <br />
+              <Row>{foods.map(showFoodItems)}</Row>
+              <div className="col-lg-8 mt-2 mb-2">
+                <textarea
+                  id="comments"
+                  name="comments"
+                  cols={80}
+                  placeholder="Additional Comments"
+                ></textarea>
+              </div>
+              <div className="col-lg-2"></div>
+            </Row>
+          ) : (
+            <div className="col-lg-12">
+              <h3 className="text-center">
+                This restaurant has no uploaded menu to order food
+              </h3>
             </div>
-            <div className="col-lg-2">
-            
-            </div>
-        </Row>
-        :
-        <div className="col-lg-12">
-            <h3 className="text-center">This restaurant has no uploaded menu to order food</h3>
-        </div>
-        }
-        
-            
-          
+          )}
+
           <Row className="mt-4 text-center w-full m-2">
             <Button size="lg" variant="success" onClick={postDataHandle}>
               Book Now
