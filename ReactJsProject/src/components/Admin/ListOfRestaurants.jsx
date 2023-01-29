@@ -11,10 +11,10 @@ function ListOfRestaurants() {
 
   useEffect(() => {
     axios
-      .get("https://admin/petitions/restaurant/pending")
+      .get("https://admin/petitions/restaurant/all")
       .then((res) => {
         setPendingRestaurant(res.data);
-        if (res.data.status === "" || res.data.status === "accepted") {
+        if (res.data.status === "") {
           return <p>There are no Restaurants for review</p>;
         } else {
           return null;
