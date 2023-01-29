@@ -3,7 +3,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
-import { Formik } from "formik";
+import { Formik, Field } from "formik";
 import * as Yup from "yup";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -131,7 +131,6 @@ function SignUp() {
           validationSchema={schema}
           onSubmit={handleSubmit}
           initialValues={{
-            
             restaurentname: "",
             managerfirstname: "",
             managerlastname: "",
@@ -146,9 +145,10 @@ function SignUp() {
             telefonenumber: "",
             file: null,
             restaurenttype: "",
+            checked: [],
+
             description: "",
             terms: false,
-            
           }}
         >
           {({
@@ -409,7 +409,7 @@ function SignUp() {
                     </Form.Group>
                   </div>
                   <div className="col-md-4 py-3">
-                    <Form.Group
+                    {/* <Form.Group
                       controlId="validationFormik105"
                       className="position-relative"
                     >
@@ -426,7 +426,29 @@ function SignUp() {
                       <Form.Control.Feedback type="invalid" tooltip>
                         {errors.restaurenttype}
                       </Form.Control.Feedback>
-                    </Form.Group>
+                    </Form.Group> */}
+                    {/* <label>
+                      <Field type="checkbox" name="toggle" />
+                      {`${values.toggle}`}
+                    </label> */}
+
+                    <div id="checkbox-group" className="fw-bold mt-4">
+                      Restaurant Type
+                    </div>
+                    <div role="group" aria-labelledby="checkbox-group">
+                      <label className="ms-2">
+                        <Field type="checkbox" name="checked" value="chinese" />
+                        Chinese
+                      </label>
+                      <label>
+                        <Field type="checkbox" name="checked" value="russian" />
+                        Russian
+                      </label>
+                      <label>
+                        <Field type="checkbox" name="checked" value="indian" />
+                        Indian
+                      </label>
+                    </div>
                   </div>
 
                   <div className="col-md-12 py-3">
