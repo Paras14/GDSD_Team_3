@@ -121,7 +121,10 @@ function SignUp() {
 
   return (
     <div className="container mt-4 mb-5">
-      <div className=" rounded shadow bg-success text-white text-uppercase">
+      <div
+        className=" rounded shadow  text-uppercase "
+        style={{ backgroundColor: "#AED0FF" }}
+      >
         <p className="py-2 fs-1 fw-bold text-center">Restaurant registration</p>
       </div>
 
