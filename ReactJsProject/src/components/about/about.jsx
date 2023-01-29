@@ -55,7 +55,7 @@ const AboutComponent = () => {
                             <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title ms-2">Paras</h5>
-                                <p class="card-text">Team leader and member from the bakend team.</p>
+                                <p class="card-text">Github master and member from the frontend team.</p>
                                 <a className='btn btn-primary' href="http://team3gdsdweb.s3-website-us-east-1.amazonaws.com/personal_webpages/Paras-CV.html">See more</a>
                             </div>
                             </div>

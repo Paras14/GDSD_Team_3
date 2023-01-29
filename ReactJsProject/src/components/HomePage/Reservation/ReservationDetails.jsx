@@ -86,6 +86,8 @@ function ReservationDetails() {
       numberofplaces: count,
       restaurantId: restaurantId,
       userId: user.id,
+      table: [],
+      parking: [],
     };
 
     axios
