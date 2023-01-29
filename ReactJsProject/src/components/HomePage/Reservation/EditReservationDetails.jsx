@@ -39,9 +39,19 @@ function EditReservationDetails() {
         setReservation(reservation.data);
         const dateObject = new Date(reservation.data.date);
 
-        console.log("Date day: " + dateObject.toISOString().split('T')[0]);
-        setDate(dateObject.toISOString().split('T')[0]);
-        setHour(dateObject.toLocaleTimeString());
+        const localdate = dateObject.toISOString().split('T')[0];
+        let localhour = dateObject.toLocaleTimeString();
+
+        console.log("Date day: " + localdate);
+        console.log("Date time: " + localhour);
+        console.log("Date time first: " + dateObject.toLocaleTimeString().split(':')[0]);
+        if (dateObject.toLocaleTimeString().split(':')[0].length === 1) {
+            console.log("Date time: " + "0" + dateObject.toLocaleTimeString());
+            localhour = "0" + dateObject.toLocaleTimeString();
+        }
+
+        setDate(localdate);
+        setHour(localhour);
         
         setCount(reservation.data.numberofplaces);
 
