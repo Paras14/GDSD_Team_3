@@ -4,6 +4,8 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { Global } from '../../helpers/Global.js';
+const baseUrl = Global.baseUrl;
 
 function ListOfUsers() {
   const navigate = useNavigate();
@@ -11,7 +13,7 @@ function ListOfUsers() {
 
   useEffect(() => {
     axios
-      .get("https://admin/petitions/review/all/")
+      .get(baseUrl+"users")
       .then((res) => {
         setPendingUsers(res.data);
         if (res.data.name === "" && res.data.email === "") {
