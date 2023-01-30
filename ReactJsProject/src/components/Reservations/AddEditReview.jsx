@@ -3,6 +3,7 @@ import { Container, Button, Row, Col } from "react-bootstrap";
 import ReviewCheckBox from "./ReviewCheckBox2";
 import StarRating from "../starRatings";
 import axios from "axios";
+import { Global } from '../../helpers/Global.js';
 
 function AddEditReview() {
   const [rating, setRating] = useState(0);
@@ -18,22 +19,41 @@ function AddEditReview() {
     console.log(politeBehavior);
     console.log(valueForMoney);
     console.log(other);
-  }
-  // const [review, setReview] = useState({
+    console.log(rating);
+
+    const userId = 1;
+    const restaurantId = 2;
+
+  // const review = {
   //   userTd: 1,
   //   restaurantId: 2,
-  //   rating: 0,
-  //   quickService: "",
-  //   deliciousFood: "",
-  //   politeBehavior: "",
-  //   valueForMoney: "",
-  //   comment: "",
-  // });
+  //   rating: rating,
+  //   quickService: quickService,
+  //   deliciousFood: deliciousFood,
+  //   politeBehavior: politeBehavior,
+  //   valueForMoney: valueForMoney,
+  //   comment: other
+  // };
+
+  const url = Global.baseUrl + "reviews?userId=" + userId + "&restaurantId=" + restaurantId+
+  "&rating="+rating+"&quickService="+quickService+"&deliciousFood="+deliciousFood+"&politeBehavior="+
+  politeBehavior+"&valueForMoney="+valueForMoney+"&comment="+other;
+    axios
+      .post(url)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+
+}
 
   // const handlePost = () => {
-  //   const url = "https://jsonplaceholder.typicode.com/todos/1/post";
+  //   const url =   ;
   //   axios
-  //     .post(url, user)
+  //     .post(url, review)
   //     .then(function (response) {
   //       console.log(response);
   //     })
