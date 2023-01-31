@@ -137,7 +137,9 @@ function RestaurantTabDetails({ restaurantDetail }) {
                       displayInput={false}
                     />
                   ))
-                  : " This restaurant has no uploaded menu. "}
+                  :
+                  <p className="text-center mt-4 fs-3"> This restaurant has no uploaded menu</p>
+            }
               </p>
             </div>
             <div class="tab-pane fade" id="reviews-tab-pane" role="tabpanel" aria-labelledby="reviews-tab" tabindex="0">
