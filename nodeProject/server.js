@@ -73,7 +73,7 @@ console.log (`Server is running on port $(PORT).` );
 
 
 //{force: true}
-db.sequelize.sync({force: true})
+db.sequelize.sync()
     .then( () => {
         console.log("Synced db.")
     })
