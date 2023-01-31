@@ -83,7 +83,7 @@ function CustomerSignUp() {
   return (
     <div className="container mt-4 mb-5">
       <div
-        className=" rounded shadow  text-uppercase"
+        className=" rounded shadow"
         style={{ backgroundColor: "#AED0FF" }}
       >
         <p className="py-2 fs-1 fw-bold text-center">Customer registration</p>
@@ -324,7 +324,7 @@ function CustomerSignUp() {
                   </div>
 
                   <Row>
-                    <Button type="submit" className="fw-bold text-uppercase">
+                    <Button type="submit" className="fw-bold col-4">
                       Register
                     </Button>
                   </Row>
