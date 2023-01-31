@@ -25,7 +25,7 @@ module.exports = (sequelize, datatypes) => {
         defaultValue: false,
     },
     comment: {
-        type: datatypes.STRING
+        type: datatypes.STRING(1000)
     }
     });
     return Review;

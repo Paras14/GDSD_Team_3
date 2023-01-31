@@ -34,16 +34,18 @@ import { Global } from "../../helpers/Global.js";
 
 function showReviews(review){
   return (
-    <ReviewCards
-    key = {review.reviewId}
-    userId = {review.userId}
-    rating = {review.rating}
-    quickService = {review.quickService}
-    deliciousFood = {review.deliciousFood}
-    politeBehavior = {review.politeBehavior}
-    valueForMoney = {review.valueForMoney}
-    comment = {review.comment}
-  />
+    <div className="m-4">
+      <ReviewCards
+        key = {review.reviewId}
+        userId = {review.userId}
+        rating = {review.rating}
+        quickService = {review.quickService}
+        deliciousFood = {review.deliciousFood}
+        politeBehavior = {review.politeBehavior}
+        valueForMoney = {review.valueForMoney}
+        comment = {review.comment}
+      />
+    </div>
   );
 }
 
@@ -67,11 +69,11 @@ function Review({restaurantDetail}) {
   }, []);
 
   return (
-    <Container className="mt-4 mb-4">
+    <Container className="my-4">
       <div>
-        <h1 className="text-uppercase fs-1 text-uppercase text-center"> reviews</h1>
+        <h1 className="fs-1 text-center mb-3">Reviews</h1>
       </div>
-      <div className="col-lg-10">
+      <div className="">
       { reviews.length > 0
       ?
       reviews.map(showReviews)
