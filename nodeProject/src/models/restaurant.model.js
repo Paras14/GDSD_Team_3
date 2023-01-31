@@ -27,9 +27,9 @@ module.exports = (sequelize, datatypes) => {
     image: {
     type: datatypes.STRING
     },
-    //address: {
-    //type: datatypes.STRING
-    //},
+    address: {
+    type: datatypes.STRING
+    },
     });
     //Food.belongsTo(FoodCategory);
     return Restaurant;
