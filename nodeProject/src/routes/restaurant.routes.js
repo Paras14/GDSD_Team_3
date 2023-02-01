@@ -1,3 +1,4 @@
+const { checkAdmin } = require("../auth/role_validation");
 
 module.exports = app => {
     const restaurants = require("../controllers/restaurants.controller");
@@ -10,7 +11,7 @@ module.exports = app => {
     // Retrieve all REstaurants with accepted petition
     router.get("/", restaurants.findAllAccepted);
     // Retrieve all REstaurants with pending petition
-    router.get("/pending", restaurants.findAllPending);
+    router.get("/pending", checkAdmin, restaurants.findAllPending);
 
     // Retrieve a single Tutorial with id
     router.get("/:id", restaurants.findOne);
