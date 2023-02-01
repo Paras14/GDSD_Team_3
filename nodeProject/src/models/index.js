@@ -34,7 +34,10 @@ db.restaurantRegistrationPetition = require('./restaurantRegistrationPetition.mo
 db.parking = require('./parking.model')(sequelize, Sequelize);
 db.reviewPetition = require('./reviewPetition.model')(sequelize, Sequelize);
 
-
+//add to food category
+//add to restaurant
+//food category with id 1  -- restaurant with id 5
+//
 db.foods.belongsTo(db.foodCategory);
 db.foods.belongsTo(db.restaurant);
 db.restaurant.belongsToMany(db.foodCategory, {through:'foodCategoryRestaurant'});
@@ -45,6 +48,8 @@ db.chat.belongsTo(db.user, {foreignKey: 'user_emitter'});
 db.chat.belongsTo(db.user, {foreignKey: 'user_receiver'});
 db.review.belongsTo(db.user);
 db.review.belongsTo(db.restaurant);
+
+
 
 db.table.belongsTo(db.restaurant);
 db.reservation.belongsToMany(db.table, {through:'reservationTable'});

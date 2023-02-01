@@ -1,6 +1,7 @@
 const { sequelize } = require("../models");
 const db = require("../models");
 const Restaurant = db.restaurant;
+
 const Op = db.Sequelize.Op;
 const petitionController = require("./restaurantRegistrationPetition.controller");
 const restaurantRegistrationPetition = db.restaurantRegistrationPetition;
@@ -208,7 +209,27 @@ exports.deleteAll = (req, res) => {
       });
   };
 
+exports.getTablesByManager = (req, res) => {
+      const Table = require('./table.controller');
+      const id = req.params.id;
+      console.log(id);
+      Restaurant.findOne({ where: { userId: id } }) 
+      .then((data) => {
+        req.params.restaurantId = data.id;
+         Table.findAllInRestaurant(req, res);
+      })
+      .catch((err) => {
+        console.log("Reached error");
+        res.status(500).send({
+          message: err.message || "Could not find Restaurant"
+        });
+      });
+}
 
+exports.updateTableStatus = (req, res) => {
+    const Table = require('./table.controller');
+    Table.update(req, res);
+}
 
 
 

@@ -34,6 +34,8 @@ const Navbar = () => {
                     navigate("/");
                   } else if (user.rolId === 7) {
                     navigate("/adminPanel");
+                  } else if(user.rolId === 9){
+                    navigate("/managerPanel");
                   }
                   
                 }}
@@ -42,11 +44,18 @@ const Navbar = () => {
               </div>
             
               {user.rolId === 7 ?
-              <div className="align-self-center">
-                <p className="text-light fs-3">Admin Panel</p>
-              </div>
-              :
-                null}
+                <div className="align-self-center">
+                  <p className="text-light fs-3">Admin Panel</p>
+                </div>
+                :
+                  null}
+
+              {user.rolId === 9 ?
+                <div className="align-self-center">
+                  <p className="text-light fs-3">Manager Panel</p>
+                </div>
+                :
+                  null}  
              
               <div className="align-self-center d-flex text-light">
 

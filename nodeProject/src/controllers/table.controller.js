@@ -72,9 +72,10 @@ exports.findOne = (req, res) => {
 
 // Update a Table by the id in the request
 exports.update = (req, res) => {
-  const id = req.query.id;
-  
-  Table.update(req.query, {
+  const id = req.params.id;
+  console.log(id);
+  console.log(req.body);
+  Table.update(req.body, {
     where: { id: id }
   })
     .then(num => {
@@ -90,7 +91,7 @@ exports.update = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Table with id=" + id
+        message: err.message || "Error updating Table with id=" + id
       });
     });
 };
@@ -138,11 +139,11 @@ exports.deleteAll = (req, res) => {
 };
 
 
-exports.findAllInRestaurant = (req, res) => {
+exports.findAllInRestaurant =  (req, res) => {
     const restaurantId = req.params.restaurantId;
     const condition = restaurantId ? { restaurantId: { [Op.eq]: restaurantId } } : null;
     
-    Table.findAll({ where: condition })
+     Table.findAll({ where: condition })
       .then(data => {
         res.send(data);
       })

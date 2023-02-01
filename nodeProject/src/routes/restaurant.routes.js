@@ -24,6 +24,9 @@ module.exports = app => {
     // Delete all Restaurants
     router.delete("/", restaurants.deleteAll);
 
-  
+    router.get("/tables/:id", restaurants.getTablesByManager);
+
+    router.put("/tables/:id", restaurants.updateTableStatus);
+
     app.use('/restaurants', router);
   };

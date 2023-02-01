@@ -36,7 +36,7 @@ function AdminPanelNavbar() {
             <p className="text-light fs-3">Admin Panel</p>
           </div>
           <div className="align-self-center d-flex text-light">
-          </div>
+          </div>  
           { user !== null 
               ? 
               <div className="align-self-center d-flex text-light">

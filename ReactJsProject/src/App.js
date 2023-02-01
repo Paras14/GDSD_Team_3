@@ -38,6 +38,8 @@ import { DeviceSsd } from "react-bootstrap-icons";
 import { Manager } from "socket.io-client";
 import ManagerPanel from "./components/Manager/ManagerPanel";
 import ManagerPanelNavbar from "./components/Manager/ManagerPanelNavbar";
+import TableReservation from "./components/Manager/TableReservations";
+import GuestReservationList from "./components/Manager/GuestReservationList";
 
 const App = () => {
   return (
@@ -350,8 +352,28 @@ const App = () => {
             path="/managerPanel"
             element={
               <div>
-                <ManagerPanelNavbar />
+                <Navbar />
                 <ManagerPanel />
+                <Footer />
+              </div>
+            }
+          />
+          <Route
+            path="/guestReservationList"
+            element={
+              <div>
+                <Navbar />
+                <GuestReservationList />
+                <Footer />
+              </div>
+            }
+          />
+          <Route
+            path="/tableReservations"
+            element={
+              <div>
+                <Navbar />
+                <TableReservation />
                 <Footer />
               </div>
             }

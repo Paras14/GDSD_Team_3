@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Button, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
+
 function ManagerPanel() {
   const navigate = useNavigate();
   return (
@@ -34,7 +35,8 @@ function ManagerPanel() {
             className="mb-3 text-capitalize fs-3"
             size="lg"
             onClick={() => {
-              navigate("/chat");
+              const user = JSON.parse(localStorage.getItem("user"));
+              navigate("/chat/"+user.id);
             }}
           >
             View messages
