@@ -2,9 +2,8 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Global } from '../../helpers/Global.js';
 import {useState, useEffect } from "react";
-const { isAuthorized } = require("../../helpers/isAuthorized")
-const TableCard = require("./TableCard");
-
+import {isAuthorized} from "../../helpers/isAuthorized";
+import TableCard from "./TableCard";
 
 
 const TableReservation = () => {
