@@ -144,9 +144,9 @@ exports.findOne = (req, res) => {
 
 // Update a Restaurant by the id in the request
 exports.update = (req, res) => {
-    const id = req.query.id;
+    const id = req.params.id;
 
-    Restaurant.update(req.query, {
+    Restaurant.update(req.body, {
       where: { id: id }
     })
       .then(num => {
@@ -231,5 +231,19 @@ exports.updateTableStatus = (req, res) => {
     Table.update(req, res);
 }
 
+exports.findRestaurantByManagerId = (req, res) => {
+  const userId = req.params.userId;
+
+  Restaurant.findOne({where: {userId:userId} })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Could not find Restaurant with the Given Id"
+      });
+    });
+
+}
 
 

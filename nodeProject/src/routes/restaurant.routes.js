@@ -32,5 +32,7 @@ module.exports = app => {
 
     router.put("/tables/:id", restaurants.updateTableStatus);
 
+    router.get("/manager/:userId", restaurants.findRestaurantByManagerId);
+
     app.use('/restaurants', router);
   };

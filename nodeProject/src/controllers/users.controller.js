@@ -82,9 +82,9 @@ exports.findOne = (req, res) => {
 
 // Update a User by the id in the request
 exports.update = (req, res) => {
-  const id = req.query.id;
+  const id = req.params.id;
 
-  User.update(req.query, {
+  User.update(req.body, {
     where: { id: id },
   })
     .then((num) => {
@@ -148,7 +148,7 @@ exports.deleteAll = (req, res) => {
 
 exports.findUserByEmail = (req, res) => {
   const email = req.query.email;
-  
+
   User.findOne({ where: { email: email } })
     .then((user) => {
       if (user) {
