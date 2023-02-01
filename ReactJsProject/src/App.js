@@ -40,6 +40,7 @@ import ManagerPanel from "./components/Manager/ManagerPanel";
 import ManagerPanelNavbar from "./components/Manager/ManagerPanelNavbar";
 import TableReservation from "./components/Manager/TableReservations";
 import GuestReservationList from "./components/Manager/GuestReservationList";
+import OtherProfile from "./components/profile/OtherUserProfile";
 
 const App = () => {
   return (
@@ -378,6 +379,17 @@ const App = () => {
               </div>
             }
           />
+          <Route 
+            path = "/otherProfile/:userId"
+            element = {
+              <div>
+                <Navbar   />
+                <OtherProfile />
+                <Footer />
+              </div>
+            }
+          />
+
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Router>

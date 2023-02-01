@@ -25,12 +25,13 @@ const TableCard = ({ table }) => {
                     <div class="col-md-12">
                         <h5 class="card-header ms-">Table: #{table.number}</h5>
                     <div class="card-body">
-                        <h5 class="card-title ms-4 mb-6">Status: {table.status===1?"Reserved": "Free"}</h5>
+                        <h5 class="card-title ms-4 mb-6">Status: {table.status===true?"Reserved": "Free"}</h5>
                         
                         <Button variant="primary" className='mx-2'
                             onClick={() => {
                                 let status = (table.status+1)%2;
-                                axios.put(baseUrl+ "restaurants/table/" + table.id, {status: status})
+                                
+                                axios.put(baseUrl+"restaurants/tables/" + table.id, {status: status})
                                     .then((res) => {
                                         console.log(res.data);
                                         window.location.reload();
