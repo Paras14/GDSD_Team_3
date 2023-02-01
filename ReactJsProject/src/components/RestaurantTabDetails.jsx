@@ -153,6 +153,10 @@ function RestaurantTabDetails({ restaurantDetail }) {
               </p>
             </div>
             <div class="tab-pane fade" id="reviews-tab-pane" role="tabpanel" aria-labelledby="reviews-tab" tabindex="0">
+              <Button
+                className="btn-primary m-1"
+                onClick={() => navigate("/AddReview/" + restaurantDetail.id)}
+              > Add Review</Button>
               <Review 
                 restaurantDetail={restaurantDetail}
               />

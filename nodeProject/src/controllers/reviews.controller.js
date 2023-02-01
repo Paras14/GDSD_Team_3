@@ -7,8 +7,8 @@ const reviewPetitionDB = db.reviewPetition;
 // Create and Save a new Review
 exports.create = (req, res) => {
     // Validate request
-    console.log(req.query);
-    if (!req.query.rating) {
+    console.log(req.body);
+    if (!req.body.rating) {
       res.status(400).send({
         message: "Review rating can not be empty!"
       });
@@ -17,14 +17,14 @@ exports.create = (req, res) => {
   
     // Create a Restaurant
     const review = {
-        restaurantId:req.query.restaurantId,
-        userId: req.query.userId,
-        rating:req. query.rating,
-        quickService: req.query.quickService,
-        deliciousFood: req.query.deliciousFood,
-        politeBehavior: req.query.politeBehavior,
-        valueForMoney: req.query.valueForMoney,
-        comment: req.query.comment
+        restaurantId:req.body.restaurantId,
+        userId: req.body.userId,
+        rating:req.body.rating,
+        quickService: req.body.quickService,
+        deliciousFood: req.body.deliciousFood,
+        politeBehavior: req.body.politeBehavior,
+        valueForMoney: req.body.valueForMoney,
+        comment: req.body.comment
     };
   
     // Save Review in the database
@@ -67,6 +67,26 @@ exports.findAllAccepted = (req, res) => {
     INNER JOIN reviewPetitions 
     ON reviews.id = reviewPetitions.reviewId 
     WHERE reviewPetitions.status = 'accepted';`;
+
+    sequelize.query(query, { type: sequelize.QueryTypes.SELECT})
+    .then(reviews => {
+      res.send(reviews);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving reviews."
+      });
+    });
+};
+
+exports.findAllPending = (req, res) => {
+  const query = `
+    SELECT reviews.*
+    FROM reviews
+    INNER JOIN reviewPetitions
+    ON reviews.id = reviewPetitions.reviewId
+    WHERE reviewPetitions.status = 'pending';`;
 
     sequelize.query(query, { type: sequelize.QueryTypes.SELECT})
     .then(reviews => {

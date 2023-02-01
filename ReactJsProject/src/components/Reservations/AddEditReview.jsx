@@ -4,8 +4,9 @@ import ReviewCheckBox from "./ReviewCheckBox2";
 import StarRating from "../starRatings";
 import axios from "axios";
 import { Global } from '../../helpers/Global.js';
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-const token = localStorage.getItem( 'token' );
 
 function AddEditReview() {
   const [rating, setRating] = useState(0);
@@ -14,6 +15,30 @@ function AddEditReview() {
   const [politeBehavior, setPoliteBehavior] = useState(false);
   const [valueForMoney, setValueForMoney] = useState(false);
   const [other, setOther] = useState('');
+  const token = localStorage.getItem( 'token' );
+  const [user, setUser] = useState( null );
+  const {restaurantId} = useParams();
+  const [restaurantData, setRestaurantData] = useState(null);
+  const baseUrl = Global.baseUrl;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+
+    async function getUserData() {
+
+      // Get user data from local storage
+      const user = JSON.parse(localStorage.getItem("user"));
+      setUser(user);
+
+      // Get restaurant data with restaurantId in params
+      const response = await axios.get(`${Global.baseUrl}restaurants/${restaurantId}`);
+      setRestaurantData(response.data);
+    }
+
+    getUserData();
+
+  }, []);
+
   const handleFinish = (e) => {
     e.preventDefault();
     console.log(quickService);
@@ -23,27 +48,26 @@ function AddEditReview() {
     console.log(other);
     console.log(rating);
 
-    const userId = 1;
-    const restaurantId = 15;
+   const review = {
+     userId: user.id,
+     restaurantId: restaurantData.id,
+     rating: rating,
+     quickService: quickService,
+     deliciousFood: deliciousFood,
+     politeBehavior: politeBehavior,
+     valueForMoney: valueForMoney,
+     comment: other
+   };
 
-  // const review = {
-  //   userTd: 1,
-  //   restaurantId: 2,
-  //   rating: rating,
-  //   quickService: quickService,
-  //   deliciousFood: deliciousFood,
-  //   politeBehavior: politeBehavior,
-  //   valueForMoney: valueForMoney,
-  //   comment: other
-  // };
-
-  const url = Global.baseUrl + "reviews?userId=" + userId + "&restaurantId=" + restaurantId+
-  "&rating="+rating+"&quickService="+quickService+"&deliciousFood="+deliciousFood+"&politeBehavior="+
-  politeBehavior+"&valueForMoney="+valueForMoney+"&comment="+other;
+  //const url = Global.baseUrl + "reviews?userId=" + userId + "&restaurantId=" + restaurantId+
+  //"&rating="+rating+"&quickService="+quickService+"&deliciousFood="+deliciousFood+"&politeBehavior="+
+  //politeBehavior+"&valueForMoney="+valueForMoney+"&comment="+other;
     axios
-      .post(url,{},{ headers: { 'Authorization': `Bearer ${token}` } })
+      .post(baseUrl + "reviews/", review,
+      { headers: { 'Authorization': `Bearer ${token}` } })
       .then(function (response) {
         console.log(response);
+        navigate(`/RestaurantDetails/${restaurantId}`);
       })
       .catch(function (error) {
         console.log(error);
@@ -68,7 +92,7 @@ function AddEditReview() {
       <div>
         <h1 className="text-uppercase fs-1 text-uppercase text-center">
           {" "}
-          Review/Edit Review
+          Review Restaurant {restaurantData?.name}
         </h1>
       </div>
       <div className="col-lg-12 mt-4">
@@ -91,6 +115,11 @@ function AddEditReview() {
             }
             >Submit</Button>
           </div>
+        </div>
+        <div className="text-center">
+          <p>
+            *Please note that your review will not be posted publicly on the website until it has been approved by an administrator.
+          </p>
         </div>
       </div>
     </Container>

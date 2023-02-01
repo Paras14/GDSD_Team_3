@@ -321,7 +321,7 @@ const App = () => {
             }
           />
           <Route
-            path="/AddEditReview"
+            path="/AddReview/:restaurantId"
             element={
               <div>
                 <Navbar />

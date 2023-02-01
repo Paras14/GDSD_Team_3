@@ -1,3 +1,4 @@
+const { checkAdmin } = require("../auth/role_validation");
 const { checkToken } = require("../auth/token_validation");
 
 module.exports = app => {
@@ -10,9 +11,11 @@ module.exports = app => {
   
   // Retrieve all accepted Reviews
   router.get("/", reviews.findAllAccepted);
+  // Retrieve all pending Reviews
+  router.get("/pending", checkAdmin, reviews.findAllPending);
 
   // Retrieve a single Reviews with id
-  router.get("/:id", reviews.findOne);
+  router.get("/one/:id", reviews.findOne);
 
   // Update a Reviews with id
   router.put("/:id", checkToken, reviews.update);

@@ -6,24 +6,45 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import { Global } from "../../helpers/Global";
 
 
 function PendingReviews() {
   const navigate = useNavigate();
   const arrow = <FontAwesomeIcon icon={faArrowRight} />;
   const [pendingData, setPendingData] = useState([]);
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const baseUrl = Global.baseUrl;
 
   useEffect(() => {
-    axios
-      .get("/admin/petitions/review/pending")
+    // Get email from local storage
+    const email = localStorage.getItem("useremail");
+    setEmail(email);
+  }, []);
+
+  useEffect(() => {
+    if (email !== "") {
+
+      // Get Pending Reviews Data with email in query params
+      axios
+      .get(baseUrl + "reviews/pending", {
+        params: {
+          email: email,
+        },
+      })
       .then((res) => {
         setPendingData(res.data);
-        if (res.data.status == "") {
-          return <p>There is no Pending Requests for Review</p>;
+        if (res.data.length === 0) {
+          console.log("There is no Pending Requests for Reviews");
+          setMessage(<p>There is no Pending Requests for Reviews</p>);
         }
       })
       .catch((err) => console.log(err));
-  }, []);
+
+    }
+
+  }, [email]);
 
   // const pendingData = [
   //   { reviewer: "example_customer1", restaurant: "example_restaurant1", time_of_post: "16.12.2022 11:04"},
@@ -54,12 +75,20 @@ function PendingReviews() {
         PENDING REVIEW POSTS
         </p>
         <div style={{overflow:"scroll", maxHeight:"25rem"}}>
-            {pendingData.map((data) => {
+          {message}
+          {pendingData.length !== 0 && pendingData.map(async (data) => {
+
+                /*const userreviewresponse = await axios.get(baseUrl + "users/" + data.userId);
+                setUserReview(userreviewresponse.data);
+                console.log(userreviewresponse.data);*/
+
                 return (
                 <div className="d-flex justify-content-between mb-2 p-3 m-2 bg-light rounded">
+                    
                     <p className="fs-4 fw-bold">{data.id}</p>
-                    <p className="fs-4 fw-bold">{data.restaurantId}</p>
-                    <p className="fs-4 fw-bold">{data.message}</p>
+                    <p className="fs-4 ">{data.createdAt}</p>
+                    <p className="fs-4 ">{data.comment}</p>
+                  
                     <Button
                         onClick={() => {
                             navigate("/PendingReviewPost");
