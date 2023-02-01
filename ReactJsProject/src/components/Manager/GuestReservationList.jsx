@@ -6,7 +6,7 @@ import { isAuthorized } from '../../helpers/isAuthorized';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Global } from '../../helpers/Global.js';
-import ReservationCard from '../Reservations/ReservationCard';
+import ManagerReservationCard from './ManagerReservationCard';
 import moment from "moment";
 
 // this component displays a list of reservations of the user
@@ -73,7 +73,7 @@ const GuestReservationList = () => {
                     {reservations.map((reservation) => (
                         
                         
-                        <ReservationCard
+                        <ManagerReservationCard
                         reservation={reservation}
                         />
                         
