@@ -34,6 +34,10 @@ import AddEditReview from "./components/Reservations/AddEditReview";
 import AboutComponent from "./components/about/about";
 import TestGetAllReservations from "./components/TestGetallReservations";
 import EditReservationDetails from "./components/HomePage/Reservation/EditReservationDetails";
+import { DeviceSsd } from "react-bootstrap-icons";
+import { Manager } from "socket.io-client";
+import ManagerPanel from "./components/Manager/ManagerPanel";
+import ManagerPanelNavbar from "./components/Manager/ManagerPanelNavbar";
 
 const App = () => {
   return (
@@ -287,7 +291,7 @@ const App = () => {
             element={
               <div>
                 <Navbar />
-                <Reservations/>
+                <Reservations />
                 <Footer />
               </div>
             }
@@ -297,7 +301,7 @@ const App = () => {
             element={
               <div>
                 <Navbar />
-                <AboutComponent/>
+                <AboutComponent />
                 <Footer />
               </div>
             }
@@ -342,8 +346,17 @@ const App = () => {
               </div>
             }
           />
+          <Route
+            path="/managerPanel"
+            element={
+              <div>
+                <ManagerPanelNavbar />
+                <ManagerPanel />
+                <Footer />
+              </div>
+            }
+          />
           <Route path="*" element={<ErrorPage />} />
-          
         </Routes>
       </Router>
     </div>
