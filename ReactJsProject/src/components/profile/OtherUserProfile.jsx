@@ -8,13 +8,17 @@ const OtherProfile = () => {
   const [user, setUser] = useState({});
   const {userId} = useParams();
   const baseUrl = Global.baseUrl;
-  useEffect(async () => {
-    const userValue = await axios.get(baseUrl + "users/" + userId);
-    setUser(userValue.data);
+  useEffect( () => {
+    const getUser = async () => {
+        const userValue = await axios.get(baseUrl + "users/" + userId);
+        setUser(userValue.data);
+    }
 
+    getUser();
   }, []);
 
   return (
+    user && (
     <div className="container mt-4 mb-5">
         <div className=" rounded shadow" style={{backgroundColor : "#AED0FF"}}>
             <p className="py-2 fs-1 fw-bold text-center" >@{user.username} profile</p>
@@ -120,7 +124,7 @@ const OtherProfile = () => {
         <br></br>
         <br></br>
         <br></br>
-    </div>
+    </div>)
   );
 }
 
