@@ -13,6 +13,9 @@ module.exports = app => {
     // Retrieve all REstaurants with pending petition
     router.get("/pending", checkAdmin, restaurants.findAllPending);
 
+    // Retrieve all Restaurants
+    router.get("/all", checkAdmin, restaurants.findAll);
+
     // Retrieve a single Tutorial with id
     router.get("/:id", restaurants.findOne);
 

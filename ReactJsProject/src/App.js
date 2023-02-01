@@ -11,8 +11,8 @@ import CustomerSignUp from "./components/SignUp/CustomerSignUp";
 import RestaurentRegistration from "./components/SignUp/RestaurentRegistration";
 import AdminPanel from "./components/Admin/AdminPanel";
 import AdminPanelNavbar from "./components/Admin/AdminPanelNavbar";
-import PendingRestaurentReg from "./components/Admin/PendingRestaurentReg";
-import PendingRestaurantForm from "./components/Admin/PendingRestaurentForm";
+import PendingRestaurantReg from "./components/Admin/PendingRestaurantReg";
+import PendingRestaurantForm from "./components/Admin/PendingRestaurantForm";
 import ListOfUsers from "./components/Admin/ListOfUsers";
 import PendingReviews from "./components/Admin/PendingReviews";
 import PendingReviewPost from "./components/Admin/PostReviews/PendingReviewPost";
@@ -121,17 +121,17 @@ const App = () => {
             }
           />
           <Route
-            path="/pendingRestaurentRegistration"
+            path="/pendingRestaurantRegistration"
             element={
               <div>
                 <Navbar />
-                <PendingRestaurentReg />
+                <PendingRestaurantReg />
                 <Footer />
               </div>
             }
           />
           <Route
-            path="/pendingRestaurantForm"
+            path="/pendingRestaurantForm/:restaurantId"
             element={
               <div>
                 <AdminPanelNavbar />

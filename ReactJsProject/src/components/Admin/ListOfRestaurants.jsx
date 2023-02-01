@@ -4,26 +4,37 @@ import { Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
+import { Global } from "../../helpers/Global.js";
 
 function ListOfRestaurants() {
   const navigate = useNavigate();
-  const [pendingRestaurant, setPendingRestaurant] = useState([]);
+  const [pendingRestaurants, setPendingRestaurants] = useState([]);
+  const baseUrl = Global.baseUrl;
+  const [message, setMessage] = useState("");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
-    axios
-      .get("https://admin/petitions/restaurant/all")
+    // Get email from local storage
+    const email = localStorage.getItem("useremail");
+    setEmail(email);
+  }, []);
+
+  useEffect(() => {
+    if (email !== "") {
+      axios
+      .get(baseUrl+"restaurants/all", {params: {email: email}})
       .then((res) => {
-        setPendingRestaurant(res.data);
-        if (res.data.status === "") {
-          return <p>There are no Restaurants for review</p>;
-        } else {
-          return null;
+        setPendingRestaurants(res.data);
+        if (res.data.length === 0) {
+          console.log("There is no users");
+          setMessage(<p>There is no users</p>);
         }
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+    }
+  }, [email]);
   //   const arrow = <FontAwesomeIcon icon={faArrowRight} />;
   // const pendingData = [
   //   { name: "Restaurant 1", email: "Restaurant1@gmail.com" },
@@ -64,14 +75,21 @@ function ListOfRestaurants() {
           List of Restaurants
         </p>
         <div style={{ overflow: "scroll", maxHeight: "25rem" }}>
-          {pendingRestaurant.map((data) => {
+          {pendingRestaurants.length !== 0 && pendingRestaurants.map((data) => {
             return (
               <div className="d-flex justify-content-between mb-2 p-3 m-2 bg-light rounded">
+                <img 
+                  src={data.image}
+                  alt={data.name}
+                  className="img-fluid"
+                  style={{ width: "100px", height: "100px" }}
+                />
                 <p className="fs-4 fw-bold">{data.name}</p>
-                <p className="fs-4 fw-bold">{data.email}</p>
+                <p className="fs-4">{data.address}</p>
+                <p className="fs-4">{data.telephone}</p>
                 <Button
                   onClick={() => {
-                    navigate("/");
+                    navigate("/RestaurantDetails/" + data.id);
                   }}
                 >
                   View Details

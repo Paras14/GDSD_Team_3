@@ -26,6 +26,21 @@ exports.getAllPetitions = (req, res) => {
     });
 }
 
+// Get petition of a restaurant
+exports.getPetition = (req, res) => {
+    const id = req.params.id;
+
+    restaurantRegistrationPetition.findAll({where: {restaurantId: id}})
+    .then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: "Error retrieving petition with id=" + id
+        });
+    });
+}
+
 exports.update = (req, res) => {
     const id = req.body.id;
     restaurantRegistrationPetition.update(req.body, {

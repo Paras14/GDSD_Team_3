@@ -14,24 +14,36 @@ function PendingRestaurantReg() {
   const arrow = <FontAwesomeIcon icon={faArrowRight} />;
   const baseUrl = Global.baseUrl;
   const [message, setMessage] = useState("");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
-    // Get Pending Restaurant Data with email in query params
-    axios
+    // Get email from local storage
+    const email = localStorage.getItem("useremail");
+    setEmail(email);
+  }, []);
+
+  useEffect(() => {
+    if (email !== "") {
+
+      // Get Pending Restaurant Data with email in query params
+      axios
       .get(baseUrl + "restaurants/pending", {
         params: {
-          email: localStorage.getItem("useremail"),
+          email: email,
         },
       })
       .then((res) => {
         setPendingData(res.data);
         if (res.data.length === 0) {
-          console.log("There is no Pending Requests for Review");
-          setMessage(<p>There is no Pending Requests for Review</p>);
+          console.log("There is no Pending Requests for Restaurants");
+          setMessage(<p>There is no Pending Requests for Restaurants</p>);
         }
       })
       .catch((err) => console.log(err));
-  }, []);
+
+    }
+
+  }, [email]);
   // const pendingData = [
   //   { name: "Restaurent 1", email: "senoman.ali7383@gmail.com" },
   //   { name: "Restaurent 2", email: "paras@gmail.com" },
@@ -48,7 +60,7 @@ function PendingRestaurantReg() {
         </p>
         <div>
           {message}
-          {pendingData.map((data) => {
+          {pendingData.length !== 0 && pendingData.map((data) => {
             return (
               <div className="d-flex justify-content-between mb-2 p-3 m-2 bg-light rounded">
                 <img 
@@ -62,7 +74,7 @@ function PendingRestaurantReg() {
                 <p className="fs-4">{data.telephone}</p>
                 <Button
                   onClick={() => {
-                    navigate("/pendingRestaurentForm");
+                    navigate("/pendingRestaurantForm/" + data.id);
                   }}
                 >
                   {arrow}

@@ -168,6 +168,11 @@ exports.findUserByEmail = (req, res) => {
 
 
 exports.findLocalUserByEmail = (req, res, next) => {
+  if (!req.query.email) {
+    res.status(400).send({
+      message: "User email can not be empty!",
+    });
+  }
   const email = req.query.email;
   
    return User.findOne({ where: { email: email } })

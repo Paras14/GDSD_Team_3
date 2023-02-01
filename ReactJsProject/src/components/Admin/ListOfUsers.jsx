@@ -5,27 +5,37 @@ import { useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { Global } from '../../helpers/Global.js';
-const baseUrl = Global.baseUrl;
+
 
 function ListOfUsers() {
   const navigate = useNavigate();
   const [pendingUsers, setPendingUsers] = useState([]);
+  const baseUrl = Global.baseUrl;
+  const [message, setMessage] = useState("");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
-    axios
-      .get(baseUrl+"users")
+    // Get email from local storage
+    const email = localStorage.getItem("useremail");
+    setEmail(email);
+  }, []);
+
+  useEffect(() => {
+    if (email !== "") {
+      axios
+      .get(baseUrl+"users/", {params: {email: email}})
       .then((res) => {
         setPendingUsers(res.data);
-        if (res.data.name === "" && res.data.email === "") {
-          return <p>There is no Users for review</p>;
-        } else {
-          return null;
+        if (res.data.length === 0) {
+          console.log("There is no users");
+          setMessage(<p>There is no users</p>);
         }
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+    }
+  }, [email]);
   //   const arrow = <FontAwesomeIcon icon={faArrowRight} />;
   // const pendingData = [
   //   { name: "User 1", email: "user1@gmail.com" },
@@ -64,7 +74,8 @@ function ListOfUsers() {
       <div>
         <p className="text-uppercase text-center m-4 p-2 fs-1">List of Users</p>
         <div style={{ overflow: "scroll", maxHeight: "25rem" }}>
-          {pendingUsers.map((data) => {
+          {message}
+          {pendingUsers.length !== 0 && pendingUsers.map((data) => {
             return (
               <div className="d-flex justify-content-between mb-2 p-3 m-2 bg-light rounded">
                 <p className="fs-4 fw-bold">{data.name}</p>

@@ -9,6 +9,9 @@ module.exports = app => {
     // Get all petitions
     router.get("/all", checkAdmin, restaurantResgistrationPetition.getAllPetitions);
 
+    // Get petition of a restaurant
+    router.get("/:id", restaurantResgistrationPetition.getPetition);
+
     // Get pending petitions
     router.get("/pending", checkAdmin, restaurantResgistrationPetition.getPendingPetitions);
 

@@ -20,7 +20,7 @@ exports.create = (req, res) => {
     };
   
     // Save Food Category in the database
-    RestaurantCategory.create(foodCategory)
+    RestaurantCategory.create(restaurantCategory)
       .then(data => {
         res.send(data);
       })
@@ -53,7 +53,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  FoodCategory.findByPk(id)
+  RestaurantCategory.findByPk(id)
     .then(data => {
       if (data) {
         res.send(data);

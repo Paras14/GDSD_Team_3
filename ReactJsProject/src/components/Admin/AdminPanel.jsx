@@ -15,7 +15,7 @@ function AdminPanel() {
             className="mb-3 text-capitalize fs-3"
             size="lg"
             onClick={() => {
-              navigate("/pendingRestaurentRegistration");
+              navigate("/pendingRestaurantRegistration");
             }}
           >
             View Pending restaurant registration
