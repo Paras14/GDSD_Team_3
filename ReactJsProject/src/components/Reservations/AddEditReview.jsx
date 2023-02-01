@@ -5,6 +5,8 @@ import StarRating from "../starRatings";
 import axios from "axios";
 import { Global } from '../../helpers/Global.js';
 
+const token = localStorage.getItem( 'token' );
+
 function AddEditReview() {
   const [rating, setRating] = useState(0);
   const [quickService, setQuickService] = useState(false);
@@ -22,7 +24,7 @@ function AddEditReview() {
     console.log(rating);
 
     const userId = 1;
-    const restaurantId = 2;
+    const restaurantId = 15;
 
   // const review = {
   //   userTd: 1,
@@ -39,7 +41,7 @@ function AddEditReview() {
   "&rating="+rating+"&quickService="+quickService+"&deliciousFood="+deliciousFood+"&politeBehavior="+
   politeBehavior+"&valueForMoney="+valueForMoney+"&comment="+other;
     axios
-      .post(url)
+      .post(url,{},{ headers: { 'Authorization': `Bearer ${token}` } })
       .then(function (response) {
         console.log(response);
       })
