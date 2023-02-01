@@ -76,7 +76,7 @@ function PendingReviews() {
         </p>
         <div style={{overflow:"scroll", maxHeight:"25rem"}}>
           {message}
-          {pendingData.length !== 0 && pendingData.map(async (data) => {
+          {pendingData.length !== 0 && pendingData.map((data) => {
 
                 /*const userreviewresponse = await axios.get(baseUrl + "users/" + data.userId);
                 setUserReview(userreviewresponse.data);
