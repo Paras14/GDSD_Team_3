@@ -28,10 +28,10 @@ module.exports = app => {
     router.post("/order/add", reservations.addOrder);
 
     // Get all food corresponding to a reservation
-    router.get("/order", reservations.getAllOrder);
+    router.get("/order/:reservationId", reservations.getAllOrder);
 
      // Delete all food corresponding to a reservation
-    router.delete("/order/:reservationId", reservations.getAllOrder);
+    router.delete("/order/:reservationId", reservations.deleteAllOrder);
 
     // Get a list of orders for a reservation
     //router.get("/order/:id", reservations.findAllOrders);

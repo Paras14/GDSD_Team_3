@@ -137,7 +137,8 @@ exports.update = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Reservation was updated successfully."
+            message: "Reservation was updated successfully.",
+            reservation: req.body
           });
         } else {
           res.send({
@@ -281,7 +282,7 @@ exports.addOrder = (req, res) => {
 };
 
 exports.getAllOrder = (req, res) => {
-    const id = req.body.reservationId;
+    const id = req.params.reservationId;
     OrderReservation.findAll({where:{reservationId:id}})
     .then(data => {
       res.send(data);
@@ -297,7 +298,7 @@ exports.deleteAllOrder = (req, res) => {
   const id = req.params.reservationId;
 
   OrderReservation.destroy({
-    where: { restaurantId: id }
+    where: { reservationId: id }
   })
     .then(num => {
       if (num == 1) {

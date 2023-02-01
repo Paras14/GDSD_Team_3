@@ -60,11 +60,22 @@ function EditReservationDetails() {
         const restaurant = await axios.get(`${baseUrl}restaurants/${reservation.data.restaurantId}`);
         setRestaurantDetail(restaurant.data);
 
-        // get food details (change to get food details from reservation)
+        // get food details
         const foods = await axios.get(`${baseUrl}foods/restaurant/${reservation.data.restaurantId}`);
         console.log(foods.data);
         setFoods(foods.data);
-        setFoodCounts(foods.data.map(food => 0));
+
+        // get food orders of the reservation
+        const orders = await axios.get(`${baseUrl}reservations/order/${reservationId}`);
+        console.log(orders.data);
+
+        // set the food counts
+        const foodCounts = foods.data.map(food => {
+            const order = orders.data.find(order => order.foodId === food.id);
+            return order ? order.quantity : 0;
+        });
+        console.log("foodCounts: ",foodCounts);
+        setFoodCounts(foodCounts);
     }
 
 
@@ -119,7 +130,7 @@ function EditReservationDetails() {
         // if there is food in the restaurant
         if (foods.length > 0) {
             // First we need to delete the orders of the reservation
-            axios.delete(`${baseUrl}reservations/order/${res.data.id}`).then(res => {
+            axios.delete(`${baseUrl}reservations/order/${reservationId}`).then(res => {
                 console.log(res);
             }).catch(err => console.log(err));
 
@@ -133,7 +144,7 @@ function EditReservationDetails() {
                 }));
 
             const orders = {
-                id: res.data.id,
+                id: reservationId,
                 list: list
             }
 

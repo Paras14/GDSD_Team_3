@@ -106,9 +106,11 @@ function ReservationDetails() {
             }));
 
           const orders = {
-            id: res.data.id,
+            id: res.data.reservation.id,
             list: list,
           };
+
+          console.log("orders: ", orders);
 
           // We create the orders
           axios
