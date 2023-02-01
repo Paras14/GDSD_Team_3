@@ -22,9 +22,9 @@ const ManagerReservationCard = ({ reservation }) => {
 
             console.log(restaurantres);
             setRestaurant(restaurantres.data);
-            const userValue = await axios.get(baseUrl + "/users/" + reservation.userId);
-            console.log(userValue);
-            setUser(userValue);
+            const userValue = await axios.get(baseUrl + "users/" + reservation.userId);
+            console.log(userValue.data);
+            setUser(userValue.data);
         }
 
         getRestaurant();
@@ -32,7 +32,7 @@ const ManagerReservationCard = ({ reservation }) => {
     }, []);
 
     return (
-        restaurant !== null
+        restaurant !== null && user !== null
         ?
         <div>
             <div class="card mb-3 shadow">
@@ -44,7 +44,7 @@ const ManagerReservationCard = ({ reservation }) => {
                     <div class="col-md-8">
                         <h5 class="card-header ms-">Reservation: #{reservation.id}</h5>
                     <div class="card-body">
-                        <h5 class="card-title ms-2 mb-4">Customer: <Link to={"/otherProfile/" + user.id}>{user.name}</Link></h5>
+                        <h5 class="card-title ms-2 mb-4">Customer: <Link to={"/otherProfile/" + user.id}>{user.firstname} {user.lastname}</Link></h5>
                         <p class="card-text">Date: <span className='fw-bold'>{ formatDate(reservation.date) }</span></p>
                         <p class="card-text mb-4">Number of People: <span className='fw-bold'>{reservation.numberofplaces}</span></p>
                         <Button variant="primary" className='mx-1'
