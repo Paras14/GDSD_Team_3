@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import Logo from "../HomePage/Logo";
+import Logo from "./../HomePage/Logo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
@@ -10,15 +10,15 @@ import { useState, useEffect } from "react";
 function ManagerPanelNavbar() {
   const navigate = useNavigate();
   const element = <FontAwesomeIcon icon={faUser} />;
-//   const isauthorized = isAuthorized();
-//   const [user, setUser] = useState(null);
+  const isauthorized = isAuthorized();
+  const [user, setUser] = useState(null);
 
-//   useEffect(() => {
-//     if (isauthorized) {
-//       console.log("isauthorized");
-//       setUser(JSON.parse(localStorage.getItem("user")));
-//     }
-//   }, []);
+  useEffect(() => {
+    if (isauthorized) {
+      console.log("isauthorized");
+      setUser(JSON.parse(localStorage.getItem("user")));
+    }
+  }, []);
 
   return (
     <div className=" bg-primary ">
@@ -26,7 +26,7 @@ function ManagerPanelNavbar() {
         <div className="d-flex justify-content-between ">
           <div
           onClick={() => {
-                        navigate("/");
+                        navigate("/managerPanel");
                     }}
           >
             <Logo fill="white" />
@@ -37,9 +37,9 @@ function ManagerPanelNavbar() {
           </div>
           <div className="align-self-center d-flex text-light">
           </div>
-          { user !== null 
+          { user.rolId === 9 
               ? 
-              {/* <div className="align-self-center d-flex text-light">
+              <div className="align-self-center d-flex text-light">
 
                 <button class="btn btn-outline-light me-2" type="button" onClick={() => {
                   navigate("/profile");
@@ -61,7 +61,7 @@ function ManagerPanelNavbar() {
                   About us
               </a>
             
-            </div> */}
+            </div>
               :
               <div className="align-self-center">
                 

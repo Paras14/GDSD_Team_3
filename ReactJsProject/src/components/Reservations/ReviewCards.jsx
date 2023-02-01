@@ -30,23 +30,52 @@ function ReviewCards(props) {
     // }
     // }, []);
   return (
-    <Container className="border w-35">
-    <Row>
-        <Col className="col-lg-3 border border-primary mr-3 text-truncate">
-            {props.userId}
-        </Col>
-        <Col className="col-lg-7 mb-4">
-            {starPrinter(props.rating)}
-            <div style={{fontWeight:"100",margin:"0.5rem"}}>
-            {props.quickService?"Quick Service":""}
-            &ensp;- {props.deliciousFood?"Delicious Food":""}
-            &ensp;- {props.politeBehavior?"Polite Behavior":""}
-            &ensp;- {props.valueForMoney?"Value For Money":""}
+    <div>
+      <div class="card shadow">
+        <div class="card-header fw-bold" style={{ backgroundColor: "#AED0FF" }}>
+          User: {props.userId}
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">{starPrinter(props.rating)}</li>
+          <li class="list-group-item">
+            <div className="row">
+              <div className="col-3">{props.quickService?
+              <button type="button" class="btn btn-success">Quick Service</button>
+              :
+              <button type="button" class="btn btn-danger">Quick Service</button>
+              }</div>
+
+
+              <div className="col-3">{props.deliciousFood?
+              <button type="button" class="btn btn-success">Delicious Food</button>
+              :
+              <button type="button" class="btn btn-danger">Delicious Food</button>
+              }</div>
+
+
+              <div className="col-3">{props.politeBehavior?
+                <button type="button" class="btn btn-success">Polite Behavior</button>
+                :
+                <button type="button" class="btn btn-danger">Polite Behavior</button>
+              }</div>
+
+
+              <div className="col-3">{props.valueForMoney?
+                <button type="button" class="btn btn-success">Value For Money</button>
+                :
+                <button type="button" class="btn btn-danger">Value For Money</button>
+              }</div>  
+
+
             </div>
-            <div style={{fontStyle:"italic",margin:"1rem"}}>{props.comment}</div>
-        </Col>
-    </Row>
-    </Container>
+          </li>
+          <li class="list-group-item">
+            <p className="mx-5 my-3 fs-5 text-center">{props.comment}</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
   );
 }
 

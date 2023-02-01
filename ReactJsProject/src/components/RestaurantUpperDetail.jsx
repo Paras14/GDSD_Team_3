@@ -17,50 +17,36 @@ function RestaurantUpperDetail({ restaurantDetail }) {
 
   
   return (
-    <Container>
-      {console.log(
-        "RestaurantUpperDetail: restaurantDetail: ",
-        restaurantDetail
-      )}
-      <br></br>
-      <Row>
-        <RestaurantPhoto restaurantDetail={restaurantDetail} />
-      </Row>
-      <br></br>
-      <Row>
-        <Container>
-          <Row>
-            <Col>
-              <h2>{restaurantDetail.name}</h2>
-            </Col>
-            <Col lg={4} md={3}></Col>
-            <Col>
-              <Button
-                size="lg"
-                className="text-center"
-                onClick={() => {
-                  navigate("/chat/" + restaurantDetail.userId);
-                }}
-              >
-                Chat with the manager
-              </Button>
-            </Col>
-            <Col>
-              <Button
-                size="lg"
-                className="text-center"
-                onClick={() => {
-                  navigate("/ReservationDetails/" + restaurantDetail.id);
-                }}
-              >
-                Make a reservation
-              </Button>
-            </Col>
-          </Row>
-        </Container>
-      </Row>
-      <br></br>
-    </Container>
+    <div>
+      <RestaurantPhoto restaurantDetail={restaurantDetail} />
+      <div className="container">
+        <div className="row">
+          <div className="col-8 p-2"><p className="fs-2 fw-bold">{restaurantDetail.name}</p></div>
+          <div className="col-4 p-2">
+            <div className="d-flex flex-row-reverse">
+
+              <button className="btn btn-primary btn-lg"
+              onClick={() => {
+                navigate("/ReservationDetails/" + restaurantDetail.id);
+              }}>
+                Make a revervation
+              </button>
+
+
+              <button className="btn btn-outline-primary btn-lg mx-2"
+              onClick={() => {
+                navigate("/chat/" + restaurantDetail.userId);
+              }}>
+                Ask Manager
+              </button>
+            
+              
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 

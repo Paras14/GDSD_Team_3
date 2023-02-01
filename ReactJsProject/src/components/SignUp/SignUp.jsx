@@ -9,6 +9,8 @@ import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Global } from "../../helpers/Global.js";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const baseUrl = Global.baseUrl;
 
@@ -41,6 +43,22 @@ const schema = Yup.object().shape({
 
 function SignUp() {
   const navigate = useNavigate();
+  const [restaurantCategories, setRestaurantCategories] = useState([]);
+  const [restaurenttype, setRestaurenttype] = useState("");
+
+  useEffect(() => {
+
+    async function getRestaurantCategories() {
+
+      const response = await axios.get(baseUrl + "restaurantCategories");
+      setRestaurantCategories(response.data);
+
+    }
+
+    getRestaurantCategories();
+
+  }, []);
+
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
       const user = {
@@ -119,10 +137,14 @@ function SignUp() {
     console.log(values);
   };
 
+  const handleRestaurentTypeChange = (e) => {
+    setRestaurenttype(e.target.value);
+  };
+
   return (
     <div className="container mt-4 mb-5">
       <div
-        className=" rounded shadow  text-uppercase "
+        className=" rounded shadow"
         style={{ backgroundColor: "#AED0FF" }}
       >
         <p className="py-2 fs-1 fw-bold text-center">Restaurant registration</p>
@@ -435,7 +457,7 @@ function SignUp() {
                       {`${values.toggle}`}
                     </label> */}
 
-                    <div id="checkbox-group" className="fw-bold mt-4">
+                    {/*<div id="checkbox-group" className="fw-bold mt-4">
                       Restaurant Type
                     </div>
                     <div role="group" aria-labelledby="checkbox-group">
@@ -451,7 +473,28 @@ function SignUp() {
                         <Field type="checkbox" name="checked" value="indian" />
                         Indian
                       </label>
-                    </div>
+                    </div>*/}
+                    <Form.Label>Restaurant Type</Form.Label>
+                    {/* We create a dropdown to select the type of restaurant, using the Form */}
+                    <Form>
+
+                      {restaurantCategories.length > 0 && 
+                        <Form.Select
+                          name="restaurenttype"
+                          value={values.restaurenttype}
+                          onChange={handleChange}
+                          isInvalid={!!errors.restaurenttype}
+                        >
+                          <option value="">Select Restaurant Type</option>
+                          {restaurantCategories.map((category) => (
+                            <option key={category.id} value={category.id}>
+                              {category.name}
+                            </option>
+                          ))}
+                        </Form.Select>
+                        
+                      }
+                    </Form>
                   </div>
 
                   <div className="col-md-12 py-3">
@@ -502,9 +545,9 @@ function SignUp() {
                     </Form.Group>
                   </div>
 
-                  <Row className="text-uppercase fw-bold py-3">
+                  <Row className="fw-bold py-3">
                     <Button
-                      className="text-uppercase fw-bold"
+                      className="fw-bold col-4"
                       type="submit"
                       disabled={
                         (values.restaurentname === "",
@@ -521,8 +564,9 @@ function SignUp() {
                         values.file === null,
                         values.terms === false)
                       }
+                      onClick={handleSubmit}
                     >
-                      Submit form
+                      Register
                     </Button>
                   </Row>
                 </div>

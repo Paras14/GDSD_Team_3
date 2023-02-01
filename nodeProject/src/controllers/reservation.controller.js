@@ -280,4 +280,39 @@ exports.addOrder = (req, res) => {
       });
 };
 
-exports.findOrders
+exports.getAllOrder = (req, res) => {
+    const id = req.body.reservationId;
+    OrderReservation.findAll({where:{reservationId:id}})
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || "Some error occured while retrieving foods for given Reservation ID"
+      });
+    });
+}
+
+exports.deleteAllOrder = (req, res) => {
+  const id = req.params.reservationId;
+
+  OrderReservation.destroy({
+    where: { restaurantId: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "All orderes were deleted successfully!"
+        });
+      } else {
+        res.send({
+          message: `Cannot delete orders with reservation id=${id}. Maybe Reservation was not found!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not delete orders with reservation id=" + id
+      });
+    });
+};

@@ -6,7 +6,7 @@ const RestaurantPhoto = ({restaurantDetail}) => {
       <img
         src={restaurantDetail.image}
         alt="Restaurant Cover"
-        style={{ width: "92%", height:"15em" , objectFit: 'cover'}}
+        style={{ width: "100%", height:"15em" , objectFit: 'cover'}}
       />
     </div>
   );
