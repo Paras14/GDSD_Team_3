@@ -5,8 +5,8 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Food
 exports.create = (req, res) => {
     // Validate request
-    console.log(req.query);
-    if (!req.query.name) {
+    console.log(req.body);
+    if (!req.body.name) {
       res.status(400).send({
         message: "Food name can not be empty!"
       });
@@ -15,12 +15,12 @@ exports.create = (req, res) => {
   
     // Create a Food
     const food = {
-        name: req.query.name,
-        ingredients: req.query.ingredients,
-        foodCategory: req.query.foodCategory,
-        image: req.query.image,
-        foodCategoryId: req.query.foodCategoryId,
-        restaurantId: req.query.restaurantId
+        name: req.body.name,
+        ingredients: req.body.ingredients,
+        price: req.body.price,
+        image: req.body.image,
+        foodCategoryId: req.body.foodCategoryId,
+        restaurantId: req.body.restaurantId
     };
   
     // Save Food in the database

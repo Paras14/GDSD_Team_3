@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Container, Button } from "react-bootstrap";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
@@ -14,9 +14,12 @@ import FoodDetails from "./HomePage/Reservation/FoodDetailsCard.jsx";
 function RestaurantTabDetails({ restaurantDetail }) {
   const baseUrl = Global.baseUrl;
   const [foods, setFoods] = useState([]);
-
+  const [user, setuser] = useState(null);
+  const navigate = useNavigate();
   useEffect(() => {
     if (restaurantDetail !== null) {
+      
+      setuser(JSON.parse(localStorage.getItem("user")));
       // Get foods from the restaurant
       axios
         .get(baseUrl + "foods/restaurant/" + restaurantDetail.id)
@@ -124,6 +127,13 @@ function RestaurantTabDetails({ restaurantDetail }) {
               </div>
             </div>
             <div class="tab-pane fade" id="menu-tab-pane" role="tabpanel" aria-labelledby="menu-tab" tabindex="0">
+              {
+                user !== null &&
+                user.rolId !== 9? null : 
+                <Button className="btn-primary m-1" 
+                  onClick={navigate("/createFood/" + restaurantDetail.id)}
+                > Add Food</Button>
+              }
               <p>
                 {foods.length !== 0
                   ? 

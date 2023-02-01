@@ -49,19 +49,12 @@ const ManagerReservationCard = ({ reservation }) => {
                         <p class="card-text mb-4">Number of People: <span className='fw-bold'>{reservation.numberofplaces}</span></p>
                         <Button variant="primary" className='mx-1'
                             onClick={() => {
-                                navigate("/Chat/" + restaurant.userId);
+                                navigate("/Chat/" + user.id);
                             }}
                         >
-                        Chat with manager</Button>
+                        Chat with {user.firstname}</Button>
+                        
                         <Button variant="success" className='mx-1'
-                            style={{backgroundColor: "#50c266", borderColor: "#50c266"}}
-                            onClick={() => {
-                                navigate("/EditReservation/" + reservation.id);
-                            }}
-                        >
-                        Edit
-                        </Button>
-                        <Button variant="danger" className='mx-1'
                             onClick={() => {
                                 axios
                                     .delete(baseUrl + "reservations/" + reservation.id)
@@ -70,8 +63,9 @@ const ManagerReservationCard = ({ reservation }) => {
                                         window.location.reload();
                                     })
                                     .catch((err) => console.log(err));
+                                
                             }}
-                        >Cancel</Button>
+                        >Free</Button>
                     
                     </div>
                     </div>

@@ -41,6 +41,7 @@ import ManagerPanelNavbar from "./components/Manager/ManagerPanelNavbar";
 import TableReservation from "./components/Manager/TableReservations";
 import GuestReservationList from "./components/Manager/GuestReservationList";
 import OtherProfile from "./components/profile/OtherUserProfile";
+import CreateFood from "./components/CreateFood";
 
 const App = () => {
   return (
@@ -389,7 +390,16 @@ const App = () => {
               </div>
             }
           />
-
+          <Route 
+            path = "/createFood/:restaurantId"
+            element = {
+              <div>
+                <Navbar   />
+                <CreateFood />
+                <Footer />
+              </div>
+            }
+          />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Router>
