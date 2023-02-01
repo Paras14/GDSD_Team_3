@@ -42,6 +42,7 @@ import TableReservation from "./components/Manager/TableReservations";
 import GuestReservationList from "./components/Manager/GuestReservationList";
 import OtherProfile from "./components/profile/OtherUserProfile";
 import CreateFood from "./components/CreateFood";
+import EditRestaurantDetails from "./components/EditRestaurantDetails";
 
 const App = () => {
   return (
@@ -396,6 +397,16 @@ const App = () => {
               <div>
                 <Navbar   />
                 <CreateFood />
+                <Footer />
+              </div>
+            }
+          />
+          <Route 
+            path = "/EditRestaurantDetails/:restaurantId"
+            element = {
+              <div>
+                <Navbar   />
+                <EditRestaurantDetails />
                 <Footer />
               </div>
             }

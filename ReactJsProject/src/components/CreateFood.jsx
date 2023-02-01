@@ -75,20 +75,21 @@ const CreateFood = () => {
                       Food Categories:
                     </label>
                   </div>
-                   <input
+                   <select
+                        className="form-select"
                         type="select"
                         name="food-categories"
                         id="food-categories"
                         value={foodCategory}
                         onChange={(e) => setFoodCategory(e.target.value)}
                     >
-                        <option value="">Select Food Type</option>
+                        <option key="" value="">Select Food Type</option>
                         {  foodCategories.length !==0 && foodCategories.map((category) => (
-                        <option key={category.id} value={category.id}>
+                            <option key={category.id} value={category.id}>
                             {category.name}
                         </option>
                         ))}
-                    </input>
+                    </select>
                 </Col>
                 
               </Row>

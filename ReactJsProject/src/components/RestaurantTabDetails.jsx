@@ -31,7 +31,7 @@ function RestaurantTabDetails({ restaurantDetail }) {
         });
     }
   }, []);
-
+  
   return (
     <div className="container">
       <div class="card text-center">
@@ -131,7 +131,7 @@ function RestaurantTabDetails({ restaurantDetail }) {
                 user !== null &&
                 user.rolId !== 9? null : 
                 <Button className="btn-primary m-1" 
-                  onClick={navigate("/createFood/" + restaurantDetail.id)}
+                  onClick = {() => navigate("/createFood/" + restaurantDetail.id)}
                 > Add Food</Button>
               }
               <p>

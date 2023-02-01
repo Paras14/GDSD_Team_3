@@ -2,12 +2,23 @@ import React from "react";
 
 import { Button, Container, Row, Col } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-
+import { useState } from "react";
 
 import RestaurantPhoto from "./RestaurantPhoto";
+import { useEffect } from "react";
+
+
 
 function RestaurantUpperDetail({ restaurantDetail }) {
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
+    useEffect(() => {
+      console.log("Reached here");
+      setUser(JSON.parse(localStorage.getItem("user")));
+      console.log("Printing user");
+      console.log(user);
+    }, []);
+
   //   const arrow = <FontAwesomeIcon icon={faArrowRight} />;
 
   //const restaurantDetail = [
@@ -16,7 +27,7 @@ function RestaurantUpperDetail({ restaurantDetail }) {
   
 
   
-  return (
+  return user !==null && (
     <div>
       <RestaurantPhoto restaurantDetail={restaurantDetail} />
       <div className="container">
@@ -24,8 +35,17 @@ function RestaurantUpperDetail({ restaurantDetail }) {
           <div className="col-8 p-2"><p className="fs-2 fw-bold">{restaurantDetail.name}</p></div>
           <div className="col-4 p-2">
             <div className="d-flex flex-row-reverse">
-
+            {
+              user.rolId === 9? 
               <button className="btn btn-primary btn-lg"
+                onClick={() => {
+                  navigate("/EditRestaurantDetails/" + restaurantDetail.id);
+                }}>
+                Edit Restaurant
+              </button>
+              :
+              <div>
+                <button className="btn btn-primary btn-lg"
               onClick={() => {
                 navigate("/ReservationDetails/" + restaurantDetail.id);
               }}>
@@ -39,6 +59,9 @@ function RestaurantUpperDetail({ restaurantDetail }) {
               }}>
                 Ask Manager
               </button>
+              </div>
+            }
+              
             
               
             </div>

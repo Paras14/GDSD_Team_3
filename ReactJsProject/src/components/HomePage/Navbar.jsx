@@ -54,6 +54,7 @@ const Navbar = () => {
                 <div className="align-self-center">
                   <p className="text-light fs-3">Manager Panel</p>
                 </div>
+                
                 :
                   null}  
              
@@ -75,7 +76,11 @@ const Navbar = () => {
                 
 
                     <button class="btn btn-outline-light me-2" type="button" onClick={() => {
-                      navigate("/profile");
+                      console.log(user.rolId);
+                      if(user.rolId === 9)
+                        navigate("/managerPanel");
+                      else
+                        navigate("/profile");
                     }}>{element}<span className="ps-2">{ user !== null ? user.username : "User"}</span></button>
             <div className="bg-light rounded">
               <button
