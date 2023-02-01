@@ -116,7 +116,7 @@ const App = () => {
             path="/pendingRestaurentRegistration"
             element={
               <div>
-                <AdminPanelNavbar />
+                <Navbar />
                 <PendingRestaurentReg />
                 <Footer />
               </div>

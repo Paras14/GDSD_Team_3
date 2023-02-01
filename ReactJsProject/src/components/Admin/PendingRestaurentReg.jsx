@@ -6,19 +6,28 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import { Global } from "../../helpers/Global";
 
 function PendingRestaurantReg() {
   const navigate = useNavigate();
   const [pendingData, setPendingData] = useState([]);
   const arrow = <FontAwesomeIcon icon={faArrowRight} />;
+  const baseUrl = Global.baseUrl;
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
+    // Get Pending Restaurant Data with email in query params
     axios
-      .get("/admin/petitions/restaurant/pending")
+      .get(baseUrl + "admin/petitions/restaurant/pending", {
+        params: {
+          email: localStorage.getItem("useremail"),
+        },
+      })
       .then((res) => {
         setPendingData(res.data);
-        if (res === 0) {
-          return <p>There is no Pending Requests for Review</p>;
+        if (res.data.length === 0) {
+          console.log("There is no Pending Requests for Review");
+          setMessage(<p>There is no Pending Requests for Review</p>);
         }
       })
       .catch((err) => console.log(err));
@@ -38,6 +47,7 @@ function PendingRestaurantReg() {
           PENDING RESTAURANT REGISTRATIONS
         </p>
         <div>
+          {message}
           {pendingData.map((data) => {
             return (
               <div className="d-flex justify-content-between mb-2 p-3 m-2 bg-light rounded">

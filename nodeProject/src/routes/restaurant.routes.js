@@ -9,11 +9,14 @@ module.exports = app => {
   
     // Retrieve all REstaurants with accepted petition
     router.get("/", restaurants.findAllAccepted);
+    // Retrieve all REstaurants with pending petition
+    router.get("/pending", restaurants.findAllPending);
+
     // Retrieve a single Tutorial with id
     router.get("/:id", restaurants.findOne);
 
     // Update a Restaurant with id
-    router.put("/:id", restaurants.update);
+    router.put("/:id", restaurants.update); 
 
     // Delete a Restaurant with id
     router.delete("/:id", restaurants.delete);

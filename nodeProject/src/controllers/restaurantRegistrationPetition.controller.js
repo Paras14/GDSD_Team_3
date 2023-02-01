@@ -1,5 +1,5 @@
 const db = require("../models");
-const restaurantRegistrationPetition = db.restaurantResgistrationPetition;
+const restaurantRegistrationPetition = db.restaurantRegistrationPetition;
 const Op = db.Sequelize.Op;
 
 exports.getPendingPetitions = (req, res) => {

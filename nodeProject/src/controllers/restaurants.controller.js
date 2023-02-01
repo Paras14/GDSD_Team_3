@@ -96,6 +96,30 @@ exports.create = (req, res) => {
     });
   };
 
+  // Find all restaurants with registration petition pending
+  exports.findAllPending = (req, res) => {
+
+    //query to get all restaurants with pending petition
+    const query = `
+    SELECT restaurants.*
+    FROM restaurants
+    INNER JOIN restaurantRegistrationPetitions
+    ON restaurants.id = restaurantRegistrationPetitions.restaurantId
+    WHERE restaurantRegistrationPetitions.status = 'pending';`;
+
+    sequelize.query(query, { type: sequelize.QueryTypes.SELECT})
+    .then(restaurants => {
+      res.send(restaurants);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving restaurants."
+      });
+
+    });
+  };
+
 // // Find a single Restaurant with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
