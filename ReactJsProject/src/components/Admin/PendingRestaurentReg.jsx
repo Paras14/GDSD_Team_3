@@ -18,7 +18,7 @@ function PendingRestaurantReg() {
   useEffect(() => {
     // Get Pending Restaurant Data with email in query params
     axios
-      .get(baseUrl + "admin/petitions/restaurant/pending", {
+      .get(baseUrl + "restaurants/pending", {
         params: {
           email: localStorage.getItem("useremail"),
         },
@@ -51,8 +51,15 @@ function PendingRestaurantReg() {
           {pendingData.map((data) => {
             return (
               <div className="d-flex justify-content-between mb-2 p-3 m-2 bg-light rounded">
+                <img 
+                  src={data.image}
+                  alt={data.name}
+                  className="img-fluid"
+                  style={{ width: "100px", height: "100px" }}
+                />
                 <p className="fs-4 fw-bold">{data.name}</p>
-                <p className="fs-4 fw-bold">{data.email}</p>
+                <p className="fs-4">{data.address}</p>
+                <p className="fs-4">{data.telephone}</p>
                 <Button
                   onClick={() => {
                     navigate("/pendingRestaurentForm");
