@@ -8,6 +8,9 @@ module.exports = app => {
     // Get all petitions
     router.get("/all", checkAdmin, reviewPetition.getAllPetitions);
 
+    // Get petition of a review
+    router.get("/:id", reviewPetition.getPetition);
+
     // Get pending petitions
     router.get("/pending", checkAdmin, reviewPetition.getPendingPetitions);
 

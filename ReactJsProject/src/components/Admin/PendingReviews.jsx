@@ -16,6 +16,7 @@ function PendingReviews() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const baseUrl = Global.baseUrl;
+  const [petition, setPetition] = useState(null);
 
   useEffect(() => {
     // Get email from local storage
@@ -38,7 +39,7 @@ function PendingReviews() {
         if (res.data.length === 0) {
           console.log("There is no Pending Requests for Reviews");
           setMessage(<p>There is no Pending Requests for Reviews</p>);
-        }
+        } 
       })
       .catch((err) => console.log(err));
 
@@ -91,10 +92,79 @@ function PendingReviews() {
                   
                     <Button
                         onClick={() => {
-                            navigate("/PendingReviewPost");
+
+                          axios.get(`${baseUrl}admin/petitions/review/${data.id}`)
+                          .then((res) => {
+                            setPetition(res.data[0]);
+                            console.log(res.data[0]);
+
+                            axios
+                            .put(`${baseUrl}admin/petitions/review/update`, 
+                            {
+                              id: res.data[0].id,
+                              status: "rejected",
+                              message: res.data[0].message,
+                              createdAt: res.data[0].createdAt,
+                              updatedAt: res.data[0].updatedAt,
+                              restaurantId: res.data[0].restaurantId,
+                            }, 
+                            {
+                              params: {
+                                email: email,
+                              },
+                            })
+                            .then((response) => {
+                              console.log(response);
+                              navigate("/pendingRestaurantRegistration")
+                            })
+                            .catch((error) => {
+                              console.log(error);
+                            });
+
+                          })
+                          .catch((err) => console.log(err));
+                        
                         }}
                         >
-                        {arrow}
+                        Decline
+                    </Button>
+                    <Button
+                        onClick={() => {
+                            
+                          axios.get(`${baseUrl}admin/petitions/review/${data.id}`)
+                          .then((res) => {
+                            setPetition(res.data[0]);
+                            console.log(res.data[0]);
+
+                            axios
+                            .put(`${baseUrl}admin/petitions/review/update`, 
+                            {
+                              id: res.data[0].id,
+                              status: "accepted",
+                              message: res.data[0].message,
+                              createdAt: res.data[0].createdAt,
+                              updatedAt: res.data[0].updatedAt,
+                              restaurantId: res.data[0].restaurantId,
+                            }, 
+                            {
+                              params: {
+                                email: email,
+                              },
+                            })
+                            .then((response) => {
+                              console.log(response);
+                              navigate("/pendingRestaurantRegistration")
+                            })
+                            .catch((error) => {
+                              console.log(error);
+                            });
+
+                          })
+                          .catch((err) => console.log(err));
+
+                        }}
+                        >
+                        Accept
                     </Button>
                 </div>
                 );
