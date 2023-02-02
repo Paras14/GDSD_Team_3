@@ -27,7 +27,7 @@ function RestaurantUpperDetail({ restaurantDetail }) {
   
 
   
-  return user !==null && (
+  return (
     <div>
       <RestaurantPhoto restaurantDetail={restaurantDetail} />
       <div className="container">
@@ -36,7 +36,7 @@ function RestaurantUpperDetail({ restaurantDetail }) {
           <div className="col-4 p-2">
             <div className="d-flex flex-row-reverse">
             {
-              user.rolId === 9? 
+              user !== null && user.rolId === 9? 
               <button className="btn btn-primary btn-lg"
                 onClick={() => {
                   navigate("/EditRestaurantDetails/" + restaurantDetail.id);
