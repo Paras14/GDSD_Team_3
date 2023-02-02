@@ -98,10 +98,65 @@ function PendingReviews() {
                   
                     <Button
                         onClick={() => {
-                            navigate("/PendingReviewPost");
+
+                            axios
+                            .put(`${baseUrl}admin/petitions/review/update`, 
+                            {
+                              id: data.reviewPetitionID,
+                              status: "rejected",
+                              message: data.reviewPetitionMessage,
+                              createdAt: data.reviewPetitionCreatedAt,
+                              updatedAt: data.reviewPetitionUpdatedAt,
+                              reviewId: data.reviewId,
+                            },
+                            {
+                              params: {
+                                email: email,
+                              },
+                            })
+                            .then((response) => {
+                              console.log(response);
+                              navigate("/pendingRestaurantRegistration")
+                            })
+                            .catch((error) => {
+                              console.log(error);
+                            });
+
+                          }}
+                        
+                        >
+                        Decline
+                    </Button>
+                    <Button
+                        onClick={() => {
+
+                          axios
+                          .put(`${baseUrl}admin/petitions/review/update`, 
+                          {
+                            id: data.reviewPetitionID,
+                            status: "accepted",
+                            message: data.reviewPetitionMessage,
+                            createdAt: data.reviewPetitionCreatedAt,
+                            updatedAt: data.reviewPetitionUpdatedAt,
+                            reviewId: data.reviewId,
+                          },
+                          {
+                            params: {
+                              email: email,
+                            },
+                          })
+                          .then((response) => {
+                            console.log(response);
+                            navigate("/pendingRestaurantRegistration")
+                          })
+                          .catch((error) => {
+                            console.log(error);
+                          });
+
                         }}
                         >
-                        {arrow}
+                        Accept
+                        
                     </Button>
                 </div>
                 );
