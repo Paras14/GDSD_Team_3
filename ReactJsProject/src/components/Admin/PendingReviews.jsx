@@ -16,7 +16,6 @@ function PendingReviews() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const baseUrl = Global.baseUrl;
-  const [petition, setPetition] = useState(null);
 
   useEffect(() => {
     // Get email from local storage
@@ -29,17 +28,18 @@ function PendingReviews() {
 
       // Get Pending Reviews Data with email in query params
       axios
-      .get(baseUrl + "reviews/pending", {
+      .get(baseUrl + "admin/petitions/review/detailedPending/a", {
         params: {
           email: email,
         },
       })
       .then((res) => {
+        console.log(res.data);
         setPendingData(res.data);
         if (res.data.length === 0) {
           console.log("There is no Pending Requests for Reviews");
           setMessage(<p>There is no Pending Requests for Reviews</p>);
-        } 
+        }
       })
       .catch((err) => console.log(err));
 
@@ -77,94 +77,31 @@ function PendingReviews() {
         </p>
         <div style={{overflow:"scroll", maxHeight:"25rem"}}>
           {message}
-          {pendingData.length !== 0 && pendingData.map((data) => {
+          {
+            console.log(pendingData.length)
+          }
+          {pendingData.length !== 0 && pendingData.map( (data) => {
 
                 /*const userreviewresponse = await axios.get(baseUrl + "users/" + data.userId);
-                setUserReview(userreviewresponse.data);
-                console.log(userreviewresponse.data);*/
+                setUserReview(userreviewresponse.data);*/
+                console.log(data);
 
                 return (
                 <div className="d-flex justify-content-between mb-2 p-3 m-2 bg-light rounded">
                     
-                    <p className="fs-4 fw-bold">{data.id}</p>
-                    <p className="fs-4 ">{data.createdAt}</p>
-                    <p className="fs-4 ">{data.comment}</p>
+                    <p className="fs-2 fw-bold">{data.reviewId}</p>
+                    <p className="fs-2 ">{data.reviewRating}</p>
+                    <p className="fs-2 ">{data.userFirstname}</p>
+                    <p className="fs-2 ">{data.userLastname}</p>
+                    <p className="fs-2 ">{data.reviewCreatedAt}</p>
+                    <p className="fs-2 ">{data.reviewComment}</p>
                   
                     <Button
                         onClick={() => {
-
-                          axios.get(`${baseUrl}admin/petitions/review/${data.id}`)
-                          .then((res) => {
-                            setPetition(res.data[0]);
-                            console.log(res.data[0]);
-
-                            axios
-                            .put(`${baseUrl}admin/petitions/review/update`, 
-                            {
-                              id: res.data[0].id,
-                              status: "rejected",
-                              message: res.data[0].message,
-                              createdAt: res.data[0].createdAt,
-                              updatedAt: res.data[0].updatedAt,
-                              restaurantId: res.data[0].restaurantId,
-                            }, 
-                            {
-                              params: {
-                                email: email,
-                              },
-                            })
-                            .then((response) => {
-                              console.log(response);
-                              navigate("/pendingRestaurantRegistration")
-                            })
-                            .catch((error) => {
-                              console.log(error);
-                            });
-
-                          })
-                          .catch((err) => console.log(err));
-                        
+                            navigate("/PendingReviewPost");
                         }}
                         >
-                        Decline
-                    </Button>
-                    <Button
-                        onClick={() => {
-                            
-                          axios.get(`${baseUrl}admin/petitions/review/${data.id}`)
-                          .then((res) => {
-                            setPetition(res.data[0]);
-                            console.log(res.data[0]);
-
-                            axios
-                            .put(`${baseUrl}admin/petitions/review/update`, 
-                            {
-                              id: res.data[0].id,
-                              status: "accepted",
-                              message: res.data[0].message,
-                              createdAt: res.data[0].createdAt,
-                              updatedAt: res.data[0].updatedAt,
-                              restaurantId: res.data[0].restaurantId,
-                            }, 
-                            {
-                              params: {
-                                email: email,
-                              },
-                            })
-                            .then((response) => {
-                              console.log(response);
-                              navigate("/pendingRestaurantRegistration")
-                            })
-                            .catch((error) => {
-                              console.log(error);
-                            });
-
-                          })
-                          .catch((err) => console.log(err));
-
-                        }}
-                        >
-                        Accept
+                        {arrow}
                     </Button>
                 </div>
                 );

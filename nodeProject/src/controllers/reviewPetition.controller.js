@@ -114,10 +114,12 @@ exports.getDetailedPendingPetitions = (req, res) => {
     "us.rolId as userRolId " + 
     "FROM reviewPetitions rp " + 
    "inner join reviews rv on rp.reviewId = rv.id " + 
-   "inner join users us on rv.userId = us.id";
-
+   "inner join users us on rv.userId = us.id " + 
+   "where rp.status = \"pending\"";
+    console.log("Reached Here");
    Sequelize.query(query, { type: QueryTypes.SELECT })
         .then((data) => {
+            console.log(data);
             res.send(data);
         })
         .catch((error) => {

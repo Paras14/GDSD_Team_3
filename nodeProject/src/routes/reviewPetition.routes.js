@@ -17,7 +17,7 @@ module.exports = app => {
     // Update a petition
     router.put("/update", checkAdmin, reviewPetition.update);
 
-    router.get("/detailedPending", reviewPetition.getDetailedPendingPetitions);
+    router.get("/detailedPending/a", checkAdmin, reviewPetition.getDetailedPendingPetitions);
 
     app.use('/admin/petitions/review', router);
 };
