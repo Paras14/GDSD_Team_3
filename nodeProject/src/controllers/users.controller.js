@@ -219,3 +219,14 @@ exports.login = (req, res) => {
       });
     });
 };
+
+exports.getById = async (id) => {
+  
+  Review.findByPk(id)
+    .then(data => {
+      return data;
+    })
+    .catch(err => {
+      throw err;
+    });
+};

@@ -1,6 +1,8 @@
 const db = require("../models");
 const reviewPetitionDB = db.reviewPetition;
 const Op = db.Sequelize.Op;
+const Sequelize = db.sequelize;
+const { QueryTypes } = require('sequelize');
 
 exports.getPendingPetitions = (req, res) => {
     reviewPetitionDB.findAll({where: {status: "pending"}})
@@ -61,4 +63,51 @@ exports.create = (idReview) => {
     .catch(err => {
         console.log(err);
     })
+}
+
+exports.getDetailedPendingPetitions = (req, res) => {
+    const query = "SELECT rp.id as reviewPetitionID," + 
+    "rp.status as reviewPetitionStatus," + 
+    "rp.message as reviewPetitionMessage," + 
+    "rp.createdAt as reviewPetitionCreatedAt," + 
+    "rp.updatedAt as reviewPetitionUpdatedAt," + 
+    "rp.reviewId as reviewPetitionReviewId, " + 
+    "rv.id as reviewId," + 
+   "rv.rating as reviewRating," + 
+    "rv.quickService as reviewQuickService," + 
+    "rv.deliciousFood as reviewDeliciousFood," + 
+    "rv.PoliteBehavior as reviewPopiteVehaviour," + 
+    "rv.valueForMoney as reviewValueForMoney," + 
+    "rv.comment as reviewComment," + 
+    "rv.createdAt as reviewCreatedAt," + 
+    "rv.updatedAt as reviewUpdatedAt," + 
+    "rv.userId as reviewUserId," + 
+    "rv.restaurantId as reviewRestaurantId," + 
+    "us.id as userId," + 
+    "us.username as userUsername," + 
+    "us.password as userPassword," + 
+    "us.firstname as userFirstname," + 
+    "us.lastname as userLastname," + 
+    "us.email as userEmail," + 
+    "us.city as userCity," + 
+    "us.state as userState," + 
+    "us.zip as userZip," + 
+    "us.description as userDescription, " + 
+    "us.image as userImage, " + 
+    "  us.createdAt as userCreatedAt, " + 
+    " us.updatedAt as userUpdatedAt, " + 
+    "us.rolId as userRolId " + 
+    "FROM reviewPetitions rp " + 
+   "inner join reviews rv on rp.reviewId = rv.id " + 
+   "inner join users us on rv.userId = us.id";
+
+   Sequelize.query(query, { type: QueryTypes.SELECT })
+        .then((data) => {
+            res.send(data);
+        })
+        .catch((error) => {
+            res.send({
+                message: error.message || "Could not fetch records"
+            })
+        });
 }

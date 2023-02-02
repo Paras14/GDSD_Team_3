@@ -87,7 +87,7 @@ exports.findAllPending = (req, res) => {
     INNER JOIN reviewPetitions
     ON reviews.id = reviewPetitions.reviewId
     WHERE reviewPetitions.status = 'pending';`;
-
+ 
     sequelize.query(query, { type: sequelize.QueryTypes.SELECT})
     .then(reviews => {
       res.send(reviews);
@@ -295,3 +295,19 @@ exports.getRestaurantAverageRatings = (req, res) => {
   
 
 
+  exports.getById = (id) => {
+  
+    Review.findByPk(id)
+      .then(data => {
+        if (data!=null) {
+          return data;
+        } else {
+          return null;
+        }
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: "Error retrieving Review with id=" + id
+        });
+      });
+  };
