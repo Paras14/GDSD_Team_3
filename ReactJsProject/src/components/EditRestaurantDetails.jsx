@@ -89,7 +89,7 @@ function EditRestaurantDetails() {
         firstname: values.managerfirstname,
         lastname: values.managerlastname,
         email: values.managermail,
-        password: values.password,
+        //password: values.password,
         city: values.city,
         state: values.state,
         zip: values.zip

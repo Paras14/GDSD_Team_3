@@ -28,6 +28,21 @@ exports.getAllPetitions = (req, res) => {
     });
 }
 
+// Get petition of a review
+exports.getPetition = (req, res) => {
+    const id = req.params.id;
+    reviewPetitionDB.findAll({where: {reviewId: id}})
+    .then(data => {
+        res.send(data); 
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: "Error retrieving petition with id=" + id
+        });
+    });
+}
+
+
 exports.update = (req, res) => {
     const id = req.body.id;
     reviewPetitionDB.update(req.body, {
