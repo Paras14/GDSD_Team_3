@@ -45,6 +45,8 @@ function SignIn() {
             navigate("/adminPanel");
           } else if (response.data.user.rolId === 9){
             navigate("/managerPanel");
+          } else if(response.data.user.rolId === 10){
+            navigate("/WaiterPanel");
           }
           
           setMessage("You are successfully registered");
