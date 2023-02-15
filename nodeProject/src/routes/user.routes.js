@@ -32,6 +32,10 @@ module.exports = app => {
   // Connect manager with waiter 
     router.post("/map-mw", users.mapManagerAndWaiter);
 
-  
+    
+
+    router.get("/map-mw/:id", users.getByManagerIdByWaiterId);
+    
     app.use('/users', router);
+    
   };

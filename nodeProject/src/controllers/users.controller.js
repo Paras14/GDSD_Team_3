@@ -232,6 +232,7 @@ exports.getById = async (id) => {
     });
 };
 
+// Create a mapping table between manager and the waiter
 exports.mapManagerAndWaiter = async (req, res) => {
   const {
     waiterId, managerId
@@ -246,4 +247,16 @@ exports.mapManagerAndWaiter = async (req, res) => {
     });
 
     return res.status(200).json(resp)
+};
+
+exports.getByManagerIdByWaiterId = async (req, res) => {
+  
+  const resp = await managerWaiterModel.findOne({where: {waiterId: req.params.id}})
+    .catch(err => {
+      throw err;
+    });
+
+  if(resp){
+    return res.status(200).json(resp)
+  }
 };
