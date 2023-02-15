@@ -29,6 +29,9 @@ module.exports = app => {
     // Login
     router.post("/login", users.login);
 
+  // Connect manager with waiter 
+    router.post("/map-mw", users.mapManagerAndWaiter);
+
   
     app.use('/users', router);
   };

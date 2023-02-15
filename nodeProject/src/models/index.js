@@ -33,6 +33,7 @@ db.table = require('./table.model')(sequelize, Sequelize);
 db.restaurantRegistrationPetition = require('./restaurantRegistrationPetition.model')(sequelize, Sequelize);
 db.parking = require('./parking.model')(sequelize, Sequelize);
 db.reviewPetition = require('./reviewPetition.model')(sequelize, Sequelize);
+db.managerWaiter = require('./manager-waiter.model')(sequelize, Sequelize);
 
 //add to food category
 //add to restaurant

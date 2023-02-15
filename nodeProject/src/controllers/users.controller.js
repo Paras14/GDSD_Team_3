@@ -3,6 +3,7 @@ const User = db.user;
 const Op = db.Sequelize.Op;
 const { genSaltSync, hashSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
+const managerWaiterModel = db.managerWaiter
 
 // Create and Save a new User
 exports.create = (req, res) => {
@@ -229,4 +230,20 @@ exports.getById = async (id) => {
     .catch(err => {
       throw err;
     });
+};
+
+exports.mapManagerAndWaiter = async (req, res) => {
+  const {
+    waiterId, managerId
+  } = req.body
+  
+  const resp = await managerWaiterModel.create({
+    managerId,
+    waiterId
+  })
+    .catch(err => {
+      throw err;
+    });
+
+    return res.status(200).json(resp)
 };
