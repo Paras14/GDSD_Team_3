@@ -202,6 +202,7 @@ exports.findOne = (req, res) => {
   //Get all reservations from a user
     exports.findAllFromUser = (req, res) => {
         const id = req.params.id;
+        if(!id) return res.status(404).json({error: "No data"})
         Reservation.findAll({ where: { userId: id } })
           .then(data => {
             res.send(data);
@@ -232,6 +233,7 @@ exports.findAllFromRestaurant = (req, res) => {
   //Get all reservations from a manager
     exports.findAllFromManager = (req, res) => {
         const id = req.params.id;
+        if(!id) return res.status(404).json({error: "No id"})
         Restaurant.findOne({ where: { userId: id } }).then(data => {
             Reservation.findAll({ where: { restaurantId: data.id } })
             .then(data => {
