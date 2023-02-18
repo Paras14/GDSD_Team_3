@@ -245,7 +245,13 @@ exports.findAllFromRestaurant = (req, res) => {
                   err.message || "Some error occurred while retrieving reservations."
               });
             });
-        });
+        })
+        .catch(err => {
+            res.status(500).send({
+              message:
+                err.message || "Some error occurred while retrieving reservations."
+            });
+          });
         };
 
 

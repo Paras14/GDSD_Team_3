@@ -44,6 +44,7 @@ import OtherProfile from "./components/profile/OtherUserProfile";
 import CreateFood from "./components/CreateFood";
 import EditRestaurantDetails from "./components/EditRestaurantDetails";
 import WaiterNavbar from "./components/Waiter/WaiterNavbar";
+import OrderList from "./components/Waiter/OrderList";
 const App = () => {
   return (
     <div className="bg-light">
@@ -417,6 +418,15 @@ const App = () => {
               <div>
                 <WaiterNavbar   />
                 <GuestReservationList />
+              </div>
+            }
+          />
+          <Route
+            path="/WaiterOrder"
+            element={
+              <div>
+                <WaiterNavbar />
+                <OrderList />
               </div>
             }
           />

@@ -28,8 +28,11 @@ const TableReservation = () => {
  
     useEffect(() => {
         if(user){
+            console.log("user is", user);
             console.log("Reached this effect " + user.id);
-            axios.get(`${baseUrl}restaurants/tables/${user.id}`)
+            const userId = user.id;
+            console.log("userId is " + userId);
+            axios.get(`${baseUrl}restaurants/tables/${userId}`)
             .then((res) => {
                 console.log("data is \n");
                 console.log(res.data);

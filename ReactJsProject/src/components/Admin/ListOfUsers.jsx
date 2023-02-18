@@ -82,7 +82,19 @@ function ListOfUsers() {
                 <p className="fs-4 fw-bold">{data.email}</p>
                 <Button
                   onClick={() => {
-                    navigate("/");
+                    // Ban user: delete user from database
+                    axios
+                      .delete(baseUrl+"users/" + data.id)
+                      .then((res) => {
+                        console.log(res);
+                        console.log("User deleted");
+                        // Reload page
+                        window.location.reload();
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                      });
+                    
                   }}
                 >
                   Ban User

@@ -6,12 +6,14 @@ import { useState } from "react";
 
 import RestaurantPhoto from "./RestaurantPhoto";
 import { useEffect } from "react";
-
+import { Global } from "../helpers/Global";
+import axios from "axios";
 
 
 function RestaurantUpperDetail({ restaurantDetail }) {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const baseUrl = Global.baseUrl;
     useEffect(() => {
       console.log("Reached here");
       setUser(JSON.parse(localStorage.getItem("user")));
@@ -36,13 +38,39 @@ function RestaurantUpperDetail({ restaurantDetail }) {
           <div className="col-4 p-2">
             <div className="d-flex flex-row-reverse">
             {
-              user !== null && user.rolId === 9? 
+              user !== null && (user.rolId === 9 && user.id === restaurantDetail.userId)? 
               <button className="btn btn-primary btn-lg"
                 onClick={() => {
                   navigate("/EditRestaurantDetails/" + restaurantDetail.id);
                 }}>
                 Edit Restaurant
               </button>
+              
+              : user !== null && user.rolId === 7 ?
+                <div>
+                  <button className="btn btn-primary btn-lg"
+                    onClick={() => {
+                      navigate("/EditRestaurantDetails/" + restaurantDetail.id);
+                    }}>
+                    Edit Restaurant
+                  </button>
+
+                  <button className="btn btn-outline-primary btn-lg mx-2"
+                  onClick={() => {
+                    // Ban Restaurant: delete restaurant
+                    axios.delete(baseUrl + "restaurant/" + restaurantDetail.id)
+                    .then((response) => {
+                      console.log(response);
+                      navigate("/adminPanel");
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                    });
+
+                  }}>
+                  Ban Restaurant
+                  </button>
+                </div>
               :
               <div>
                 <button className="btn btn-primary btn-lg"

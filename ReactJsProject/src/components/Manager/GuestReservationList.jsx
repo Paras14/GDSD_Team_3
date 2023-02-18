@@ -32,29 +32,48 @@ const GuestReservationList = () => {
     }, []);
 
     useEffect(() => {
-        
-        if (user) {
-            console.log("user", user);
-            // get reservations from the server
-            axios
-            .get(`${baseUrl}reservations/manager/${user.id}`)
-            .then((res) => {
-                console.log(res);
-                let resultSet = [];
-                let today = moment().toDate();
-                console.log(today);
-                for(let i in res.data){
-                    console.log(res.data[i]);
-                    let reservationDate = Date.parse(res.data[i]);
-                    //if(reservationDate>=today){
-                        resultSet.push(res.data[i]);
-                    //}
+
+        async function getGuestReservationList() {
+            if (user) {
+                console.log("user", user);
+                let userId = user.id;
+    
+                if (user.rolId === 10) {
+                    // get restaurant info
+                    const restaurantResponse = await axios
+                        .get(`${baseUrl}restaurants/waiter/${user.id}`)
+                        .catch((err) => console.log(err));
+
+                    if (restaurantResponse) {
+                        console.log(restaurantResponse);
+                        userId = restaurantResponse.data.userId;
+                    }
+    
                 }
-                console.log(resultSet);
-                setReservations(resultSet);
-            })
-            .catch((err) => console.log(err));
+    
+                // get reservations from the server
+                axios
+                .get(`${baseUrl}reservations/manager/${userId}`)
+                .then((res) => {
+                    console.log(res);
+                    let resultSet = [];
+                    let today = moment().toDate();
+                    console.log(today);
+                    for(let i in res.data){
+                        console.log(res.data[i]);
+                        let reservationDate = Date.parse(res.data[i]);
+                        //if(reservationDate>=today){
+                            resultSet.push(res.data[i]);
+                        //}
+                    }
+                    console.log(resultSet);
+                    setReservations(resultSet);
+                })
+                .catch((err) => console.log(err));
+            }
         }
+        
+        getGuestReservationList();
 
     }, [user]);
 

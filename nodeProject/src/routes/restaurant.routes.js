@@ -34,5 +34,8 @@ module.exports = app => {
 
     router.get("/manager/:userId", restaurants.findRestaurantByManagerId);
 
+    // Get restaurant by waiter id
+    router.get("/waiter/:waiterId", restaurants.findRestaurantByWaiterId);
+
     app.use('/restaurants', router);
   };

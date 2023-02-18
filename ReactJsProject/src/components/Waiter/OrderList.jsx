@@ -9,7 +9,7 @@ const dummyOrder = [
     { name: "Food 3", Quantity: 2, Price: 10},
 ]
 
-const totalPrice = 0;
+let totalPrice = 0;
 
 dummyOrder.map((food) => {
     totalPrice += food.Quantity*food.Price;

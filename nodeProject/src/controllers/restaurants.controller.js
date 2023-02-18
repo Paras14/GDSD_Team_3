@@ -1,6 +1,7 @@
 const { sequelize } = require("../models");
 const db = require("../models");
 const Restaurant = db.restaurant;
+const managerWaiter = db.managerWaiter;
 
 const Op = db.Sequelize.Op;
 const petitionController = require("./restaurantRegistrationPetition.controller");
@@ -241,6 +242,29 @@ exports.findRestaurantByManagerId = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message: err.message || "Could not find Restaurant with the Given Id"
+      });
+    });
+
+}
+
+exports.findRestaurantByWaiterId = (req, res) => {
+  const userId = req.params.waiterId;
+
+  managerWaiter.findOne({where: {waiterId:userId} })
+    .then((data) => {
+      Restaurant.findOne({where: {userId:data.managerId} })
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err.message || "Could not find Restaurant with the Given Id"
+        });
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Could not find Manager of restaurant with the Given Id"
       });
     });
 
