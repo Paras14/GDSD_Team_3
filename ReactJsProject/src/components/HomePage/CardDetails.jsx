@@ -59,6 +59,7 @@ const CardDetails = () => {
               placeholder="Search There Your Favourite Restaurant"
               size="lg"
               className="me-4"
+              maxLength={40}
               onChange={(event) => setSearchTerm(event.target.value)}
             />
             <div className="text-primary">
