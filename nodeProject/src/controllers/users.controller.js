@@ -3,7 +3,9 @@ const User = db.user;
 const Op = db.Sequelize.Op;
 const { genSaltSync, hashSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
-const managerWaiterModel = db.managerWaiter
+const managerWaiterModel = db.managerWaiter;
+const Sequelize = db.sequelize;
+const { QueryTypes } = require('sequelize');
 
 // Create and Save a new User
 exports.create = (req, res) => {
@@ -259,4 +261,35 @@ exports.getByManagerIdByWaiterId = async (req, res) => {
   if(resp){
     return res.status(200).json(resp)
   }
+};
+
+exports.registerWaiter = (req, res) => {
+    const waiter = req.body.waiter;
+    waiter.password = hashSync(waiter.password, genSaltSync(10));
+    waiter.rolId = 10;
+    const managerId = req.body.managerId;
+
+    User.create(waiter)
+      .then((data) => {
+        const waiter = data;
+        const query = "Insert into managerWaiters(managerId, waiterId, createdAt, updatedAt) values(" + managerId + ", " + data.id + 
+        ", '" + new Date(data.createdAt).toISOString().replace("T", " ").split(".")[0] + "', '" + new Date(data.updatedAt).toISOString().replace("T", " ").split(".")[0] + "')";
+        Sequelize.query(query, { type: QueryTypes.INSERT })
+          .then((data) => {
+              res.send({managerId, waiter});  
+          })
+          .catch((error) => {
+              res.send({
+                  message: error.message || "Could not create manager-waiter reference"
+              })
+         
+        });
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err.message || "Some error occurred while creating the Waiter.",
+        });
+      });
+    
+     
 };

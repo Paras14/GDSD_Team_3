@@ -1,4 +1,4 @@
-const { checkAdmin } = require("../auth/role_validation");
+const { checkAdmin, checkManager } = require("../auth/role_validation");
 const { checkToken } = require("../auth/token_validation");
 
 module.exports = app => {
@@ -32,7 +32,7 @@ module.exports = app => {
   // Connect manager with waiter 
     router.post("/map-mw", users.mapManagerAndWaiter);
 
-    
+    router.post("/registerWaiter", checkManager, users.registerWaiter);
 
     router.get("/map-mw/:id", users.getByManagerIdByWaiterId);
     
