@@ -422,7 +422,7 @@ const App = () => {
             }
           />
           <Route
-            path="/WaiterOrder"
+            path="/WaiterOrder/:id"
             element={
               <div>
                 <WaiterNavbar />

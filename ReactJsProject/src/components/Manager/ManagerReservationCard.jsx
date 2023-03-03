@@ -99,7 +99,7 @@ const ManagerReservationCard = ({ reservation }) => {
                         <p class="card-text mb-4">Number of People: <span className='fw-bold'>{reservation.numberofplaces}</span></p>
                         <Button variant="primary" className='mx-1'
                             onClick={() => {
-                                navigate("/WaiterOrder");
+                                navigate("/WaiterOrder/"+reservation.id);
                             }}
                         >
                         See order</Button>
