@@ -325,3 +325,15 @@ exports.deleteAllOrder = (req, res) => {
       });
     });
 };
+
+
+exports.changeStatus = async(req, res) => {
+ const orders = await OrderReservation.findOne({where: {id: req.params.id}})
+
+ orders.status = req.body.data.status
+
+ console.log(req.body.data.status)
+ await orders.save()
+ 
+ return res.json(orders)
+}

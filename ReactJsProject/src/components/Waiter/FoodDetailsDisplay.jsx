@@ -15,9 +15,13 @@ function FoodDetails(props) {
         <Col className="col-lg-2">
             <b>{props.price} €</b>
         </Col>
-          <Col className="col-lg-3">
-          <b>{props.quantity}</b>
-          </Col>
+
+        <Col className="col-lg-3">
+        <b>{props.quantity}</b>
+        </Col>
+
+        <Col className="col-lg-3">
+        </Col>
         
     </Row>
     </Container>

@@ -27,6 +27,8 @@ module.exports = app => {
     // Create new orders for a reservation
     router.post("/order/add", reservations.addOrder);
 
+    router.put("/order/:id/status", reservations.changeStatus);
+
     // Get all food corresponding to a reservation
     router.get("/order/:reservationId", reservations.getAllOrder);
 

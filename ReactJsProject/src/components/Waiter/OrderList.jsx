@@ -7,17 +7,17 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Global } from '../../helpers/Global.js';
 import FoodDetailsDisplay from './FoodDetailsDisplay';
 
-const dummyOrder = [
-    { name: "Food 1", Quantity: 2, Price: 10},
-    { name: "Food 2", Quantity: 2, Price: 10},
-    { name: "Food 3", Quantity: 2, Price: 10},
-]
+// const dummyOrder = [
+//     { name: "Food 1", Quantity: 2, Price: 10},
+//     { name: "Food 2", Quantity: 2, Price: 10},
+//     { name: "Food 3", Quantity: 2, Price: 10},
+// ]
 
-let totalPrice = 0;
+// let totalPrice = 0;
 
-dummyOrder.map((food) => {
-    totalPrice += food.Quantity*food.Price;
-});
+// dummyOrder.map((food) => {
+//     totalPrice += food.Quantity*food.Price;
+// });
 
 
 
@@ -29,6 +29,8 @@ const OrderList = () => {
     const [orderData, setOderData] = useState([]);
     const [foodData, setFoodData] = useState([]);
     const [quantities, setQuantity] = useState([]);
+    const [currentStatus, setCurrentStatus] = useState("");
+    const status = ["pending","processing","done"];
     const baseUrl = Global.baseUrl;
     let params = useParams();
 
@@ -70,7 +72,7 @@ const displayFoodItems = (foodItem, idx) => {
             axios
             .get(`${baseUrl}reservations/order/${params.id}`)
             .then((res) => {
-                console.log("Look here res.data.quantity",res.data);
+                console.log("Look here res.data",res.data);
                 setQuantity(res.data.map(item => item.quantity));
                 setOderData(res.data);
             })
@@ -98,12 +100,29 @@ const displayFoodItems = (foodItem, idx) => {
 
     }, [orderData.length]);
 
+    console.log("Here is Status: ",currentStatus);
+
+    const updateStatus = (cStatus) => {
+        setCurrentStatus(cStatus)
+        axios
+        .put(`${baseUrl}reservations/order/${params.id}/status`, { data: {status: cStatus}})
+        .then((res) => {
+            console.log(res);
+        })
+    }
 
     return (
         <Container>
         <br></br>
         <Row>
-          <Row>{foodData.map((data, idx) => displayFoodItems(data, idx))}</Row>
+          <Row><Col lg={8} md={8} xs={8}>{foodData.map((data, idx) => displayFoodItems(data, idx))}</Col>
+          <Col lg={2} md={2} xs={2}><select name="status" id="status" onChange={(e) => updateStatus(e.target.value)}>
+            <option value={"pending"}>pending</option>
+            <option value={"processing"}>processing</option>
+            <option value={"done"}>done</option>
+        </select>
+        </Col>
+          </Row>
         </Row>
         <br></br>
       </Container>
