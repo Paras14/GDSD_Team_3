@@ -3,7 +3,7 @@ API Waiters
 ====================================================================================================
 Waiters can check the food order list.
 You need to do a get to the following url.
-@return: You will get a JSON with dishes.
+@return: You will get a JSON with dishes and table id. If there is no table related, it will be null.
 
 get("/waiter/:waiterId/getFoodOrders")
 
@@ -33,7 +33,6 @@ Waiters can mark orders as served.
 You need to do a post to the following url. You need to 
 
 post("/waiter/:waiterId/markOrderAsServed")
-
 {
     orderReservationId: id,
 }
