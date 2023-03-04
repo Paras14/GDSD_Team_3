@@ -5,7 +5,7 @@ Waiters can check the food order list.
 You need to do a get to the following url.
 @return: You will get a JSON with dishes.
 
-get("/waiter/:id/getFoodOrders")
+get("/waiter/:waiterId/getFoodOrders")
 
 @return: You will get a JSON with dishes.
 [
@@ -32,7 +32,7 @@ Waiters can mark orders as served.
 
 You need to do a post to the following url. You need to 
 
-post("/waiter/:id/markOrderAsServed")
+post("/waiter/:waiterId/markOrderAsServed")
 
 {
     orderReservationId: id,
