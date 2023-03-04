@@ -36,7 +36,8 @@ function showReviews(review){
   return (
     <div className="m-4">
       <ReviewCards
-        key = {review.reviewId}
+        key = {review.id}
+        reviewId = {review.id}
         userId = {review.userId}
         rating = {review.rating}
         quickService = {review.quickService}
