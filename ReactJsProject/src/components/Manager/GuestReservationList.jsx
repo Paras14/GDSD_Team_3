@@ -38,7 +38,8 @@ const GuestReservationList = () => {
                 console.log("user", user);
                 let userId = user.id;
     
-                if (user.rolId === 10) {
+                // if the user is a waiter, get the restaurant id
+                if (user.rolId === 10) { 
                     // get restaurant info
                     const restaurantResponse = await axios
                         .get(`${baseUrl}restaurants/waiter/${user.id}`)
