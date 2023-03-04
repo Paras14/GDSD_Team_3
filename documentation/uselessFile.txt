@@ -1,0 +1,17 @@
+Hola, tengo una base de datos en la que tengo las tablas:
+
+    - "managerWaiters": una tabla en la que almaceno los camareros que pertenecen a un manager. La tabla tiene los atributos "id", "managerId".
+
+    - "restaurants": una tabla en la que almaceno los restaurantes que existen. La tabla tiene los atributos "id", "userId" la cual coincide con la id del manager al que pertenece.
+
+	- "reservations": una tabla en la que almaceno todas las reservas de un restaurante. La tabla tiene los atributos "id", "userId", "restaurantId".
+
+	- "orderReservations": una tabla que almacena los pedidos de comida de las reservas que existen. La tabla tiene los atributos "id", "quantity", "status, "foodId", "reservationId"
+
+    - "reservationTable": que relaciona la mesa a la que pertenece una resrva   . La tabla tiene los atributos "reservationId", "tableId"
+
+La reserva no tiene por que tener una mesa asignada, por lo que puede no existir una fila en la tabla "reservationTable" para una reserva en concreto. 
+
+La reserva no tiene por que tener un pedido, por lo que puede no existir una fila en la tabla "orderReservation" para una reserva en concreto.
+
+Quiero que me des la consulta SQL que tengo que hacer para obtener todas las orderReservation que existen (que me devuelva la id, quantity y foodId), y la id de la mesa a la que estan asignadas dada la id de un waiter. Si no tienen mesa asignada, que me devuelva null.

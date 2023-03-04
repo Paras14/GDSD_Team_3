@@ -10,15 +10,10 @@ get("/waiter/:waiterId/getFoodOrders")
 @return: You will get a JSON with dishes.
 [
     {
-        table: tableId,
-        food: [
-            {
-                orderReservationId: id,
-                foodId: id,
-                quantity: quantity,
-            },
-            ...
-        ]
+        reservationId: reservationId, 
+        quantity: quantity, 
+        foodId: foodId, 
+        tableId: tableId(nulleable)
     },
     ...
 ]
@@ -30,9 +25,13 @@ Waiters can fetch orders and their corresponding tables.
 ====================================================================================================
 Waiters can mark orders as served.
 
-You need to do a post to the following url. You need to 
+You need to do a post to the following url. You need to send this info in the body
+@body:
+    {
+        id: id
+    }
 
 post("/waiter/:waiterId/markOrderAsServed")
-{
-    orderReservationId: id,
+@return{
+    message: string,
 }

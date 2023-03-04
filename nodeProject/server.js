@@ -44,6 +44,7 @@ const reservationRoute = require('./src/routes/reservation.routes')(app);
 const reviewRoute = require('./src/routes/review.routes')(app);
 const restaurantRegistrationPetitionRoute = require('./src/routes/restaurantRegistrationPetition.routes')(app);
 const reviewPetitionRoute = require('./src/routes/reviewPetition.routes')(app);
+const orderReservationRoute = require('./src/routes/orderReservation.routes')(app);
 
 app.use (cors({origin: "http://localhost:8080/"}));
 
@@ -64,7 +65,7 @@ require('./src/socket/socket.js')(io);
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => {
-console.log (`Server is running on port $(PORT).` );
+console.log (`Server is running on port ${PORT}.` );
 });
 
 // const sequelize = new Sequelize('risto', 'root', 'aman', {
