@@ -211,7 +211,7 @@ exports.deleteAll = (req, res) => {
   };
 
 exports.getTablesByManager = (req, res) => {
-      const Table = require('./table.controller');
+      const Table = require('./tables.controller');
       const id = req.params.id;
       console.log(id);
       Restaurant.findOne({ where: { userId: id } }) 
@@ -228,7 +228,7 @@ exports.getTablesByManager = (req, res) => {
 }
 
 exports.updateTableStatus = (req, res) => {
-    const Table = require('./table.controller');
+    const Table = require('./tables.controller');
     Table.update(req, res);
 }
 
@@ -271,3 +271,18 @@ exports.findRestaurantByWaiterId = (req, res) => {
 }
 
 
+exports.getParkingsByManager = (req, res) => {
+  const Parking = require('./parkings.controller');
+  const id = req.params.id;
+  Restaurant.findOne({ where: { userId: id } }) 
+  .then((data) => {
+    req.params.restaurantId = data.id;
+     Parking.findAllInRestaurant(req, res);
+  })
+  .catch((err) => {
+    console.log("Reached error");
+    res.status(500).send({
+      message: err.message || "Could not find Restaurant"
+    });
+  });
+}

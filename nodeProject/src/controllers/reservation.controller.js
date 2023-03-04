@@ -4,8 +4,8 @@ const db = require("../models");
 const Reservation = db.reservation;
 const Restaurant = db.restaurant;
 const OrderReservation = db.orderReservation; 
-const Table = require('./table.controller');
-const Parking = require('./parking.controller');
+const Table = require('./tables.controller');
+const Parking = require('./parkings.controller');
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Reservation

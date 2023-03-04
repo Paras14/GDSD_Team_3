@@ -32,6 +32,8 @@ module.exports = app => {
 
     router.put("/tables/:id", restaurants.updateTableStatus);
 
+    router.get("/parkings/:id", restaurants.getParkingsByManager);
+
     router.get("/manager/:userId", restaurants.findRestaurantByManagerId);
 
     // Get restaurant by waiter id

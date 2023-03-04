@@ -61,6 +61,17 @@ useEffect( () => {
           >
             View your restaurant
           </Button>
+        
+          
+        </Row>
+        <Row>
+          <Button className="text-capitalize fs-3 mt-3" size="lg"
+            onClick={() => {
+                navigate("/WaiterRegister/" + restaurantId);
+              }}
+            >
+              Register a Waiter
+            </Button>
         </Row>
       </div>
     </Container>

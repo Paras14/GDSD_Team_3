@@ -45,6 +45,9 @@ import CreateFood from "./components/CreateFood";
 import EditRestaurantDetails from "./components/EditRestaurantDetails";
 import WaiterNavbar from "./components/Waiter/WaiterNavbar";
 import OrderList from "./components/Waiter/OrderList";
+import WaiterRegister from "./components/Manager/WaiterRegister";
+
+
 const App = () => {
   return (
     <div className="bg-light">
@@ -427,6 +430,17 @@ const App = () => {
               <div>
                 <WaiterNavbar />
                 <OrderList />
+              </div>
+            }
+          />
+
+          <Route
+            path="/WaiterRegister/:restaurantId"
+            element={
+              <div>
+                <Navbar />
+                <WaiterRegister />
+                <Footer />
               </div>
             }
           />
