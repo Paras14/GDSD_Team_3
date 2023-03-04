@@ -1,170 +1,170 @@
 const db = require("../models");
-const Parking = db.parking;
+const Table = db.table;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Parking
+// Create and Save a new Table
 exports.create = (req, res) => {
     // Validate request
-    console.log(req.query);
-    if (!req.query.name) {
+    if (!req.body.number) {
       res.status(400).send({
-        message: "Parking name can not be empty!"
+        message: "Table number can not be empty!"
       });
       return;
     }
   
-    // Create a Parking
-    const parking = {
-        number: req.query.number
+    // Create a Table
+    const table = {
+        number: req.body.number,
+        status: 0,
+        restaurantId: req.body.restaurantId
     };
   
-    // Save Parking in the database
-    Parking.create(parking)
+    // Save Table in the database
+    Table.create(table)
       .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while creating the Parking."
+            err.message || "Some error occurred while creating the Table."
         });
       });
   };
 
-// Retrieve all Parkings from the database.
+// Retrieve all Tables from the database.
 exports.findAll = (req, res) => {
-    const name = req.query.name;
-    var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
+    const number = req.body.number;
+    var condition = number ? { number: { [Op.eq]: `%${number}%` } } : null;
   
-    Parking.findAll({ where: condition })
+    Table.findAll({ where: condition })
       .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving parkings."
+            err.message || "Some error occurred while retrieving tables."
         });
       });
   };
 
-// // Find a single Parking with an id
+// // Find a single Table with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Parking.findByPk(id)
+  Table.findByPk(id)
     .then(data => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Parking with id=${id}.`
+          message: `Cannot find Table with id=${id}.`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving Parking with id=" + id
+        message: "Error retrieving Table with id=" + id
       });
     });
 };
 // };
 
-// Update a Parking by the id in the request
+// Update a Table by the id in the request
 exports.update = (req, res) => {
-  const id = req.query.id;
-  
-  Parking.update(req.query, {
+  const id = req.params.id;
+  Table.update(req.body, {
     where: { id: id }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Parking was updated successfully."
+          message: "Table was updated successfully."
         });
       } else {
         res.send({
-          message: `Cannot update Parking with id=${id}. Maybe Parking was not found or req.query is empty!`
+          message: `Cannot update Table with id=${id}. Maybe Table was not found or req.query is empty!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Parking with id=" + id
+        message: err.message || "Error updating Table with id=" + id
       });
     });
 };
 
-// // Delete a Parking with the specified id in the request
+// Delete a Table with the specified id in the request
 exports.delete = (req, res) => {
-  const id = req.query.id;
+  const id = req.params.id;
 
-  Parking.destroy({
+  Table.destroy({
     where: { id: id }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Parking was deleted successfully!"
+          message: "Table was deleted successfully!"
         });
       } else {
         res.send({
-          message: `Cannot delete Parking with id=${id}. Maybe Parking was not found!`
+          message: `Cannot delete Table with id=${id}. Maybe Table was not found!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete Parking with id=" + id
+        message: "Could not delete Table with id=" + id
       });
     });
 };
 
-// // Delete all Parkings from the database.
+// // Delete all Tables from the database.
 exports.deleteAll = (req, res) => {
-  Parking.destroy({
+  Table.destroy({
     where: {},
     truncate: false
   })
     .then(nums => {
-      res.send({ message: `${nums} Parkings were deleted successfully!` });
+      res.send({ message: `${nums} Tables were deleted successfully!` });
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all parkings."
+          err.message || "Some error occurred while removing all tables."
       });
     });
 };
 
 
-exports.findAllInRestaurant = (req, res) => {
+exports.findAllInRestaurant =  (req, res) => {
     const restaurantId = req.params.restaurantId;
     const condition = restaurantId ? { restaurantId: { [Op.eq]: restaurantId } } : null;
     
-    Parking.findAll({ where: condition })
+     Table.findAll({ where: condition })
       .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving parkings."
+            err.message || "Some error occurred while retrieving tables."
         });
       });
 }
 
 exports.checkFree = async (req, res) => {
-    const idList = req.body.parking;
+    const idList = req.body.table;
     for(i in idList){
-        Parking.findByPk(idList[i].id)
+        Table.findByPk(idList[i].id)
             .then((data) => {
                 if(data.status==1)
                     throw err;
             })
             .catch((err) => {
                 res.status(500).send({
-                    message: err || "Selected parkings are not free."
+                    message: err || "Selected tables are not free."
                 });
             });
     }
@@ -172,4 +172,6 @@ exports.checkFree = async (req, res) => {
     out.req = req;
     out.res = res;
     return out;
+    
 }
+
