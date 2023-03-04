@@ -1,0 +1,39 @@
+API Waiters
+
+====================================================================================================
+Waiters can check the food order list.
+You need to do a get to the following url.
+@return: You will get a JSON with dishes.
+
+get("/waiter/:id/getFoodOrders")
+
+@return: You will get a JSON with dishes.
+[
+    {
+        table: tableId,
+        food: [
+            {
+                orderReservationId: id,
+                foodId: id,
+                quantity: quantity,
+            },
+            ...
+        ]
+    },
+    ...
+]
+
+====================================================================================================
+Waiters can fetch orders and their corresponding tables.
+
+
+====================================================================================================
+Waiters can mark orders as served.
+
+You need to do a post to the following url. You need to 
+
+post("/waiter/:id/markOrderAsServed")
+
+{
+    orderReservationId: id,
+}
