@@ -1,36 +1,34 @@
-import React from "react";
-import { Navigate, useNavigate } from "react-router-dom";
-import { Container, Button } from "react-bootstrap";
-import Tab from "react-bootstrap/Tab";
-import Tabs from "react-bootstrap/Tabs";
+import React from "react"; 
+import { useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Global } from "../helpers/Global.js";
 import Review from "./Reservations/Review.jsx";
-import PendingReviews from "./Admin/PendingReviews.jsx";
-import PendingReviewPost from "./Admin/PostReviews/PendingReviewPost.jsx";
 import FoodDetails from "./HomePage/Reservation/FoodDetailsCard.jsx";
 
+export const BASE_URL = Global.baseUrl;
+
 function RestaurantTabDetails({ restaurantDetail }) {
-  const baseUrl = Global.baseUrl;
   const [foods, setFoods] = useState([]);
-  const [user, setuser] = useState(null);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const navigate = useNavigate();
+
   useEffect(() => {
-    if (restaurantDetail !== null) {
-      
-      setuser(JSON.parse(localStorage.getItem("user")));
-      // Get foods from the restaurant
-      axios
-        .get(baseUrl + "foods/restaurant/" + restaurantDetail.id)
-        .then((response) => {
-          setFoods(response.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    // Get the dishes of the restaurant
+    async function getFoods() {
+      try {
+        const response = await axios.get(`${BASE_URL}foods/restaurant/${restaurantDetail?.id}`);
+        setFoods(response.data);
+      } catch (error) {
+        console.error(error);
+      }
     }
-  }, []);
+
+    if (restaurantDetail) {
+      getFoods();
+    }
+  }, [restaurantDetail]);
   
   return (
     <div className="container">
@@ -130,9 +128,7 @@ function RestaurantTabDetails({ restaurantDetail }) {
               {
                 user !== null &&
                 user.rolId !== 9? null : 
-                <Button className="btn-primary m-1" 
-                  onClick = {() => navigate("/createFood/" + restaurantDetail.id)}
-                > Add Food</Button>
+                <Button className="btn-primary m-1" onClick = {() => navigate("/createFood/" + restaurantDetail.id)}> Add Food</Button>
               }
               <p>
                 {foods.length !== 0
@@ -153,13 +149,8 @@ function RestaurantTabDetails({ restaurantDetail }) {
               </p>
             </div>
             <div class="tab-pane fade" id="reviews-tab-pane" role="tabpanel" aria-labelledby="reviews-tab" tabindex="0">
-              <Button
-                className="btn-primary m-1"
-                onClick={() => navigate("/AddReview/" + restaurantDetail.id)}
-              > Add Review</Button>
-              <Review 
-                restaurantDetail={restaurantDetail}
-              />
+              <Button className="btn-primary m-1" onClick={() => navigate("/AddReview/" + restaurantDetail.id)}> Add Review</Button>
+              <Review restaurantDetail={restaurantDetail} />
             </div>
             <div class="tab-pane fade" id="parking-tab-pane" role="tabpanel" aria-labelledby="parking-tab" tabindex="0">
               <p className="text-center mt-4 fs-3"> This Restaurant has no Parking Facilities Section</p>
