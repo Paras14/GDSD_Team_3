@@ -19,6 +19,7 @@ const Reservations = () => {
         // Update the document title using the browser API
         document.title = `Reservations`;
 
+        // check if the user is authorized
         if (isauthorized) {
             console.log("isauthorized");
             setUser(JSON.parse(localStorage.getItem("user")));
@@ -32,7 +33,7 @@ const Reservations = () => {
     useEffect(() => {
         
         if (user) {
-            console.log("user", user);
+
             // get reservations from the server
             axios
             .get(`${baseUrl}reservations/user/${user.id}`)
