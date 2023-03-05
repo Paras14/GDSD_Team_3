@@ -1,9 +1,6 @@
 const {sequelize} = require("../models");
 const db = require("../models");
 const orderReservationDB = db.orderReservation;
-const waiterDB = db.managerWaiter;
-const Op = db.Sequelize.Op;
-const restaurantBD = db.restaurant;
 
 
 //Waiters can check the food order list.
@@ -35,7 +32,7 @@ exports.getFoodOrders = async (req, res) => {
     })
     .catch(err => {
         res.status(500).send({
-            message: "Error retrieving orderReservations with restaurantId=" + restaurantId
+            message: "Error retrieving orderReservations with restaurantId = " + restaurantId + ". err: " + err
         });
     });
 };
@@ -63,7 +60,5 @@ exports.markAsServed = async (req, res) => {
             message: "Error updating Order with id=" + id
         });
     });
-
-
 
 };

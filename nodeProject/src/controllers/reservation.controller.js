@@ -21,7 +21,6 @@ exports.create = (req, res) => {
       return;
     }
   
-    // Create a Reservation
     const reservation = {
         date: req.body.date,
         numberofplaces: req.body.numberofplaces,

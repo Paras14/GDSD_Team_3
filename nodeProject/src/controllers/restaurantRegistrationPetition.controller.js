@@ -26,7 +26,7 @@ exports.getAllPetitions = (req, res) => {
     });
 }
 
-// Get petition of a restaurant
+// Get petition of a restaurant by id
 exports.getPetition = (req, res) => {
     const id = req.params.id;
 
