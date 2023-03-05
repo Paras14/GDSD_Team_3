@@ -7,6 +7,8 @@ const OrderReservation = db.orderReservation;
 const Table = require('./tables.controller');
 const Parking = require('./parkings.controller');
 const Op = db.Sequelize.Op;
+const Sequelize = db.sequelize;
+const {QueryTypes} = require('sequelize');
 
 // Create and Save a new Reservation
 exports.create = (req, res) => {
@@ -328,12 +330,25 @@ exports.deleteAllOrder = (req, res) => {
 
 
 exports.changeStatus = async(req, res) => {
- const orders = await OrderReservation.findOne({where: {id: req.params.id}})
+ const order = await OrderReservation.findOne({where: {id: req.params.id}});
 
- orders.status = req.body.data.status
-
- console.log(req.body.data.status)
- await orders.save()
+ const reservationId = order.reservationId;
  
- return res.json(orders)
+ const query = "Update orderReservations set status = '" + req.body.data.status + "' where reservationId = " + reservationId;
+
+ Sequelize.query(query, {type: QueryTypes.UPDATE})
+  .then((data) => {
+
+    res.status(200).send(
+      {message: "Updated status of reservation with Id: " + reservationId + " to '" + req.body.data.status + "'"}
+    );
+  })
+  .catch((err) => {
+    res.status(500).send({
+      message: "Could not change status"
+    });
+  });
+
+
+
 }
