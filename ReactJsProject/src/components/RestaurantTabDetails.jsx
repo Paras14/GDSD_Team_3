@@ -15,7 +15,7 @@ function RestaurantTabDetails({ restaurantDetail }) {
   const baseUrl = Global.baseUrl;
   const [foods, setFoods] = useState([]);
   const [user, setuser] = useState(null);
-  const [parkings, setParkings] = useState(0);
+  const [parkingsNumber, setParkings] = useState(0);
   const navigate = useNavigate();
   useEffect(() => {
     if (restaurantDetail !== null) {
@@ -38,12 +38,12 @@ function RestaurantTabDetails({ restaurantDetail }) {
     .get(baseUrl + "parkings/restaurant/" + restaurantDetail.id)
     .then((response) => {
       setParkings(response.data.length);
-      console.log("Number of Parkings", parkings);
+      console.log("Number of Parkings", parkingsNumber);
     })
     .catch((error) => {
       console.log(error);
     })
-  }, [parkings])
+  }, [parkingsNumber])
   
   return (
     <div className="container">
@@ -176,7 +176,7 @@ function RestaurantTabDetails({ restaurantDetail }) {
             </div>
             <div class="tab-pane fade" id="parking-tab-pane" role="tabpanel" aria-labelledby="parking-tab" tabindex="0">
 
-              <p className="text-center mt-4 fs-3">{parkings > 0?"This restaurant has "+parkings+" places in total":"This Restaurant has no Parking Facilities Section"}</p>
+              <p className="text-center mt-4 fs-3">{parkingsNumber > 0?"This restaurant has "+parkingsNumber+" places in total":"This Restaurant has no Parking Facilities Section"}</p>
             </div>
           </div>
         </div>

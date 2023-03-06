@@ -21,6 +21,9 @@ function ReservationDetails() {
   const [user, setUser] = useState(null);
   const [foods, setFoods] = useState([]);
   const [foodCounts, setFoodCounts] = useState([]);
+  const [parkings, setParkings] = useState([]);
+  const [checkboxState, setCheckboxState] = useState([]);
+  // const [parkingsOg, setParkingsOg] = useState([]);
 
   useEffect(() => {
     if (!isauthorized) {
@@ -50,8 +53,22 @@ function ReservationDetails() {
       console.log(foods.data);
       setFoods(foods.data);
       setFoodCounts(foods.data.map((food) => 0));
-    }
-  }, []);
+
+      axios
+      .get(baseUrl + "parkings/restaurant/" + restaurantId)
+      .then((response) => {
+        setParkings(response.data);
+        // parkings = parkings.filter((parking) => parking.status != true);
+        // setParkings(response.data);
+        console.log("Parkings data filtered: ", parkings);
+        setCheckboxState(parkings.map(parking => parking.status));
+        console.log("CheckboxStatuses : ", checkboxState);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      }
+  }, [parkings.length]);
 
   function showFoodItems(foodItem) {
     return (
@@ -80,6 +97,11 @@ function ReservationDetails() {
     console.log("count", count);
     console.log("restaurantId", restaurantId);
     console.log("user", user);
+    setParkings(parkings.map((parking,index) => {
+      parking.status = checkboxState[index];
+      return parking;
+    }))
+    console.log("ParkingsFinal :", parkings);
 
     const reservation = {
       date: date + " " + hour + ":00",
@@ -87,7 +109,7 @@ function ReservationDetails() {
       restaurantId: restaurantId,
       userId: user.id,
       table: [],
-      parking: [],
+      parkingFinal: parkings,
     };
 
     axios
@@ -137,6 +159,28 @@ function ReservationDetails() {
     },
   ];
 */
+
+const parkSel = (park, index) => {
+  return (
+    <div className="form-check form-check-inline">
+      <input type="checkbox" className="form-check-input" id={park.number} name={park.number} 
+      disabled={park.status} 
+      checked={checkboxState[index]}
+      onChange={event => handleCheckboxChange(index, event.target.checked)}
+      />
+      <label class="form-check-label" for={park.number}>{park.number}</label>
+    </div>
+  );
+}
+
+const handleCheckboxChange = (index, checked) => {
+  setCheckboxState(prevState => {
+    const newState = [...prevState];
+    newState[index] = checked;
+    console.log(newState);
+    return newState;
+  });
+};
 
   return restaurantDetail !== null ? (
     <Container>
@@ -199,6 +243,23 @@ function ReservationDetails() {
                 required
               />
             </Col>
+          </Row>
+          {/* Parking spots already reserved will not be displayed */}
+          <Row>
+          <div>
+            <label for="people_number" className="fw-bold">
+              Parking:
+            </label>
+          </div>
+            {parkings.length !== 0
+            ? 
+              parkings.map((park, index) => parkSel(park,index))
+            :
+            (
+            <div>
+                Currently there are no parking spaces available.
+            </div>
+          )}
           </Row>
           <hr></hr>
 
