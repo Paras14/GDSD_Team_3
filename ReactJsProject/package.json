@@ -20,6 +20,7 @@
     "react-bootstrap": "^2.7.0",
     "react-bootstrap-icons": "^1.10.2",
     "react-dom": "^18.2.0",
+    "react-draggable": "^4.4.5",
     "react-router-dom": "^6.6.1",
     "react-scripts": "5.0.1",
     "socket.io-client": "^4.5.4",

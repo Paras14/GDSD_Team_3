@@ -46,6 +46,7 @@ import EditRestaurantDetails from "./components/EditRestaurantDetails";
 import WaiterNavbar from "./components/Waiter/WaiterNavbar";
 import OrderList from "./components/Waiter/OrderList";
 import WaiterRegister from "./components/Manager/WaiterRegister";
+import TableMap from "./components/Manager/TableMap";
 
 
 const App = () => {
@@ -440,6 +441,17 @@ const App = () => {
               <div>
                 <Navbar />
                 <WaiterRegister />
+                <Footer />
+              </div>
+            }
+          />
+
+<Route
+            path="/TableMap"
+            element={
+              <div>
+                <Navbar />
+                <TableMap />
                 <Footer />
               </div>
             }
