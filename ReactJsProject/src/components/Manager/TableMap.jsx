@@ -7,7 +7,7 @@ import { Global } from '../../helpers/Global';
 import { Link, useNavigate } from 'react-router-dom';
 import * as ReactDOM from 'react-dom/client';
 import Draggable, {DraggableCore} from "react-draggable";
-
+import '../../styles/Scrollbar.css';
 const TableMap = () => {
     const baseUrl = Global.baseUrl;
     const navigate = useNavigate();
@@ -22,12 +22,21 @@ const TableMap = () => {
     const bottom = useRef(0);
     const tableCount = useRef(0);
     const elementToRemove = useRef(null);
+    const dragZone = useRef(null);
     function updateDimensions(row = 10, col = 10){
         const h = containerRef.current.offsetHeight/col;
         const w = containerRef.current.offsetWidth/row;
         //setDivElement({height: h*0.8, width: w*0.8});
         setTableElement({height: h, width: w});
 
+    }
+
+    function removeElement(element){
+        element.id = "";
+        element.style.visibility = "hidden";
+        //element.style.display = "none";
+        // element.style.height = 0;
+        // element.style.width = 0;
     }
 
     function addTable(){
@@ -45,10 +54,17 @@ const TableMap = () => {
                 console.log(elementToRemove);
                 elementToRemove.current.setAttribute("x", data.x);
                 elementToRemove.current.setAttribute("y", data.y);
-                if(event.target.offsetLeft<left.current){
+                const table = elementToRemove.current.getBoundingClientRect();
+                const dragArea = dragZone.current.getBoundingClientRect();
+                const overlapping = !(
+                    table.right < dragArea.left || table.left > dragArea.right ||
+                    table.top > dragArea.bottom || table.bottom < dragArea.top
+                );
+                if(overlapping){
                     var tableNumber = parseInt(elementToRemove.current.innerHTML.split(' ')[1]);
                     console.log(tableNumber);
-                    elementToRemove.current.remove();
+                    // elementToRemove.current.remove();
+                    removeElement(elementToRemove.current);
                     elementToRemove.current = null;
                     let foundSkipped = false;
                     while(tableNumber<=tableCount.current){
@@ -108,16 +124,16 @@ const TableMap = () => {
     console.log('called TableMap')
 
     return (
-        <div style={{height:"500px"}}>
-            <div className='row' style={{height:"100%", position:"relative"}}>
-            <div className='col-md-3'>
-                <div className='row m-3' style={{height:"10%"}}>
+        <div style={{height:"500px", zIndex:"0"}}>
+            <div className='row' style={{height:"100%", position:"relative", zIndex:"0"}}>
+            <div className='col-md-3 col-sm-2'>
+                <div className='row m-3' style={{height:"10%", zIndex:"0"}}>
                     <input id="rowField" type="text" placeholder="Tables per row"></input>
                 </div>
-                <div className='row m-3' style={{height:"10%"}}>
+                <div className='row m-3' style={{height:"10%", zIndex:"0"}}>
                     <input id="columnField" type="text" placeholder="Tables per column"></input>
                 </div>
-                <div className='row m-3' style={{height:"10%"}}>
+                <div className='row m-3' style={{height:"10%", zIndex:"0"}}>
                     <Button variant="primary"
                         onClick={()=>{
                             updateDimensions(document.getElementById('rowField').value, document.getElementById('columnField').value)
@@ -127,17 +143,17 @@ const TableMap = () => {
                     </Button>
                     
                 </div>
-                <div className='row m-3' style={{height:"30%"}}>
+                <div ref={dragZone} className='row m-3' style={{height:"30%", zIndex:"0"}}>
                     <p className='border rounded'>Drag here to delete</p>
                 </div>
-                <div className='row m-3' style={{height:"10%"}}>
+                <div className='row m-3' style={{height:"10%", zIndex:"0"}}>
                 <Button variant="primary"
                         onClick={addTable}
                     >
                         Add Table
                     </Button>
                 </div>
-                <div className='row m-3' style={{height:"10%"}}>
+                <div className='row m-3' style={{height:"10%", zIndex:"0"}}>
                     <Button variant="primary"
                         onClick={saveTables}
                     >
@@ -145,7 +161,7 @@ const TableMap = () => {
                     </Button>
                 </div>
             </div>
-            <div className='col-md-9' style={{height:"-webkit-fill-available"}}>
+            <div id='tableMapContainer' className='col-md-9' style={{height:"-webkit-fill-available", zIndex:"0"}}>
                 <div ref={containerRef} className='border border-secondary rounded h-100 m-3' style={{overflow:"scroll"}}></div>
             </div>
             </div>
