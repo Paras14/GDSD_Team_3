@@ -20,36 +20,35 @@ export const Chat = () => {
   const [conexion, setConexion] = useState( '' );
   const [message, setMessage] = useState( '' );
   const [user, setUser] = useState( null );
-  //const [conMessages, setConMessages] = useState( false );
-  const [iniciandoChat, setIniciandoChat] = useState( false );
-  const [responder, setResponder] = useState( false );
-  const [recienEnviado, setRecienEnviado] = useState( false );
+  const [startingChat, setStartingChat] = useState( false );
+  const [response, setResponse] = useState( false );
+  const [recentlySent, setRecentlySent] = useState( false );
   const [messagesDESC, setMessagesDESC] = useState([]);
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
-  const [messagesBuscar, setMessagesBuscar] = useState([]);
+  const [messagesSearch, setMessagesSearch] = useState([]);
   const [firstChat, setFirstChat] = useState( false );
 
 
-  //With this function we revise if the iser is loged or not, and then, it saves the receptor user in the state.
+  // With this function we revise if the user is loged or not, and then, it saves the receptor user in the state.
   useEffect( () => {
 
     async function getReceptor() {
-      //Check if login
+      // Check if logged in
       if ( !isauthorized ) {
         navigate( '/signIn' );
       } else {
-        //Name of document
+        // Name of document
         document.title = 'Chat';        
-        //Get user from local storage
+        // Get user from local storage
         setUser( JSON.parse( localStorage.getItem( 'user' ) ) );
 
-        //Get receptor from url:
-        //If receptor is not null, we call the API to get the receptor user and we put as true the state iniciandoChat
+        // Get receptor from url:
+        // If receptor is not null, we call the API to get the receptor user and we put as true the state startingChat
         if ( receptorActual !== undefined ) {
           const receptor = await axios.get( `${baseUrl}users/${receptorActual}` );
           setReceptor( receptor.data );
-          setIniciandoChat( true );
+          setStartingChat( true );
           document.title = `Chating with ${receptorActual}`;
         }
       }
@@ -68,40 +67,35 @@ export const Chat = () => {
     return isNotReceptorInUsers;
   };
 
-  //With this function we call the API to get the messages between the user loged and the receptor
+  // With this function we call the API to get the messages between the user loged and the receptor
   useEffect( () => {
 
     async function getConversationsAndMessages() {
-      //If the user is logged we get the info about all the conversations and the messages with the current receptor
+      // If the user is logged we get the info about all the conversations and the messages with the current receptor
       if (user) {
 
-        //With this function we get the info about all the conversations that the user logged has
-        setUpChat( user, setUsers, setMessages, setMessagesDESC, setMessagesBuscar);
-
-        console.log( 'Trying to set up chat' );
+        // With this function we get the info about all the conversations that the user logged has
+        setUpChat( user, setUsers, setMessages, setMessagesDESC, setMessagesSearch);
 
         const conversations = await axios.get( `${baseUrl}chats/user/${user.id}` );
           
         setUsers( conversations.data );
-        console.log( conversations.data );
   
-        //Here we get all the messages between the user logged and the receptor
-          const messaggesFronTheCoversationBetweenUserLoggedAndreceptor = await axios.get( `${baseUrl}chats/conversation/`, {
+        // Here we get all the messages between the user logged and the receptor
+          const messaggesFromTheCoversationBetweenUserLoggedAndreceptor = await axios.get( `${baseUrl}chats/conversation/`, {
             params: {
               userid1: user.id,
               userid2: receptorActual
             }
           });
           
-          setMessages(messaggesFronTheCoversationBetweenUserLoggedAndreceptor.data);
-          setMessagesBuscar( messaggesFronTheCoversationBetweenUserLoggedAndreceptor.data );
-          console.log(messaggesFronTheCoversationBetweenUserLoggedAndreceptor.data);
+          setMessages(messaggesFromTheCoversationBetweenUserLoggedAndreceptor.data);
+          setMessagesSearch( messaggesFromTheCoversationBetweenUserLoggedAndreceptor.data );
 
-          console.log( "receptor: ", receptor );
         if ( receptor !== null && isNotReceptorInUsers( receptor, users ) ) {
           setUsers( users => [...users, receptor] );
 
-          //If the receptor is not in the users state we put as true the state firstChat
+          // If the receptor is not in the users state we put as true the state firstChat
           setFirstChat( true );
 
         }
@@ -114,28 +108,27 @@ export const Chat = () => {
   }, [user, receptor]);
 
 
-  //With this function we get the messages between the user loged and the receptor and all the conversations of the user logged but
-  //when the messages and the users change it updates the socket client
+  // With this function we get the messages between the user logged and the receptor and all the conversations of the user logged
+  // but when the messages and the users change it updates the socket client
   useEffect( () => {
 
     async function getConversationsAndMessagesUpdatingTheSocketClient() {
 
-      //Opens a channel to the server
+      // We open a live channel with the server
       socket.on( 'messages', async () => {
-        //If the user is logged we get the info about all the conversations and the messages with the current receptor
+        // If the user is logged we get the info about all the conversations and the messages with the current receptor
         if (user) {
-          //With this function we get the info about all the conversations that the user logged has
-          setUpChat( user, setUsers, setMessages, setMessagesDESC, setMessagesBuscar, false);
-          const messaggesFronTheCoversationBetweenUserLoggedAndreceptor = await axios.get( `${baseUrl}chats/conversation/`, {
+          // With this function we get the info about all the conversations that the user logged has
+          setUpChat( user, setUsers, setMessages, setMessagesDESC, setMessagesSearch, false);
+          const messaggesFromTheCoversationBetweenUserLoggedAndreceptor = await axios.get( `${baseUrl}chats/conversation/`, {
                 params: {
                   userid1: user.id,
                   userid2: receptorActual
                 }
               });
               
-          setMessages( messaggesFronTheCoversationBetweenUserLoggedAndreceptor.data );
-          setMessagesBuscar( messaggesFronTheCoversationBetweenUserLoggedAndreceptor.data );
-          console.log(messaggesFronTheCoversationBetweenUserLoggedAndreceptor.data);
+          setMessages( messaggesFromTheCoversationBetweenUserLoggedAndreceptor.data );
+          setMessagesSearch( messaggesFromTheCoversationBetweenUserLoggedAndreceptor.data );
         }
   
       });
@@ -159,7 +152,7 @@ export const Chat = () => {
   return (
     user === null 
       ? <div></div>
-      : firstChat || iniciandoChat
+      : firstChat || startingChat
         ? <div className="row justify-content-center pb-5">
           <section className="botonTransparente">
             <div className="container py-5 botonTransparente" >
@@ -178,18 +171,12 @@ export const Chat = () => {
                           setConexion={ setConexion }
                           setMessage={ setMessage }
                           receptor={ receptor }
-                          //group={ group }
-                          //setGroup={ setGroup }
-                          //myGroups={ myGroups }
-                          //configurationGroups={ configurationGroups }
-                          //setConfigurationGroups={ setConfigurationGroups }
-                          setIniciandoChat={ setIniciandoChat }
                           messagesDESC={ messagesDESC }
-                          setResponder={ setResponder }
-                          messagesBuscar={ messagesBuscar }
-                          setMessagesBuscar={ setMessagesBuscar }
-                          recienEnviado={ recienEnviado }
-                          setRecienEnviado={ setRecienEnviado }
+                          setResponse={ setResponse }
+                          messagesSearch={ messagesSearch }
+                          setMessagesSearch={ setMessagesSearch }
+                          recentlySent={ recentlySent }
+                          setRecentlySent={ setRecentlySent }
                         />
                         <Conversation
                           users={ users }
@@ -199,14 +186,11 @@ export const Chat = () => {
                           conexion={ conexion }
                           message={ message }
                           setMessage={ setMessage }
-                          //group={ group }
-                          //myGroups={ myGroups }
-                          //setGroup={ setGroup }
                           setReceptor={ setReceptor }
                           setConexion={ setConexion }
-                          responder={ responder }
-                          setResponder={ setResponder }
-                          setRecienEnviado={ setRecienEnviado }
+                          response={ response }
+                          setResponse={ setResponse }
+                          setRecentlySent={ setRecentlySent }
                         />
                       </div>
                     </div>

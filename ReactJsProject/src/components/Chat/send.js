@@ -7,8 +7,8 @@ import { removeSpacesMessages } from './format/removeSpacesMessages';
 const baseUrl = Global.baseUrl;
 const URI = `${baseUrl}chats/`;
 
-export const submit = async ( message, receptor, //group, 
-    responder, messageRespuesta, user, idMessageRespuesta, nombreMessageRespuesta, imagenRespuesta, setResponder, setIdMessageRespuesta, setMessageRespuesta, setImagenRespuesta, setNombreMessageRespuesta, setMessage, setRecienEnviado ) => {
+export const submit = async ( message, receptor, 
+    response, messageRespuesta, user, idMessageRespuesta, nombreMessageRespuesta, imagenRespuesta, setResponse, setIdMessageRespuesta, setMessageRespuesta, setImagenRespuesta, setNombreMessageRespuesta, setMessage, setRecentlySent ) => {
 
   if ( removeSpacesMessages( message ) ) {
 
@@ -35,7 +35,7 @@ export const submit = async ( message, receptor, //group,
 
     
     setMessage( '' );
-    setRecienEnviado( true );
+    setRecentlySent( true );
 
     await axios.get( `${baseUrl}chats/user/${user.id}` )
       .then( ( res ) => {

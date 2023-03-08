@@ -8,10 +8,10 @@ import { useNavigate } from 'react-router-dom';
 //import { setMiembrosGrupo } from '../format/setMiembrosGrupo';
 //import { getGrupo } from '../format/getGroup';
 
-export const Chats = ({ users, messagesBuscar, receptor, //group, 
-    setResponder, setReceptor, //setGroup, 
+export const Chats = ({ users, messagesSearch, receptor, //group, 
+    setResponse, setReceptor, //setGroup, 
     user, setMessage, setConexion, //myGroups, setConfigurationGroups, 
-    messages, recienEnviado }) => {
+    messages }) => {
 
   const users2 = [];
 
@@ -38,7 +38,7 @@ export const Chats = ({ users, messagesBuscar, receptor, //group,
 
   const putUsers2 = ( user ) => {
 
-    //if ( messagesBuscar.length === messages.length || recienEnviado ) {
+    //if ( messagesSearch.length === messages.length || recienEnviado ) {
 
       users2.push( user.id );
 
@@ -69,7 +69,7 @@ export const Chats = ({ users, messagesBuscar, receptor, //group,
 
   const changeChat = ( user ) => {
 
-    setResponder( false );
+    setResponse( false );
 
     if ( document.getElementById( `${receptor.id}` ) !== null ) {
 
@@ -101,7 +101,7 @@ export const Chats = ({ users, messagesBuscar, receptor, //group,
         height= "400px">
         <ul className="list-unstyled mb-0">
           {
-            ( users.length !== 0  ) && users.map( (user, index) => ( //&& messagesBuscar.reverse().map( ( men, index ) => (
+            ( users.length !== 0  ) && users.map( (user, index) => ( //&& messagesSearch.reverse().map( ( men, index ) => (
 
               //( ( users2.indexOf( men.user_receiver ) === -1 ) && ( users2.indexOf( men.user_emitter ) === -1 ) //&& ( users2.indexOf( men.id_grupo_receptor ) === -1 ) 
               //)
@@ -150,21 +150,3 @@ export const Chats = ({ users, messagesBuscar, receptor, //group,
 
 };
 
-/*
-Chats.propTypes = {
-  users: PropTypes.array.isRequired,
-  messagesBuscar: PropTypes.array.isRequired,
-  receptor: PropTypes.string.isRequired,
-  //group: PropTypes.object.isRequired,
-  setResponder: PropTypes.func.isRequired,
-  setReceptor: PropTypes.func.isRequired,
-  //setGroup: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
-  setMessage: PropTypes.func.isRequired,
-  setConexion: PropTypes.func.isRequired,
-  //myGroups: PropTypes.array.isRequired,
-  //setConfigurationGroups: PropTypes.func.isRequired,
-  messages: PropTypes.array.isRequired,
-  recienEnviado: PropTypes.bool.isRequired
-};
-*/

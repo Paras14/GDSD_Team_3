@@ -4,7 +4,7 @@ import { submit } from '../send';
 import { Messages } from './showMessages';
 
 //We xport all this info to the Chat.jsx file
-export const Conversation = ({ users, messages, user, receptor, conexion, message, setMessage, setReceptor, setConexion, responder, setResponder, setRecienEnviado }) => {
+export const Conversation = ({ users, messages, user, receptor, conexion, message, setMessage, setReceptor, setConexion, response, setResponse, setRecentlySent }) => {
 
   const messageEndRef = useRef( null );
   const [idMessageRespuesta, setIdMessageRespuesta] = useState( '' );
@@ -52,7 +52,7 @@ export const Conversation = ({ users, messages, user, receptor, conexion, messag
             //group={group}
             users={users}
             //myGroups={myGroups}
-            setResponder={setResponder}
+            setResponse={setResponse}
             setIdMessageRespuesta={setIdMessageRespuesta}
             setMessageRespuesta={setMessageRespuesta}
             setImagenRespuesta={setImagenRespuesta}
@@ -73,7 +73,7 @@ export const Conversation = ({ users, messages, user, receptor, conexion, messag
         <button className="ms-3 botonTransparente divObjectsSend align-items-center"
           type="submit"
           id="botonEnviar"
-          onClick={() => submit( message, receptor, responder, messageRespuesta, user, idMessageRespuesta, nombreMessageRespuesta, imagenRespuesta, setResponder, setIdMessageRespuesta, setMessageRespuesta, setImagenRespuesta, setNombreMessageRespuesta, setMessage, setRecienEnviado )}>
+          onClick={() => submit( message, receptor, response, messageRespuesta, user, idMessageRespuesta, nombreMessageRespuesta, imagenRespuesta, setResponse, setIdMessageRespuesta, setMessageRespuesta, setImagenRespuesta, setNombreMessageRespuesta, setMessage, setRecentlySent )}>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-send" viewBox="0 0 16 16">
             <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
             </svg>
@@ -121,22 +121,3 @@ export const Conversation = ({ users, messages, user, receptor, conexion, messag
 
 };
 
-/*
-Conversation.propTypes = {
-  users: PropTypes.array.isRequired,
-  messages: PropTypes.array.isRequired,
-  user: PropTypes.object.isRequired,
-  receptor: PropTypes.string.isRequired,
-  conexion: PropTypes.node.isRequired,
-  message: PropTypes.string.isRequired,
-  setMessage: PropTypes.func.isRequired,
-  //group: PropTypes.object.isRequired,
-  //myGroups: PropTypes.array.isRequired,
-  //setGroup: PropTypes.func.isRequired,
-  setReceptor: PropTypes.func.isRequired,
-  setConexion: PropTypes.func.isRequired,
-  responder: PropTypes.bool.isRequired,
-  setResponder: PropTypes.func.isRequired,
-  setRecienEnviado: PropTypes.func.isRequired
-};
-*/

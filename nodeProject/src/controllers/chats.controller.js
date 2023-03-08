@@ -1,12 +1,10 @@
-const { checkAdmin } = require("../auth/role_validation");
 const db = require("../models");
 const Chat = db.chat;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Chat
+// Create and Save a new Chat (message of a conversation)
 exports.create = (req, res) => {
     // Validate request
-    // checkAdmin(req,res);
     if (!req.body.user_emitter || !req.body.user_receiver) {
       res.status(400).send({
         message: "Chat must have sender and receiver id"
@@ -34,7 +32,7 @@ exports.create = (req, res) => {
       });
   };
 
-// Retrieve all users which have a chat with the user with the name req.params.nombre_user
+// Retrieve all users which have a chat with the user with the id: userid
 exports.findAllConversationsFromUser = (req, res) => {
     const userid = req.params.userid;
 
@@ -78,7 +76,7 @@ exports.findAllByConversation = (req, res) => {
       
   };
 
-// // Find a single Chat with an id
+// Find a single Chat with an id
 exports.findOne = (req, res) => {
     const id = req.query.id;
   
@@ -124,7 +122,7 @@ exports.update = (req, res) => {
       });
   };
 
-// // Delete a Chat with the specified id in the request
+// Delete a Chat with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.query.id;
   
@@ -149,7 +147,7 @@ exports.delete = (req, res) => {
       });
   };
 
-// // Delete all Chats from the database.
+// Delete all Chats from the database.
 exports.deleteAll = (req, res) => {
     Chat.destroy({
       where: {},

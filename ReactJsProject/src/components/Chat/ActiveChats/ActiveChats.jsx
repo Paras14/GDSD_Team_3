@@ -12,8 +12,8 @@ import { eventKeyboard } from '../eventsKeyboard';
 import { setConection } from '../format/setConection';
 import { Chats } from './showChats';
 
-export const ActiveChats = ({ users, messages, user, setReceptor, setConexion, setMessage, receptor, //group, setGroup, myGroups, configurationGroups, setConfigurationGroups, 
-setIniciandoChat, messagesDESC, setResponder, messagesBuscar, setMessagesBuscar, recienEnviado, setRecienEnviado }) => {
+export const ActiveChats = ({ users, messages, user, setReceptor, setConexion, setMessage, receptor, //group, setGroup, myGroups, configurationGroups, setConfigurationGroups, setIniciandoChat, 
+ messagesDESC, setResponse, messagesSearch, setMessagesSearch, recentlySent, setRecentlySent }) => {
 
   const baseUrl = Global.baseUrl;
   const [buscar, setBuscar] = useState( '' );
@@ -26,11 +26,11 @@ setIniciandoChat, messagesDESC, setResponder, messagesBuscar, setMessagesBuscar,
 
   useEffect( () => {
 
-    if ( receptor === null //&& group.nombre === undefined 
+    if ( receptor === null 
     ) {
 
       const messages = [];
-      messagesBuscar.reverse().forEach( ( mensaje ) => {
+      messagesSearch.reverse().forEach( ( mensaje ) => {
 
         //if ( mensaje.id_grupo_receptor !== 1 ) {
 
@@ -86,7 +86,7 @@ setIniciandoChat, messagesDESC, setResponder, messagesBuscar, setMessagesBuscar,
 
     }
 
-  }, [messagesBuscar]);
+  }, [messagesSearch]);
 
   /*
   useEffect( () => {
@@ -122,11 +122,11 @@ setIniciandoChat, messagesDESC, setResponder, messagesBuscar, setMessagesBuscar,
 
           if ( res.data[0] === undefined ) {
 
-            setMessagesBuscar([]);
+            setMessagesSearch([]);
 
           } else {
 
-            setMessagesBuscar( res.data );
+            setMessagesSearch( res.data );
 
           }
 
@@ -135,7 +135,7 @@ setIniciandoChat, messagesDESC, setResponder, messagesBuscar, setMessagesBuscar,
     } else {
 
       */
-      setMessagesBuscar( messages );
+      setMessagesSearch( messages );
 
     //}
 
@@ -157,7 +157,7 @@ setIniciandoChat, messagesDESC, setResponder, messagesBuscar, setMessagesBuscar,
             onChange={( e ) => {
 
               setBuscar( e.target.value );
-              setRecienEnviado( false );
+              setRecentlySent( false );
 
             }} />
           <div className="dropdown">
@@ -180,19 +180,14 @@ setIniciandoChat, messagesDESC, setResponder, messagesBuscar, setMessagesBuscar,
         </div>
         <Chats
           users={users}
-          messagesBuscar={messagesBuscar}
+          messagesSearch={messagesSearch}
           receptor={receptor}
-          //group={group}
-          setResponder={setResponder}
+          setResponse={setResponse}
           setReceptor={setReceptor}
-          //setGroup={setGroup}
           user={user}
           setMessage={setMessage}
           setConexion={setConexion}
-          //myGroups={myGroups}
-          //setConfigurationGroups={setConfigurationGroups}
           messages={messages}
-          recienEnviado={recienEnviado}
         />
 
       </div>
@@ -202,26 +197,3 @@ setIniciandoChat, messagesDESC, setResponder, messagesBuscar, setMessagesBuscar,
 
 };
 
-/*
-ActiveChats.propTypes = {
-  users: PropTypes.array.isRequired,
-  messages: PropTypes.array.isRequired,
-  user: PropTypes.object.isRequired,
-  setReceptor: PropTypes.func.isRequired,
-  setConexion: PropTypes.func.isRequired,
-  setMessage: PropTypes.func.isRequired,
-  receptor: PropTypes.string.isRequired,
-  //group: PropTypes.object.isRequired,
-  //setGroup: PropTypes.func.isRequired,
-  //myGroups: PropTypes.array.isRequired,
-  //setConfigurationGroups: PropTypes.func.isRequired,
-  //configurationGroups: PropTypes.node.isRequired,
-  setIniciandoChat: PropTypes.func.isRequired,
-  messagesDESC: PropTypes.array.isRequired,
-  setResponder: PropTypes.func.isRequired,
-  messagesBuscar: PropTypes.array.isRequired,
-  setMessagesBuscar: PropTypes.func.isRequired,
-  recienEnviado: PropTypes.bool.isRequired,
-  setRecienEnviado: PropTypes.func.isRequired
-};
-*/
