@@ -81,6 +81,7 @@ exports.findAllConversationsFromUser = (req, res) => {
 
 // Retrieve all Chats between 2 users from the database.
 exports.findAllByConversation = (req, res) => {
+  //JESUS: Would be better to send always the information in the body instead on the query
     const userid1 = req.query.userid1; //JESUS: we have used camelCase in the project so we should use it here too i think.
     const userid2 = req.query.userid2; // same here as above
 
@@ -176,6 +177,7 @@ exports.delete = (req, res) => {
       });
   };
 
+//JESUS: I think we dont use this method never, so it is not necessary to have it.
 // Delete all Chats from the database.
 exports.deleteAll = (req, res) => {
     Chat.destroy({
