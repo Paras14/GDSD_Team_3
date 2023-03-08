@@ -18,7 +18,7 @@ exports.create = (req, res) => {
     const foodCategory = {
         name: req.query.name
     };
-  
+   
     // Save Food Category in the database
     FoodCategory.create(foodCategory)
       .then(data => {
