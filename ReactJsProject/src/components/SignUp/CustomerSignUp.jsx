@@ -18,7 +18,12 @@ const schema = Yup.object().shape({
   lastName: Yup.string().required(),
   username: Yup.string().required(),
   customeremail: Yup.string().required(),
-  password: Yup.string().required(),
+  password: Yup.string()
+    .required("Please enter your password")
+    .matches(
+      "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
+      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+    ),
   reenterpassword: Yup.string()
     .required()
     .when("password", {
@@ -82,10 +87,7 @@ function CustomerSignUp() {
 
   return (
     <div className="container mt-4 mb-5">
-      <div
-        className=" rounded shadow"
-        style={{ backgroundColor: "#AED0FF" }}
-      >
+      <div className=" rounded shadow" style={{ backgroundColor: "#AED0FF" }}>
         <p className="py-2 fs-1 fw-bold text-center">Customer registration</p>
       </div>
 
