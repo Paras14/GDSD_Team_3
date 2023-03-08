@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Table
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.number) {
+    if (!req.body.number) { // LUIS: Good practice to validate the number of the table, but could be better if more fields are validated, like the restaurantId
       res.status(400).send({
         message: "Table number can not be empty!"
       });
@@ -14,7 +14,7 @@ exports.create = (req, res) => {
   
     // Create a Table
     const table = {
-        number: req.body.number,
+        number: req.body.number, // LUIS: Good practice to send the data in the body of the request
         status: 0,
         restaurantId: req.body.restaurantId
     };
@@ -27,7 +27,7 @@ exports.create = (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while creating the Table."
+            err.message || "Some error occurred while creating the Table." // LUIS: Good practice to send a message to the user, but could be better if the message is more specific, like "Some error occurred while creating the Table with number: " + table.number + " and restaurantId: " + table.restaurantId
         });
       });
   };
@@ -35,7 +35,7 @@ exports.create = (req, res) => {
 // Retrieve all Tables from the database.
 exports.findAll = (req, res) => {
     const number = req.body.number;
-    var condition = number ? { number: { [Op.eq]: `%${number}%` } } : null;
+    var condition = number ? { number: { [Op.eq]: `%${number}%` } } : null; // LUIS: It is better to declare variables using const or let, instead of var
   
     Table.findAll({ where: condition })
       .then(data => {
@@ -44,7 +44,7 @@ exports.findAll = (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tables."
+            err.message || "Some error occurred while retrieving tables." // LUIS: Good practice to send a message to the user, but could be better if the message is more specific, like "Some error occurred while retrieving tables with condition: " + condition
         });
       });
   };
@@ -68,8 +68,8 @@ exports.findOne = (req, res) => {
         message: "Error retrieving Table with id=" + id
       });
     });
-};
-// };
+}; // LUIS: This function is well done!
+// }; // LUIS: This comment line is not necessary, it is better to delete it
 
 // Update a Table by the id in the request
 exports.update = (req, res) => {
@@ -80,7 +80,7 @@ exports.update = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Table was updated successfully."
+          message: "Table was updated successfully." // LUIS: Good practice to send a message to the user, but could be better if the message is more specific, like "Table with id: " + id + " was updated successfully."
         });
       } else {
         res.send({
@@ -93,7 +93,7 @@ exports.update = (req, res) => {
         message: err.message || "Error updating Table with id=" + id
       });
     });
-};
+}; // LUIS: This function is well done!
 
 // Delete a Table with the specified id in the request
 exports.delete = (req, res) => {
@@ -105,7 +105,7 @@ exports.delete = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Table was deleted successfully!"
+          message: "Table was deleted successfully!" // LUIS: Good practice to send a message to the user, but could be better if the message is more specific, like "Table with id: " + id + " was deleted successfully."
         });
       } else {
         res.send({
@@ -118,9 +118,9 @@ exports.delete = (req, res) => {
         message: "Could not delete Table with id=" + id
       });
     });
-};
+}; // LUIS: This function is well done!
 
-// // Delete all Tables from the database.
+// // Delete all Tables from the database. // LUIS: This comment has two double slashes, it is better to have only one double slash
 exports.deleteAll = (req, res) => {
   Table.destroy({
     where: {},
@@ -135,9 +135,9 @@ exports.deleteAll = (req, res) => {
           err.message || "Some error occurred while removing all tables."
       });
     });
-};
+}; // LUIS: This function is well done!
 
-
+// LUIS: This function has no comment to explain what it does, which is not strictly necessary, but it would be good to have it.
 exports.findAllInRestaurant =  (req, res) => {
     const restaurantId = req.params.restaurantId;
     const condition = restaurantId ? { restaurantId: { [Op.eq]: restaurantId } } : null;
@@ -149,11 +149,11 @@ exports.findAllInRestaurant =  (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tables."
+            err.message || "Some error occurred while retrieving tables." // LUIS: Good practice to send a message to the user, but could be better if the message is more specific, like "Some error occurred while retrieving tables with condition: " + condition + " and restaurantId: " + restaurantId
         });
       });
 }
-
+// LUIS: This function has no comment to explain what it does, which is not strictly necessary, but it would be good to have it.
 exports.checkFree = async (req, res) => {
     const idList = req.body.table;
     for(i in idList){
@@ -164,11 +164,11 @@ exports.checkFree = async (req, res) => {
             })
             .catch((err) => {
                 res.status(500).send({
-                    message: err || "Selected tables are not free."
+                    message: err || "Selected tables are not free." 
                 });
             });
     }
-    const out = {};
+    const out = {}; // LUIS: The name of this variable is not very descriptive, it would be better to use a more descriptive name
     out.req = req;
     out.res = res;
     return out;

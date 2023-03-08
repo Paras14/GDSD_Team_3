@@ -1,21 +1,21 @@
 const { sequelize } = require("../models");
 const db = require("../models");
 const Review = db.review;
-const Op = db.Sequelize.Op;
+const Op = db.Sequelize.Op; // LUIS: This Op is not used in this file, so it can be removed.
 const reviewPetitionDB = db.reviewPetition;
 
 // Create and Save a new Review
 exports.create = (req, res) => {
     // Validate request
-    console.log(req.body);
-    if (!req.body.rating) {
+    console.log(req.body); // LUIS: This console.log is only for debugging, so it can be removed.
+    if (!req.body.rating) { // LUIS: Good practice to validate the request and use the body to send the data. But maybe it can be improved to validate more fields.
       res.status(400).send({
-        message: "Review rating can not be empty!"
+        message: "Review rating can not be empty!" // LUIS: Good practice to send a message to the user.
       });
       return;
     }
   
-    // Create a Restaurant
+    // Create a Restaurant // LUIS: This comment is not correct, it should be "Create a Review".
     const review = {
         restaurantId:req.body.restaurantId,
         userId: req.body.userId,
@@ -34,18 +34,18 @@ exports.create = (req, res) => {
           reviewId: data.dataValues.id,
           status: "pending",
           message: ""
-        });
+        }); // LUIS: Good practice to create the review petition after the review is created.
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while creating the Review."
+            err.message || "Some error occurred while creating the Review." // LUIS: Good practice to send a message to the user, but maybe it can include the id's of the restaurant and user.
         });
       });
   };
 
-// Retrieve all Restaurants from the database.
+// Retrieve all Restaurants from the database. // LUIS: This comment is not correct, it should be "Retrieve all Reviews from the database".
 exports.findAll = (req, res) => {
   
     Review.findAll()
@@ -60,13 +60,14 @@ exports.findAll = (req, res) => {
       });
   };
 
+// LUIS: This function has no comment to explain what it does, which is not strictly necessary, but it would be good to have it.
 exports.findAllAccepted = (req, res) => {
   const query = `
     SELECT reviews.* 
     FROM reviews 
     INNER JOIN reviewPetitions 
     ON reviews.id = reviewPetitions.reviewId 
-    WHERE reviewPetitions.status = 'accepted';`;
+    WHERE reviewPetitions.status = 'accepted';`; // LUIS: Good practice to type the query in a variable and then use it in the query, so you have it separated from the rest of the code.
 
     sequelize.query(query, { type: sequelize.QueryTypes.SELECT})
     .then(reviews => {
@@ -75,18 +76,19 @@ exports.findAllAccepted = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving reviews."
+          err.message || "Some error occurred while retrieving reviews." // LUIS: Maybe the message can be more specific, like "Some error occurred while retrieving accepted reviews."
       });
     });
 };
 
+// LUIS: This function has no comment to explain what it does, which is not strictly necessary, but it would be good to have it.
 exports.findAllPending = (req, res) => {
   const query = `
     SELECT reviews.*
     FROM reviews
     INNER JOIN reviewPetitions
     ON reviews.id = reviewPetitions.reviewId
-    WHERE reviewPetitions.status = 'pending';`;
+    WHERE reviewPetitions.status = 'pending';`; // LUIS: Good practice to type the query in a variable and then use it in the query, so you have it separated from the rest of the code.
  
     sequelize.query(query, { type: sequelize.QueryTypes.SELECT})
     .then(reviews => {
@@ -95,13 +97,13 @@ exports.findAllPending = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving reviews."
+          err.message || "Some error occurred while retrieving reviews." // LUIS: Maybe the message can be more specific, like "Some error occurred while retrieving pending reviews."
       });
     });
 };
 
 
-// // Find a single Restaurant with an id
+// // Find a single Restaurant with an id // LUIS: This comment is not correct, it should be "Find a single Review with an id".
 exports.findOne = (req, res) => {
     const id = req.params.id;
   
@@ -120,10 +122,10 @@ exports.findOne = (req, res) => {
           message: "Error retrieving Review with id=" + id
         });
       });
-  };
+  }; // LUIS: This function is well done!
 
 
-// Update a Restaurant by the id in the request
+// Update a Restaurant by the id in the request // LUIS: This comment is not correct, it should be "Update a Review by the id in the request".
 exports.update = (req, res) => {
     const id = req.query.id;
     
@@ -146,9 +148,9 @@ exports.update = (req, res) => {
           message: "Error updating Review with id=" + id
         });
       });
-  };
+  }; // LUIS: This function is well done!
 
-// // Delete a Restaurant with the specified id in the request
+// // Delete a Restaurant with the specified id in the request // LUIS: This comment is not correct, it should be "Delete a Review with the specified id in the request".
 exports.delete = (req, res) => {
     const id = req.params.id;
   
@@ -171,9 +173,9 @@ exports.delete = (req, res) => {
           message: "Could not delete Review with id=" + id
         });
       });
-  };
+  }; // LUIS: This function is well done!
 
-// // Delete all Restaurants from the database.
+// // Delete all Restaurants from the database. // LUIS: This comment is not correct, it should be "Delete all Reviews from the database".
 exports.deleteAll = (req, res) => {
     Review.destroy({
       where: {},
@@ -192,9 +194,9 @@ exports.deleteAll = (req, res) => {
 
 
   
-  };
+  }; // LUIS: This function is well done, but there is so much space at the end of the function, it would be better to have it more compact.
 
-// // Find all single Restaurant with an id
+// // Find all single Restaurant with an id // LUIS: This comment is not correct, it should be "Find all Reviews with an id of a Restaurant".
 exports.findByRestaurant = (req, res) => {
     const restaurantId = req.params.restaurantId;
     
@@ -213,9 +215,9 @@ exports.findByRestaurant = (req, res) => {
           message: "Error retrieving Review with restaurant Id=" + restaurantId
         });
       });
-  };
+  }; // LUIS: This function is well done!
 
-exports.findByRestaurantAccepted = (req, res) => {
+exports.findByRestaurantAccepted = (req, res) => { // Method done by Jesus, not Vichitar
     const restaurantId = req.params.restaurantId;
     //en el router cambiar el metodo a este
     //Y finalmente comprobar que funciona
@@ -241,7 +243,7 @@ exports.findByRestaurantAccepted = (req, res) => {
 };
 
 
-  // // Find all single User with an id
+  // // Find all single User with an id // LUIS: This comment is not correct, it should be "Find all Reviews with an id of a User".
 exports.findByUser = (req, res) => {
     const userId = req.params.userId;
 
@@ -261,7 +263,7 @@ exports.findByUser = (req, res) => {
           message: "Error retrieving Review with User Id=" + userId
         });
       });
-  };      
+  }; // LUIS: This function is well done! 
 
   
 // Find average Rating for a restaurant
@@ -271,9 +273,9 @@ exports.getRestaurantAverageRatings = (req, res) => {
     Review.findAll({ where: { restaurantId: restaurantId } })
       .then(data => {
         if (data) {
-            var average = 0;
-            var n = Object.keys(data).length;
-            for( val in data){
+            var average = 0; // LUIS: It is better to use let instead of var, because it is more secure.
+            var n = Object.keys(data).length; // LUIS: The name of the variable n is not very descriptive, it would be better to use something like numberOfReviews.
+            for( val in data){ // LUIS: The name of the variable val is not very descriptive, it would be better to use something like review.
                 average += parseFloat(data[val].rating);
             }
             average /= n;
@@ -293,8 +295,7 @@ exports.getRestaurantAverageRatings = (req, res) => {
       });
   };
   
-
-
+  // LUIS: This function has no comment to explain what it does, which is not strictly necessary, but it would be good to have it.
   exports.getById = (id) => {
   
     Review.findByPk(id)
