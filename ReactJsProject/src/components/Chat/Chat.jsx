@@ -54,7 +54,7 @@ export const Chat = () => {
       }
     }
 
-  getReceptor();
+    getReceptor();
   }, []);
 
   const isNotReceptorInUsers = ( receptor, users ) => {
