@@ -67,7 +67,7 @@ exports.findAll = (req, res) => {
   };
 
 // LUIS: This function has no comment to explain what it does, which is not strictly necessary, but it would be good to have it.
-// Remark: corrected
+// Remark: corrected but function not written by me
 exports.findAllAccepted = (req, res) => {
   const query = `
     SELECT reviews.* 
@@ -90,7 +90,7 @@ exports.findAllAccepted = (req, res) => {
 };
 
 // LUIS: This function has no comment to explain what it does, which is not strictly necessary, but it would be good to have it.
-// Remark: corrected
+// Remark: corrected but function not written by me
 exports.findAllPending = (req, res) => {
   const query = `
     SELECT reviews.*
