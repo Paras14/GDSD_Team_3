@@ -66,7 +66,7 @@ function ReservationDetails() {
       })
       .catch((error) => {
         console.log(error);
-      })
+      });
       }
   }, [parkings.length]);
 
@@ -97,11 +97,16 @@ function ReservationDetails() {
     console.log("count", count);
     console.log("restaurantId", restaurantId);
     console.log("user", user);
-    setParkings(parkings.map((parking,index) => {
+    const validParkings = parkings.map((parking,index) => {
       parking.status = checkboxState[index];
       return parking;
-    }))
-    console.log("ParkingsFinal :", parkings);
+    });
+
+    const finalParking = validParkings.filter(parking => parking.status==true).map(parking => {
+      return {"id": parking.id, "number": parking.number, "restaurantId": parking.restaurantId}
+    });
+
+    console.log("ParkingsFinal :", finalParking);
 
     const reservation = {
       date: date + " " + hour + ":00",
@@ -109,7 +114,7 @@ function ReservationDetails() {
       restaurantId: restaurantId,
       userId: user.id,
       table: [],
-      parkingFinal: parkings,
+      parking: finalParking,
     };
 
     axios
