@@ -79,6 +79,14 @@ const displayFoodItems = (foodItem, idx) => {
             .catch((err) => console.log(err));
         }
 
+        axios
+        .get(`${baseUrl}reservations/order/${params.id}`)
+        .then((res) => {
+            console.log("Get resevation status",res.data[0].status);
+            setCurrentStatus(res.data[0].status);
+        })
+        .catch((err) => console.log(err));
+
     }, [params]);
 
     console.log("quantities: ", quantities);
@@ -109,6 +117,9 @@ const displayFoodItems = (foodItem, idx) => {
         .then((res) => {
             console.log(res);
         })
+        .catch((err) => {
+          console.log(err);
+        })
     }
 
     return (
@@ -116,7 +127,7 @@ const displayFoodItems = (foodItem, idx) => {
         <br></br>
         <Row>
           <Row><Col lg={8} md={8} xs={8}>{foodData.map((data, idx) => displayFoodItems(data, idx))}</Col>
-          <Col lg={2} md={2} xs={2}><select name="status" id="status" onChange={(e) => updateStatus(e.target.value)}>
+          <Col lg={2} md={2} xs={2}><select name="status" id="status" value={currentStatus} onChange={(e) => updateStatus(e.target.value)}>
             <option value={"pending"}>pending</option>
             <option value={"processing"}>processing</option>
             <option value={"done"}>done</option>
