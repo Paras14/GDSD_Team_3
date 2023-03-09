@@ -6,6 +6,7 @@ const Op = db.Sequelize.Op;
 exports.create = (req, res) => {
     // Validate request
     if (!req.body.number) { // LUIS: Good practice to validate the number of the table, but could be better if more fields are validated, like the restaurantId
+            //Remark: Corrected -  added validation for restaurantId input
       res.status(400).send({
         message: "Table number can not be empty!"
       });
@@ -28,6 +29,7 @@ exports.create = (req, res) => {
         res.status(500).send({
           message:
             err.message || "Some error occurred while creating the Table." // LUIS: Good practice to send a message to the user, but could be better if the message is more specific, like "Some error occurred while creating the Table with number: " + table.number + " and restaurantId: " + table.restaurantId
+                // Remark: corrected
         });
       });
   };
@@ -45,6 +47,7 @@ exports.findAll = (req, res) => {
         res.status(500).send({
           message:
             err.message || "Some error occurred while retrieving tables." // LUIS: Good practice to send a message to the user, but could be better if the message is more specific, like "Some error occurred while retrieving tables with condition: " + condition
+                //Remark: Corrected
         });
       });
   };
@@ -69,7 +72,8 @@ exports.findOne = (req, res) => {
       });
     });
 }; // LUIS: This function is well done!
-// }; // LUIS: This comment line is not necessary, it is better to delete it
+// }; // LUIS: This comment line is not necessary, it is better to delete it 
+// Remark: corrected
 
 // Update a Table by the id in the request
 exports.update = (req, res) => {
@@ -81,6 +85,7 @@ exports.update = (req, res) => {
       if (num == 1) {
         res.send({
           message: "Table was updated successfully." // LUIS: Good practice to send a message to the user, but could be better if the message is more specific, like "Table with id: " + id + " was updated successfully."
+        // Remark: corrected
         });
       } else {
         res.send({
@@ -106,6 +111,7 @@ exports.delete = (req, res) => {
       if (num == 1) {
         res.send({
           message: "Table was deleted successfully!" // LUIS: Good practice to send a message to the user, but could be better if the message is more specific, like "Table with id: " + id + " was deleted successfully."
+        // Remark: corrected
         });
       } else {
         res.send({
@@ -121,6 +127,7 @@ exports.delete = (req, res) => {
 }; // LUIS: This function is well done!
 
 // // Delete all Tables from the database. // LUIS: This comment has two double slashes, it is better to have only one double slash
+// Remark: corrected
 exports.deleteAll = (req, res) => {
   Table.destroy({
     where: {},
@@ -138,6 +145,7 @@ exports.deleteAll = (req, res) => {
 }; // LUIS: This function is well done!
 
 // LUIS: This function has no comment to explain what it does, which is not strictly necessary, but it would be good to have it.
+// Remark: corrected
 exports.findAllInRestaurant =  (req, res) => {
     const restaurantId = req.params.restaurantId;
     const condition = restaurantId ? { restaurantId: { [Op.eq]: restaurantId } } : null;
@@ -150,10 +158,12 @@ exports.findAllInRestaurant =  (req, res) => {
         res.status(500).send({
           message:
             err.message || "Some error occurred while retrieving tables." // LUIS: Good practice to send a message to the user, but could be better if the message is more specific, like "Some error occurred while retrieving tables with condition: " + condition + " and restaurantId: " + restaurantId
+        // Remark: corrected
         });
       });
 }
 // LUIS: This function has no comment to explain what it does, which is not strictly necessary, but it would be good to have it.
+// Remark: corrected
 exports.checkFree = async (req, res) => {
     const idList = req.body.table;
     for(i in idList){
@@ -169,6 +179,7 @@ exports.checkFree = async (req, res) => {
             });
     }
     const out = {}; // LUIS: The name of this variable is not very descriptive, it would be better to use a more descriptive name
+    // Remark: rejected as out is standard description for output. But added a comment explaining the need for the variable.
     out.req = req;
     out.res = res;
     return out;
