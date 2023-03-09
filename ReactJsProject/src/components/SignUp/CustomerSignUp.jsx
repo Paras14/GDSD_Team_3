@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import { Global } from "../../helpers/Global.js";
 
 const baseUrl = Global.baseUrl;
+const strongPasswordRegex =
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
 const schema = Yup.object().shape({
   firstName: Yup.string().required(),
@@ -21,7 +23,7 @@ const schema = Yup.object().shape({
   password: Yup.string()
     .required("Please enter your password")
     .matches(
-      "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
+      strongPasswordRegex,
       "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
     ),
   reenterpassword: Yup.string()

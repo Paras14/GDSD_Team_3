@@ -13,6 +13,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 const baseUrl = Global.baseUrl;
+const strongPasswordRegex =
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
 const schema = Yup.object().shape({
   restaurentname: Yup.string().required(),
@@ -23,7 +25,7 @@ const schema = Yup.object().shape({
   password: Yup.string()
     .required("Please Enter Your Password")
     .matches(
-      "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
+      strongPasswordRegex,
       "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
     ),
   reenterpassword: Yup.string()
