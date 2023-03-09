@@ -5,9 +5,9 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Table
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.number) {
+    if (!req.body.number || !req.body.restaurantId) {
       res.status(400).send({
-        message: "Table number can not be empty!"
+        message: "Table number or Restaurant ID can not be empty!"
       });
       return;
     }
@@ -27,7 +27,7 @@ exports.create = (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while creating the Table."
+            err.message || "Some error occurred while creating the Table with number: " + table.number + " and Restaurant ID: " + table.restaurantId
         });
       });
   };
@@ -44,12 +44,12 @@ exports.findAll = (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tables."
+            err.message || "Some error occurred while retrieving table" + condition?" number: " + number + ".":"s."
         });
       });
   };
 
-// // Find a single Table with an id
+// Find a single Table with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
@@ -69,7 +69,6 @@ exports.findOne = (req, res) => {
       });
     });
 };
-// };
 
 // Update a Table by the id in the request
 exports.update = (req, res) => {
@@ -80,7 +79,7 @@ exports.update = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Table was updated successfully."
+          message: "Table was updated successfully with id = " + id
         });
       } else {
         res.send({
@@ -105,7 +104,7 @@ exports.delete = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Table was deleted successfully!"
+          message: "Table with id: " + id + " was deleted successfully!"
         });
       } else {
         res.send({
@@ -120,7 +119,7 @@ exports.delete = (req, res) => {
     });
 };
 
-// // Delete all Tables from the database.
+// Delete all Tables from the database.
 exports.deleteAll = (req, res) => {
   Table.destroy({
     where: {},
@@ -137,7 +136,7 @@ exports.deleteAll = (req, res) => {
     });
 };
 
-
+// Find all tables belonging to a restaurant
 exports.findAllInRestaurant =  (req, res) => {
     const restaurantId = req.params.restaurantId;
     const condition = restaurantId ? { restaurantId: { [Op.eq]: restaurantId } } : null;
@@ -149,11 +148,12 @@ exports.findAllInRestaurant =  (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tables."
+            err.message || "Some error occurred while retrieving tables from restaurant with Id: " + restaurantId
         });
       });
 }
 
+//Check if a list of provided tables are all free
 exports.checkFree = async (req, res) => {
     const idList = req.body.table;
     for(i in idList){
@@ -168,7 +168,7 @@ exports.checkFree = async (req, res) => {
                 });
             });
     }
-    const out = {};
+    const out = {}; //will send the request and response input back to be used by the calling function.
     out.req = req;
     out.res = res;
     return out;

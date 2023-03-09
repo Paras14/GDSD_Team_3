@@ -15,7 +15,8 @@ function RestaurantTabDetails({ restaurantDetail }) {
   const baseUrl = Global.baseUrl;
   const [foods, setFoods] = useState([]);
   const [user, setuser] = useState(null);
-  const [parkingsNumber, setParkings] = useState(0);
+  const [parkingsNumber, setParkingsNumber] = useState(0);
+  const [parkings, setParkings] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     if (restaurantDetail !== null) {
@@ -37,13 +38,56 @@ function RestaurantTabDetails({ restaurantDetail }) {
     axios
     .get(baseUrl + "parkings/restaurant/" + restaurantDetail.id)
     .then((response) => {
-      setParkings(response.data.length);
+      setParkings(response.data);
+      setParkingsNumber(response.data.length);
       console.log("Number of Parkings", parkingsNumber);
     })
     .catch((error) => {
       console.log(error);
     })
   }, [parkingsNumber])
+
+  const getFreeParkings = () => {
+    let freeParkings = [];
+    console.log("parkings", parkings);
+    parkings.forEach(parking => {
+      if (!parking.status) {
+        freeParkings.push(parking);
+      }
+    });
+    return freeParkings;
+  }
+
+  const addParking = () => {
+    axios
+    .post(baseUrl + "parkings", {
+      number: parkingsNumber + 1,
+      restaurantId: restaurantDetail.id,
+      status: false
+    }, {params: {email: user.email}})
+    .then((response) => {
+      console.log("Parking added");
+      setParkingsNumber(parkingsNumber + 1);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+
+  const deleteParking = () => {
+    if (parkingsNumber > 0) {
+      axios
+      .delete(baseUrl + "parkings/" + parkings[parkingsNumber - 1].id, {params: {email: user.email}})
+      .then((response) => {
+        console.log("Parking deleted");
+        setParkingsNumber(parkingsNumber - 1);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }
+  }
+
   
   return (
     <div className="container">
@@ -142,10 +186,11 @@ function RestaurantTabDetails({ restaurantDetail }) {
             <div class="tab-pane fade" id="menu-tab-pane" role="tabpanel" aria-labelledby="menu-tab" tabindex="0">
               {
                 user !== null &&
-                user.rolId !== 9? null : 
+                user.rolId === 9?  
                 <Button className="btn-primary m-1" 
                   onClick = {() => navigate("/createFood/" + restaurantDetail.id)}
                 > Add Food</Button>
+                : null
               }
               <p>
                 {foods.length !== 0
@@ -175,8 +220,21 @@ function RestaurantTabDetails({ restaurantDetail }) {
               />
             </div>
             <div class="tab-pane fade" id="parking-tab-pane" role="tabpanel" aria-labelledby="parking-tab" tabindex="0">
+              {user !== null && user.rolId === 9? //If the user is a restaurant owner, he can add parking facilities and remove them 
+                <div className="row">
+                  <div className="col-md-6">
+                    <Button className="btn-primary m-1" onClick={addParking}>Add Parking Facility</Button>
+                  </div>
+                  <div className="col-md-6">
+                    <Button className="btn-danger m-1" onClick={deleteParking}>Remove Parking Facility</Button>
+                  </div>
+                </div>
 
-              <p className="text-center mt-4 fs-3">{parkingsNumber > 0?"This restaurant has "+parkingsNumber+" places in total":"This Restaurant has no Parking Facilities Section"}</p>
+                : null
+                
+                }  
+            
+              <p className="text-center mt-4 fs-3">{parkings !== [] && parkingsNumber > 0?"This restaurant has "+parkingsNumber+" places in total. "+ getFreeParkings().length +" of them are free.":"This Restaurant has no Parking Facilities Section"}</p>
             </div>
           </div>
         </div>

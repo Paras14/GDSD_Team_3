@@ -73,6 +73,15 @@ useEffect( () => {
               Register a Waiter
             </Button>
         </Row>
+        <Row>
+          <Button className="text-capitalize fs-3 mt-3" size="lg"
+            onClick={() => {
+                navigate("/TableMap/" );
+              }}
+            >
+              Create Map for Restaurant
+            </Button>
+        </Row>
       </div>
     </Container>
   );
