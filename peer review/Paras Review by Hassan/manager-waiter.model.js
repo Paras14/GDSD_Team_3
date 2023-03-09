@@ -1,4 +1,4 @@
-module.exports = (sequelize, datatypes) => {
+module.exports = (sequelize, datatypes) => {//Hassan; This code is fine
     const ManagerWaiter = sequelize.define("managerWaiter", {
     id: {
     type: datatypes.INTEGER,
