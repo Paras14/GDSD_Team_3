@@ -193,7 +193,7 @@ function RestaurantTabDetails({ restaurantDetail }) {
             </div>
             <div class="tab-pane fade" id="parking-tab-pane" role="tabpanel" aria-labelledby="parking-tab" tabindex="0">
               {/* SUGGESTION: 
-                        Intendation could be improved for the p tag below
+                        Intendation could be improved for the p tag below  -- PS Sorry, I meant Indentation
                 ANSWER: I did not this line of code and I dont understand what you mean exactly.
               */}
               <p className="text-center mt-4 fs-3">{parkingsNumber > 0?"This restaurant has "+parkingsNumber+" places in total":"This Restaurant has no Parking Facilities Section"}</p>
