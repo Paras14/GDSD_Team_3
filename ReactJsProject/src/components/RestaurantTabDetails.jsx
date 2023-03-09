@@ -74,10 +74,10 @@ function RestaurantTabDetails({ restaurantDetail }) {
     });
   }
 
-  const deleteParking = () => {
+  const deleteParking = (parkingId) => {
     if (parkingsNumber > 0) {
       axios
-      .delete(baseUrl + "parkings/" + parkings[parkingsNumber - 1].id, {params: {email: user.email}})
+      .delete(baseUrl + "parkings/" + parkingId, {params: {email: user.email}})
       .then((response) => {
         console.log("Parking deleted");
         setParkingsNumber(parkingsNumber - 1);
@@ -86,6 +86,21 @@ function RestaurantTabDetails({ restaurantDetail }) {
         console.log(error);
       });
     }
+  }
+
+  const changeParkingStatus = (parkingId, actualStatus) => {
+    axios
+    .put(baseUrl + "parkings/" + parkingId, {
+      status: !actualStatus
+    })
+    .then((response) => {
+      console.log("Parking status changed");
+      setParkingsNumber(parkingsNumber+1);
+      setParkingsNumber(parkingsNumber-1);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   }
 
   
@@ -221,20 +236,51 @@ function RestaurantTabDetails({ restaurantDetail }) {
             </div>
             <div class="tab-pane fade" id="parking-tab-pane" role="tabpanel" aria-labelledby="parking-tab" tabindex="0">
               {user !== null && user.rolId === 9? //If the user is a restaurant owner, he can add parking facilities and remove them 
-                <div className="row">
-                  <div className="col-md-6">
+                <div className="center">
                     <Button className="btn-primary m-1" onClick={addParking}>Add Parking Facility</Button>
-                  </div>
-                  <div className="col-md-6">
-                    <Button className="btn-danger m-1" onClick={deleteParking}>Remove Parking Facility</Button>
-                  </div>
                 </div>
 
                 : null
                 
                 }  
             
-              <p className="text-center mt-4 fs-3">{parkings !== [] && parkingsNumber > 0?"This restaurant has "+parkingsNumber+" places in total. "+ getFreeParkings().length +" of them are free.":"This Restaurant has no Parking Facilities Section"}</p>
+              <p className="text-center mt-4 fs-3">
+                {parkings !== [] && parkingsNumber > 0 ?
+                
+                <p>This restaurant has {parkingsNumber} places in total. {getFreeParkings().length} of them are free.</p>
+                :"This Restaurant has no Parking Facilities Section"
+                }
+                {parkings !== [] && parkingsNumber > 0 && user !== null && user.rolId === 9?
+                  parkings.map((parking) => (
+                  <div className="row">
+                    <div className="col-md-3">
+                      <p>Place number: {parking.id}</p>
+                    </div>
+                    <div className="col-md-3">
+                      <p>Is free: {parking.status? "No" : "Yes"}</p>
+                    </div>
+                    <div className="col-md-3">
+                      <Button className="btn-primary m-1" onClick={() => changeParkingStatus(parking.id, parking.status)}>Change Status</Button>
+                    </div>
+                    <div className="col-md-3">
+                      <Button className="btn-danger m-1" onClick={() => deleteParking(parking.id)}>Delete Parking</Button>
+                    </div>
+                  </div>
+                ))
+                : parkings !== [] && parkingsNumber > 0 ?
+                  parkings.map((parking) => (
+                    <div className="row">
+                      <div className="col-md-6">
+                        <p>Place number: {parking.id}</p>
+                      </div>
+                      <div className="col-md-6">
+                        <p>Is free: {parking.status? "No" : "Yes"}</p>
+                      </div>
+                    </div>
+                  ))
+                : null
+                }
+              </p>
             </div>
           </div>
         </div>
