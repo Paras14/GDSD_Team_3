@@ -29,9 +29,9 @@ const Navbar = () => {
             <div className="d-flex justify-content-between ">
               <div
                 onClick={() => {
-                  if (user.rolId === 8) { // 8 is for customer           //JESUS: With the sintax x?y:z this piece of code could be simpler 
+                  if (user.rolId === 8) { // 8 is for customer           //JESUS: With the sintax x?y:z this piece of code could be simpler // REMARK: Rejected, I don't think it's a good idea to use a ternary operator for this case. It could be more confusing than the current code.
                     navigate("/");
-                  } else if (user.rolId === 7) { // 7 is for admin       //JESUS: those numbers could be defined in const variables.
+                  } else if (user.rolId === 7) { // 7 is for admin       //JESUS: those numbers could be defined in const variables. // REMARK: Accepted
                     navigate("/adminPanel");
                   } else if(user.rolId === 9){ // 9 is for manager
                     navigate("/managerPanel");
@@ -80,7 +80,7 @@ const Navbar = () => {
                 <div className="bg-light rounded">
                   <button
                     className="btn btn-outline-secondary"
-                    onClick={() => { //JESUS: this button could be a simpler component. That would allow us tu use it in other places.
+                    onClick={() => { //JESUS: this button could be a simpler component. That would allow us tu use it in other places. // REMARK: Accepted
                       localStorage.clear();
                       navigate("/");
                       window.location.reload();

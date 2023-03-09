@@ -86,7 +86,7 @@ export const Chat = () => {
         // Here we get all the messages between the user logged and the receptor
           const messaggesFromTheCoversationBetweenUserLoggedAndreceptor = await axios.get( `${baseUrl}chats/conversation/`, {
             params: {
-              userid1: user.id, //JESUS: you could have used camelCase here
+              userid1: user.id, //JESUS: you could have used camelCase here //REMARK: Accepted
               userid2: receptorActual
             }
           });
@@ -220,7 +220,7 @@ export const Chat = () => {
                     >
                     
                     <svg xmlns="http://www.w3.org/2000/svg" //JESUS: better to have the images downloaded in assets because if w3.com is down or changes the link wont work anymore
-                        width="150" 
+                        width="150"                                                        //REMARK: Accepted         
                         height="150" 
                         fill="currentColor" 
                         className="bi bi-house" 

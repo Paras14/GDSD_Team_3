@@ -28,6 +28,7 @@ db.sequelize.query("SELECT * FROM users u WHERE u.id IN (SELECT DISTINCT user_re
 
         With that you are sending a more specific message to the user. In some methods you use this, in others not.
 */
+// REMARK: Accepted, but not in all cases. In some of them I think that the error message is enough for the user. If the user is not found, it is because the user does not have any conversation, so it is not an error.
 
 // Create and Save a new Chat (message of a conversation)
 exports.create = (req, res) => {
@@ -42,7 +43,7 @@ exports.create = (req, res) => {
     // Create a chat
     const chat = {
         user_emitter: req.body.user_emitter, //JESUS: we have used camelCase in the project so we should use it here too i think. 
-        user_receiver: req.body.user_receiver,// same here as above
+        user_receiver: req.body.user_receiver,// same here as above // REMARK: Accepted
         text: req.body.text
     };
   
@@ -83,7 +84,7 @@ exports.findAllConversationsFromUser = (req, res) => {
 exports.findAllByConversation = (req, res) => {
   //JESUS: Would be better to send always the information in the body instead on the query
     const userid1 = req.query.userid1; //JESUS: we have used camelCase in the project so we should use it here too i think.
-    const userid2 = req.query.userid2; // same here as above
+    const userid2 = req.query.userid2; // same here as above // REMARK: Accepted
 
     Chat.findAll({
         where: {
@@ -114,7 +115,7 @@ exports.findOne = (req, res) => {
           res.send(data);
         } else {
           res.status(404).send({
-            message: `Cannot find Chat with id=${id}.` //JESUS: Great! Here you are sending a more specific message to the user.
+            message: `Cannot find Chat with id=${id}.` //JESUS: Great! Here you are sending a more specific message to the user. // REMARK: Accepted
           });
         }
       })
@@ -125,7 +126,7 @@ exports.findOne = (req, res) => {
       });
   };
 
-  //JESUS: this method is perfect! Good job!
+  //JESUS: this method is perfect! Good job! // REMARK: Accepted
 // Update a Chat by the id in the request
 exports.update = (req, res) => {
     const id = req.query.id;
@@ -151,7 +152,7 @@ exports.update = (req, res) => {
       });
   };
 
-//JESUS: this method is perfect! Good job!
+//JESUS: this method is perfect! Good job! // REMARK: Accepted
 // Delete a Chat with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.query.id;
@@ -177,7 +178,7 @@ exports.delete = (req, res) => {
       });
   };
 
-//JESUS: I think we dont use this method never, so it is not necessary to have it.
+//JESUS: I think we dont use this method never, so it is not necessary to have it. // REMARK: Rejected. It can be used by the admin to delete all the chats in order to make easier the testing of the application. It is not necessary to have it, but it is useful.
 // Delete all Chats from the database.
 exports.deleteAll = (req, res) => {
     Chat.destroy({
