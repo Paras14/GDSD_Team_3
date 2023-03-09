@@ -13,9 +13,10 @@ const OtherProfile = () => {
       const userValue = await axios.get(baseUrl + "users/" + userId);
       setUser(userValue.data);
     };
-    console.log(user); //Hassan this console is extra
+    //Hassan this console is extra
     //Remarks: Accepted
-    getUser();
+    // I agree and i have delete
+   
   }, []);
 
   return (
