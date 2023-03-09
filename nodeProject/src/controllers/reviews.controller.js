@@ -7,15 +7,14 @@ const reviewPetitionDB = db.reviewPetition;
 // Create and Save a new Review
 exports.create = (req, res) => {
     // Validate request
-    console.log(req.body);
-    if (!req.body.rating) {
+    if (!req.body.rating || !req.body.restaurantId || !req.body.userId) {
       res.status(400).send({
-        message: "Review rating can not be empty!"
+        message: "Either rating, restaurant id or user id empty!"
       });
       return;
     }
   
-    // Create a Restaurant
+    // Create a Review object
     const review = {
         restaurantId:req.body.restaurantId,
         userId: req.body.userId,
@@ -40,12 +39,12 @@ exports.create = (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while creating the Review."
+            err.message || "Some error occurred while creating the Review by the user with id: " + review.userId + " for the restaurant with id: " + review.restaurantId
         });
       });
   };
 
-// Retrieve all Restaurants from the database.
+// Retrieve all Reviews from the database.
 exports.findAll = (req, res) => {
   
     Review.findAll()
@@ -60,6 +59,7 @@ exports.findAll = (req, res) => {
       });
   };
 
+// Find all Reviews that have been accepted
 exports.findAllAccepted = (req, res) => {
   const query = `
     SELECT reviews.* 
@@ -80,6 +80,7 @@ exports.findAllAccepted = (req, res) => {
     });
 };
 
+//Find all Reviews that are not yet accpeted but posted.
 exports.findAllPending = (req, res) => {
   const query = `
     SELECT reviews.*
@@ -101,7 +102,7 @@ exports.findAllPending = (req, res) => {
 };
 
 
-// // Find a single Restaurant with an id
+// Find a single Review with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
   
@@ -123,7 +124,7 @@ exports.findOne = (req, res) => {
   };
 
 
-// Update a Restaurant by the id in the request
+// Update a Review by the id in the request
 exports.update = (req, res) => {
     const id = req.query.id;
     
@@ -148,7 +149,7 @@ exports.update = (req, res) => {
       });
   };
 
-// // Delete a Restaurant with the specified id in the request
+// Delete a Review with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
   
@@ -188,13 +189,9 @@ exports.deleteAll = (req, res) => {
             err.message || "Some error occurred while removing all reviews."
         });
       });
-      
-
-
-  
   };
 
-// // Find all single Restaurant with an id
+// Find all single Review with an id
 exports.findByRestaurant = (req, res) => {
     const restaurantId = req.params.restaurantId;
     
@@ -241,7 +238,7 @@ exports.findByRestaurantAccepted = (req, res) => {
 };
 
 
-  // // Find all single User with an id
+// Find all Reviews with a User id
 exports.findByUser = (req, res) => {
     const userId = req.params.userId;
 
@@ -271,10 +268,10 @@ exports.getRestaurantAverageRatings = (req, res) => {
     Review.findAll({ where: { restaurantId: restaurantId } })
       .then(data => {
         if (data) {
-            var average = 0;
-            var n = Object.keys(data).length;
-            for( val in data){
-                average += parseFloat(data[val].rating);
+            let average = 0;
+            let n = Object.keys(data).length;
+            for( review in data){
+                average += parseFloat(data[review].rating);
             }
             average /= n;
             res.status(200).send({
@@ -294,7 +291,7 @@ exports.getRestaurantAverageRatings = (req, res) => {
   };
   
 
-
+// Find Review by its id
   exports.getById = (id) => {
   
     Review.findByPk(id)
