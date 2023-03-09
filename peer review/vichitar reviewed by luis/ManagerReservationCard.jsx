@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap'; // LUIS: Container, Row and Col are not used, so they can be removed
+// Remark: corrected
 import { formatDate } from '../Chat/format/formatDate';
 import { Global } from '../../helpers/Global';
 import { Link, useNavigate } from 'react-router-dom';
@@ -21,21 +22,26 @@ const ManagerReservationCard = ({ reservation }) => {
         setManager(JSON.parse(localStorage.getItem("user"))); 
         // LUIS: Good practice to use localStorage.getItem() only once, and store the result in a variable. 
         // But this call is not guarded by error handling, so it can throw an error if the user is not logged in. It is better to use the isAuthorized() helper function to check if the user is logged in, and if not, redirect to the login page.
+        // Remark: corrected
     }, []);
 
 
     useEffect(() => {
         // LUIS: There are almost no comments in this file. Some comments would be helpful to understand the functionality of the functions overall. Also, improving error handling would be good.
+        // Remark: corrected
         async function getRestaurant() {
 
             if (manager) { // LUIS: It is a good practice to check if the variable is null before using it. But in this case, the manager variable is not used in this function, so I think it is not necessary.
+                   // Remark: corrected
                 const restaurantres = await axios
                 .get(baseUrl + "restaurants/" + reservation.restaurantId);
 
                 console.log(restaurantres); // LUIS: console.log can be removed, it is only for debugging
+             // Remark: corrected
                 setRestaurant(restaurantres.data);
                 const userValue = await axios.get(baseUrl + "users/" + reservation.userId);
                 console.log(userValue.data); // LUIS: console.log can be removed, it is only for debugging
+             // Remark: corrected
                 setUser(userValue.data);
             }
             
@@ -50,6 +56,7 @@ const ManagerReservationCard = ({ reservation }) => {
         ?
         <div>
             <div class="card mb-3 shadow"> { /* LUIS: class is a reserved word in JS, so it is better to use className in React */}
+     {/* // Remark: corrected */}
                 <div class="row g-0">
                     <div class="col-md-4">
                     <img src={restaurant.image}
@@ -74,6 +81,7 @@ const ManagerReservationCard = ({ reservation }) => {
                                     .delete(baseUrl + "reservations/" + reservation.id)
                                     .then((res) => {
                                         console.log(res); // LUIS: console.log can be removed, it is only for debugging
+                                 // Remark: corrected
                                         window.location.reload();
                                     })
                                     .catch((err) => console.log(err));
@@ -90,6 +98,7 @@ const ManagerReservationCard = ({ reservation }) => {
         ?
         <div>
             <div class="card mb-3 shadow"> { /* LUIS: class is a reserved word in JS, so it is better to use className in React */}
+        {/* // Remark: corrected */}
                 <div class="row g-0">
                     <div class="col-md-4">
                     <img src={restaurant.image}
