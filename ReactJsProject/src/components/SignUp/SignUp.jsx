@@ -13,6 +13,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 const baseUrl = Global.baseUrl;
+const strongPasswordRegex =
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
 const schema = Yup.object().shape({
   restaurentname: Yup.string().required(),
@@ -20,7 +22,12 @@ const schema = Yup.object().shape({
   managerlastname: Yup.string().required(),
   username: Yup.string().required(),
   managermail: Yup.string().required(),
-  password: Yup.string().required(),
+  password: Yup.string()
+    .required("Please Enter Your Password")
+    .matches(
+      strongPasswordRegex,
+      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+    ),
   reenterpassword: Yup.string()
     .required()
     .when("password", {
@@ -47,16 +54,12 @@ function SignUp() {
   const [restaurenttype, setRestaurenttype] = useState("");
 
   useEffect(() => {
-
     async function getRestaurantCategories() {
-
       const response = await axios.get(baseUrl + "restaurantCategories");
       setRestaurantCategories(response.data);
-
     }
 
     getRestaurantCategories();
-
   }, []);
 
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
@@ -143,10 +146,7 @@ function SignUp() {
 
   return (
     <div className="container mt-4 mb-5">
-      <div
-        className=" rounded shadow"
-        style={{ backgroundColor: "#AED0FF" }}
-      >
+      <div className=" rounded shadow" style={{ backgroundColor: "#AED0FF" }}>
         <p className="py-2 fs-1 fw-bold text-center">Restaurant registration</p>
       </div>
 
@@ -477,8 +477,7 @@ function SignUp() {
                     <Form.Label>Restaurant Type</Form.Label>
                     {/* We create a dropdown to select the type of restaurant, using the Form */}
                     <Form>
-
-                      {restaurantCategories.length > 0 && 
+                      {restaurantCategories.length > 0 && (
                         <Form.Select
                           name="restaurenttype"
                           value={values.restaurenttype}
@@ -492,8 +491,7 @@ function SignUp() {
                             </option>
                           ))}
                         </Form.Select>
-                        
-                      }
+                      )}
                     </Form>
                   </div>
 

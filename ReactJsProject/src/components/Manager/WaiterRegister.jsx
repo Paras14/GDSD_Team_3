@@ -12,19 +12,21 @@ import { useNavigate } from "react-router-dom";
 import { Global } from "../../helpers/Global.js";
 import { isAuthorized } from "../../helpers/isAuthorized";
 
-
 const baseUrl = Global.baseUrl;
-
-
-
-
+const strongPasswordRegex =
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
 const schema = Yup.object().shape({
   firstName: Yup.string().required(),
   lastName: Yup.string().required(),
   username: Yup.string().required(),
   customeremail: Yup.string().required(),
-  password: Yup.string().required(),
+  password: Yup.string()
+    .required("Please Enter Your Password")
+    .matches(
+      strongPasswordRegex,
+      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+    ),
   reenterpassword: Yup.string()
     .required()
     .when("password", {
@@ -63,7 +65,7 @@ function WaiterRegister() {
         state: values.state,
         zip: values.zip,
         description: "",
-        image: ""
+        image: "",
       };
       let body = {};
       body.managerId = user.id;
@@ -71,11 +73,14 @@ function WaiterRegister() {
       //users/registerWaiter?email=luisres@gmail.com
       setSubmitting(true);
       // Make the API call
-      const response = await fetch(baseUrl + "users/registerWaiter?email=" + user.email, {
-        method: "POST",
-        body: JSON.stringify(body),
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await fetch(
+        baseUrl + "users/registerWaiter?email=" + user.email,
+        {
+          method: "POST",
+          body: JSON.stringify(body),
+          headers: { "Content-Type": "application/json" },
+        }
+      );
       // Parse the response to JSON
       const data = await response.json();
       if (response.ok) {
@@ -99,11 +104,10 @@ function WaiterRegister() {
 
   return (
     <div className="container mt-4 mb-5">
-      <div
-        className=" rounded shadow"
-        style={{ backgroundColor: "#AED0FF" }}
-      >
-        <p className="py-2 fs-1 fw-bold text-center">Waiter Registration Form</p>
+      <div className=" rounded shadow" style={{ backgroundColor: "#AED0FF" }}>
+        <p className="py-2 fs-1 fw-bold text-center">
+          Waiter Registration Form
+        </p>
       </div>
 
       <div className="rounded shadow bg-white pb-4">
@@ -323,7 +327,6 @@ function WaiterRegister() {
                       </Form.Control.Feedback>
                     </Form.Group>
                   </div>
-                  
 
                   <Row>
                     <Button type="submit" className="fw-bold col-4">

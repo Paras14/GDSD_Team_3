@@ -1,4 +1,5 @@
 const { checkToken } = require("../auth/token_validation");
+const { checkAdmin } = require("../auth/role_validation");
 
 module.exports = app => {
     const chats = require("../controllers/chats.controller");
@@ -27,7 +28,7 @@ module.exports = app => {
     router.delete("/:id", checkToken, chats.delete);
 
     // Delete all Chats
-    router.delete("/", checkToken, chats.deleteAll);
+    router.delete("/", checkAdmin, chats.deleteAll);
 
   
     app.use('/chats', router);

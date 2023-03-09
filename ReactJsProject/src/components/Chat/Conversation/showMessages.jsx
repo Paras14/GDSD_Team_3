@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 export const Messages = ({ messages, user, receptor, //group, 
     users, //myGroups, 
-    setResponder, setIdMensajeRespuesta, setMensajeRespuesta, setImagenRespuesta, setNombreMensajeRespuesta }) => {
+    setResponse, setIdMensajeRespuesta, setMensajeRespuesta, setImagenRespuesta, setNombreMensajeRespuesta }) => {
 
   let nombreAnterior = '';
 
@@ -57,18 +57,3 @@ export const Messages = ({ messages, user, receptor, //group,
 
 };
 
-/*
-Messages.propTypes = {
-  messages: PropTypes.array.isRequired,
-  user: PropTypes.object.isRequired,
-  receptor: PropTypes.string.isRequired,
-  //group: PropTypes.object.isRequired,
-  users: PropTypes.array.isRequired,
-  //myGroups: PropTypes.array.isRequired,
-  setResponder: PropTypes.func.isRequired,
-  setIdMensajeRespuesta: PropTypes.func.isRequired,
-  setMensajeRespuesta: PropTypes.func.isRequired,
-  setImagenRespuesta: PropTypes.func.isRequired,
-  setNombreMensajeRespuesta: PropTypes.func.isRequired
-};
-*/

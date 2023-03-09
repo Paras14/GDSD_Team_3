@@ -29,9 +29,9 @@ const Navbar = () => {
             <div className="d-flex justify-content-between ">
               <div
                 onClick={() => {
-                  if (user.rolId === 8) { // 8 is for customer
+                  if (user.rolId === 8) { // 8 is for customer           //JESUS: With the sintax x?y:z this piece of code could be simpler 
                     navigate("/");
-                  } else if (user.rolId === 7) { // 7 is for admin
+                  } else if (user.rolId === 7) { // 7 is for admin       //JESUS: those numbers could be defined in const variables.
                     navigate("/adminPanel");
                   } else if(user.rolId === 9){ // 9 is for manager
                     navigate("/managerPanel");
@@ -80,7 +80,7 @@ const Navbar = () => {
                 <div className="bg-light rounded">
                   <button
                     className="btn btn-outline-secondary"
-                    onClick={() => {
+                    onClick={() => { //JESUS: this button could be a simpler component. That would allow us tu use it in other places.
                       localStorage.clear();
                       navigate("/");
                       window.location.reload();

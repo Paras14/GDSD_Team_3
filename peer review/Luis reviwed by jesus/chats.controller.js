@@ -2,6 +2,33 @@ const db = require("../models");
 const Chat = db.chat;
 const Op = db.Sequelize.Op;
 
+//JESUS REVIEW: In all methods if there is an error you send a very generic message "Some errors..."
+//you could control at least the error if you can found a object in the database.
+//Example:
+/*
+db.sequelize.query("SELECT * FROM users u WHERE u.id IN (SELECT DISTINCT user_receiver FROM chats WHERE user_emitter = :user UNION SELECT DISTINCT user_emitter FROM chats WHERE user_receiver = :user)", {
+        replacements: { user: userid },
+        type: db.sequelize.QueryTypes.SELECT,
+      })
+        .then(users => {
+    ->    if(users){
+            res.send(users);
+          }else{
+    ->      res.status(404).send({
+    ->         message: `Cannot get users with id=${userid}.`
+            });
+          }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                err.message || "Some error occurred while retrieving users."
+            });
+        });
+
+        With that you are sending a more specific message to the user. In some methods you use this, in others not.
+*/
+
 // Create and Save a new Chat (message of a conversation)
 exports.create = (req, res) => {
     // Validate request
@@ -14,8 +41,8 @@ exports.create = (req, res) => {
   
     // Create a chat
     const chat = {
-        user_emitter: req.body.user_emitter,
-        user_receiver: req.body.user_receiver,
+        user_emitter: req.body.user_emitter, //JESUS: we have used camelCase in the project so we should use it here too i think. 
+        user_receiver: req.body.user_receiver,// same here as above
         text: req.body.text
     };
   
@@ -54,8 +81,9 @@ exports.findAllConversationsFromUser = (req, res) => {
 
 // Retrieve all Chats between 2 users from the database.
 exports.findAllByConversation = (req, res) => {
-    const userid1 = req.query.userid1;
-    const userid2 = req.query.userid2;
+  //JESUS: Would be better to send always the information in the body instead on the query
+    const userid1 = req.query.userid1; //JESUS: we have used camelCase in the project so we should use it here too i think.
+    const userid2 = req.query.userid2; // same here as above
 
     Chat.findAll({
         where: {
@@ -86,7 +114,7 @@ exports.findOne = (req, res) => {
           res.send(data);
         } else {
           res.status(404).send({
-            message: `Cannot find Chat with id=${id}.`
+            message: `Cannot find Chat with id=${id}.` //JESUS: Great! Here you are sending a more specific message to the user.
           });
         }
       })
@@ -97,6 +125,7 @@ exports.findOne = (req, res) => {
       });
   };
 
+  //JESUS: this method is perfect! Good job!
 // Update a Chat by the id in the request
 exports.update = (req, res) => {
     const id = req.query.id;
@@ -122,6 +151,7 @@ exports.update = (req, res) => {
       });
   };
 
+//JESUS: this method is perfect! Good job!
 // Delete a Chat with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.query.id;
@@ -147,6 +177,7 @@ exports.delete = (req, res) => {
       });
   };
 
+//JESUS: I think we dont use this method never, so it is not necessary to have it.
 // Delete all Chats from the database.
 exports.deleteAll = (req, res) => {
     Chat.destroy({
