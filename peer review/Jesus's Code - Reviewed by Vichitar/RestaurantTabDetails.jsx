@@ -7,6 +7,7 @@ import { Container, Button } from "react-bootstrap";
             import Tabs from "react-bootstrap/Tabs";
             import PendingReviews from "./Admin/PendingReviews.jsx";
             import PendingReviewPost from "./Admin/PostReviews/PendingReviewPost.jsx";
+  ANSWER: I agree. I forgot
 */
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
@@ -47,6 +48,7 @@ function RestaurantTabDetails({ restaurantDetail }) {
       setParkings(response.data.length);
       /* SUGGESTION:
           The console log can be removed as it would be irrelevant to the user.
+          ANSWER: I agree. I forgot to remove it
       */
       console.log("Number of Parkings", parkingsNumber);
     })
@@ -58,6 +60,7 @@ function RestaurantTabDetails({ restaurantDetail }) {
   return (
     /* SUGGESTION:
           Use className instead of class for every element.
+      ANSWER: Rejected. I don't know why it is better to use className instead of class
     */
     <div className="container">
       
@@ -191,6 +194,7 @@ function RestaurantTabDetails({ restaurantDetail }) {
             <div class="tab-pane fade" id="parking-tab-pane" role="tabpanel" aria-labelledby="parking-tab" tabindex="0">
               {/* SUGGESTION: 
                         Intendation could be improved for the p tag below
+                ANSWER: I did not this line of code and I dont understand what you mean exactly.
               */}
               <p className="text-center mt-4 fs-3">{parkingsNumber > 0?"This restaurant has "+parkingsNumber+" places in total":"This Restaurant has no Parking Facilities Section"}</p>
             </div>

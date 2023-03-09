@@ -54,6 +54,8 @@ exports.update = (req, res) => {
             });
     /* SUGGESTION:
               The else part could be better handled by throwing an error to the catch block instead of directly sending an error message
+        ANSWER: REJECTED. This code is in try{}catch{} block in case the DB does not work. If the DB works, other errors can be handled in another way.
+
     */
         } else {
             res.send({
@@ -76,6 +78,7 @@ exports.update = (req, res) => {
         .then(data => {
     /* SUGGESTION:
                 After creating, the response should be sent to client instead of logging in the console
+        ANSWER: I agree. I forgot.
     */
             console.log(data);
         })
