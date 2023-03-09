@@ -14,6 +14,7 @@ const OtherProfile = () => {
       setUser(userValue.data);
     };
     console.log(user); //Hassan this console is extra
+    //Remarks: Accepted
     getUser();
   }, []);
 
