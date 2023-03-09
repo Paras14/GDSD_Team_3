@@ -11,6 +11,7 @@ import * as ReactDOMServer from 'react-dom/server';
 import { renderToStaticMarkup } from "react-dom/server"
 import Draggable, {DraggableCore} from "react-draggable";
 import '../../styles/Scrollbar.css';
+import {isAuthorized} from '../../helpers/isAuthorized';
 const TableMap = () => {
     const baseUrl = Global.baseUrl;
     const navigate = useNavigate();
@@ -28,11 +29,14 @@ const TableMap = () => {
     const doorCount = useRef(0);
     const elementBeingDragged = useRef(null);
     const dragZone = useRef(null);
+    const isauthorized = isAuthorized();
 
 
     
 
     useEffect(() => {
+        if(!isauthorized)
+            navigate('/signIn');
         setManager(JSON.parse(localStorage.getItem("user")));
         left.current = containerRef.current.offsetLeft;
         right.current = left.current + containerRef.current.clientWidth;
@@ -47,7 +51,7 @@ const TableMap = () => {
         const w = containerRef.current.offsetWidth/row;
         //setDivElement({height: h*0.8, width: w*0.8});
         console.log('reached here');
-        setTableElement({height: h, width: w});
+        setTableElement({height: h-1, width: w-1});
 
     }
 
@@ -168,15 +172,26 @@ const TableMap = () => {
         
     }
     
-    function saveTables(){
+    function saveElements(){
         let tableList = [];
-
+        let doorList = [];
+        let windowList = [];
         for(let i=1; i<=tableCount.current; i++){
-            const element = document.getElementById(""+i);
-            tableList.push({id:element.id, x:(element.getAttribute('x')-left.current), y:(element.getAttribute('y')-top.current), h:element.offsetHeight, w:element.offsetWidth});
+            const element = document.getElementById("T"+i);
+            tableList.push({id:element.id, x:(element.getAttribute('x')), y:(element.getAttribute('y')), h:element.offsetHeight, w:element.offsetWidth});
+        }
+        for(let i=1; i<=doorCount.current; i++){
+            const element = document.getElementById("D"+i);
+            doorList.push({id:element.id, x:(element.getAttribute('x')), y:(element.getAttribute('y')), h:element.offsetHeight, w:element.offsetWidth});
+        }
+        for(let i=1; i<=windowCount.current; i++){
+            const element = document.getElementById("W"+i);
+            windowList.push({id:element.id, x:(element.getAttribute('x')), y:(element.getAttribute('y')), h:element.offsetHeight, w:element.offsetWidth});
         }
 
         console.log(tableList);
+        console.log(windowList);
+        console.log(doorList);
     }
 
     
@@ -228,7 +243,7 @@ const TableMap = () => {
                 </div>
                 <div className='row m-3' style={{height:"10%", zIndex:"0"}}>
                     <Button variant="primary"
-                        onClick={saveTables}
+                        onClick={saveElements}
                     >
                         Save
                     </Button>
