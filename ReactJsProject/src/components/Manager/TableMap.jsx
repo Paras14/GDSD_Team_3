@@ -156,37 +156,99 @@ const TableMap = () => {
             }}>
                 <div id={elementId} className='border border-secondary rounded' 
                 style={{height:tableElement.height, width:tableElement.width, textAlign:"center",
-                 position:"absolute", justifyContent:"center", backgroundColor:elementColor, color:"white"}}>
+                 position:"absolute", display:"-webkit-inline-flex", top: top.current, justifyContent:"center", backgroundColor:elementColor, color:"white"}}>
                     {elementText}
                 
                 </div>
             </Draggable>
             
         );
-        
         const newRoot = document.createElement("div");
         newRoot.style.width = "fit-content";
         newRoot.style.display = "inline-block";
         hydrate(newElement, newRoot);
         containerRef.current.appendChild(newRoot);
-        
+        document.getElementById(elementId).setAttribute("x","0");
+        document.getElementById(elementId).setAttribute("y","0");
     }
     
     function saveElements(){
         let tableList = [];
         let doorList = [];
         let windowList = [];
+        let rows = parseInt(containerRef.current.offsetWidth);
+        let cols = parseInt(containerRef.current.offsetHeight);
+        let positionArray = new Array(rows).fill(null).map(() => Array(cols).fill(0));
+        
         for(let i=1; i<=tableCount.current; i++){
             const element = document.getElementById("T"+i);
-            tableList.push({id:element.id, x:(element.getAttribute('x')), y:(element.getAttribute('y')), h:element.offsetHeight, w:element.offsetWidth});
+            let x = parseInt(element.getAttribute("x"));
+            let y = parseInt(element.getAttribute("y"));
+            let h = parseInt(element.offsetHeight);
+            let w = parseInt(element.offsetWidth);
+            if(x<0 || y<0 || (x+w)>rows || (y+h)>cols){
+                console.log("Table " + element.id + " outside boundary");
+                return;
+            }
+            console.log(x);
+            console.log(y);
+            console.log(positionArray[x][y]);
+            for(let j = x; j<=(x+w); j++){
+                for(let k = y; k<=(y+h); k++){
+                    if(positionArray[j][k]===0)
+                        positionArray[j][k] = 1;
+                    else{
+                        console.log("Table " + element.id + " overlapping");
+                        return;
+                    }
+                }
+            }
+            
+            tableList.push({id:element.id, x:x, y:y, h:h, w:w});
         }
         for(let i=1; i<=doorCount.current; i++){
             const element = document.getElementById("D"+i);
-            doorList.push({id:element.id, x:(element.getAttribute('x')), y:(element.getAttribute('y')), h:element.offsetHeight, w:element.offsetWidth});
+            let x = parseInt(element.getAttribute("x"));
+            let y = parseInt(element.getAttribute("y"));
+            let h = parseInt(element.offsetHeight);
+            let w = parseInt(element.offsetWidth);
+            if(x<0 || y<0 || (x+w)>rows || (y+h)>cols){
+                console.log("Door " + element.id + " outside boundary");
+                return;
+            }
+            for(let j = x; j<=(x+w); j++){
+                for(let k = y; k<=(y+h); k++){
+                    if(positionArray[j][k]===0)
+                        positionArray[j][k] = 1;
+                    else{
+                        console.log("Door " + element.id + " overlapping");
+                        return;
+                    }
+                }
+            }
+            doorList.push({id:element.id, x:x, y:y, h:h, w:w});
         }
         for(let i=1; i<=windowCount.current; i++){
             const element = document.getElementById("W"+i);
-            windowList.push({id:element.id, x:(element.getAttribute('x')), y:(element.getAttribute('y')), h:element.offsetHeight, w:element.offsetWidth});
+            let x = parseInt(element.getAttribute("x"));
+            let y = parseInt(element.getAttribute("y"));
+            let h = parseInt(element.offsetHeight);
+            let w = parseInt(element.offsetWidth);
+            if(x<0 || y<0 || (x+w)>rows || (y+h)>cols){
+                console.log("Window " + element.id + " outside boundary");
+                return;
+            }
+            for(let j = x; j<=(x+w); j++){
+                for(let k = y; k<=(y+h); k++){
+                    if(positionArray[j][k]===0)
+                        positionArray[j][k] = 1;
+                    else{
+                        console.log("Window " + element.id + " overlapping");
+                        return;
+                    }
+                }
+            }
+            windowList.push({id:element.id, x:x, y:y, h:h, w:w});
         }
 
         console.log(tableList);
@@ -200,14 +262,14 @@ const TableMap = () => {
     return (
         <div style={{height:"500px", zIndex:"0"}}>
             <div className='row' style={{height:"100%", position:"relative", zIndex:"0"}}>
-            <div className='col-md-3 col-sm-2'>
-                <div className='row m-3' style={{height:"10%", zIndex:"0"}}>
+            <div className='col-md-3'>
+                <div className='row m-3' style={{height:"2.5rem", zIndex:"0"}}>
                     <input id="rowField" type="text" placeholder="Tables per row"></input>
                 </div>
-                <div className='row m-3' style={{height:"10%", zIndex:"0"}}>
+                <div className='row m-3' style={{height:"2.5rem", zIndex:"0"}}>
                     <input id="columnField" type="text" placeholder="Tables per column"></input>
                 </div>
-                <div className='row m-3' style={{height:"10%", zIndex:"0"}}>
+                <div className='row m-3' style={{height:"2.5rem", zIndex:"0"}}>
                     <Button variant="primary"
                         onClick={()=>{
                             updateDimensions(document.getElementById('rowField').value, document.getElementById('columnField').value)
@@ -217,31 +279,31 @@ const TableMap = () => {
                     </Button>
                     
                 </div>
-                <div ref={dragZone} className='row m-3' style={{height:"30%", zIndex:"0"}}>
+                <div ref={dragZone} className='row m-1' style={{height:"7rem", zIndex:"0"}}>
                     <p className='border rounded'>Drag here to delete</p>
                 </div>
-                <div className='row m-3' style={{height:"10%", zIndex:"0"}}>
+                <div className='row m-3' style={{height:"2.5rem", zIndex:"0"}}>
                 <Button variant="primary"
                         onClick={() => addElement('t')}
                     >
                         Add Table
                     </Button>
                 </div>
-                <div className='row m-3' style={{height:"10%", zIndex:"0"}}>
+                <div className='row m-3' style={{height:"2.5rem", zIndex:"0"}}>
                 <Button variant="primary"
                         onClick={() => addElement('d')}
                     >
                         Add Door
                     </Button>
                 </div>
-                <div className='row m-3' style={{height:"10%", zIndex:"0"}}>
+                <div className='row m-3' style={{height:"2.5rem", zIndex:"0"}}>
                 <Button variant="primary"
                         onClick={() => addElement('w')}
                     >
                         Add Window
                     </Button>
                 </div>
-                <div className='row m-3' style={{height:"10%", zIndex:"0"}}>
+                <div className='row m-3' style={{height:"2.5rem", zIndex:"0"}}>
                     <Button variant="primary"
                         onClick={saveElements}
                     >
@@ -249,7 +311,7 @@ const TableMap = () => {
                     </Button>
                 </div>
             </div>
-            <div id='tableMapContainer' className='col-md-9' style={{height:"-webkit-fill-available", zIndex:"0"}}>
+            <div id='tableMapContainer' className='col-md-9' style={{height:"-webkit-fill-available", position:"sticky", zIndex:"0"}}>
                 <div ref={containerRef} className='border border-secondary rounded h-100 m-3' style={{overflow:"scroll"}}></div>
             </div>
             </div>
