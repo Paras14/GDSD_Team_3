@@ -22,6 +22,8 @@ function EditReservationDetails() {
   const [foods, setFoods] = useState([]);
   const [foodCounts, setFoodCounts] = useState([]);
   const [reservation, setReservation] = useState(null);
+  const [parkings, setParkings] = useState([]);
+  const [checkboxState, setCheckboxState] = useState([]);
 
   useEffect(() => {
     
@@ -76,6 +78,21 @@ function EditReservationDetails() {
         });
         console.log("foodCounts: ",foodCounts);
         setFoodCounts(foodCounts);
+
+        //get parking data
+        axios
+        .get(baseUrl + "parkings/restaurant/" + reservation?.data.restaurantId)
+        .then((response) => {
+          setParkings(response.data);
+          // parkings = parkings.filter((parking) => parking.status != true);
+          // setParkings(response.data);
+          console.log("Parkings data filtered: ", parkings);
+          setCheckboxState(parkings.map(parking => parking.status));
+          console.log("CheckboxStatuses : ", checkboxState);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
 
 
@@ -85,7 +102,8 @@ function EditReservationDetails() {
         getUserReservationRestaurantAndFood();
     }
 
-  }, []);
+
+  }, [parkings.length]);
 
   function showFoodItems(foodItem) {
     return (
@@ -113,12 +131,21 @@ function EditReservationDetails() {
     console.log("hour", hour);
     console.log("count", count);
     console.log("user", user);
+    const validParkings = parkings.map((parking,index) => {
+      parking.status = checkboxState[index];
+      return parking;
+    });
+
+    const finalParking = validParkings.filter(parking => parking.status==true).map(parking => {
+      return {"id": parking.id, "number": parking.number, "restaurantId": parking.restaurantId}
+    });
 
     const reservationObj = {
       id: reservationId,
       date: date + " " + hour + ":00",
       numberofplaces: count,
       restaurantId: restaurantDetail.id,
+      parking:finalParking,
       userId: user.id,
     };
 
@@ -171,6 +198,28 @@ function EditReservationDetails() {
     },
   ];
 */
+const parkSel = (park, index) => {
+  return (
+    <div className="form-check form-check-inline">
+      <input type="checkbox" className="form-check-input" id={park.number} name={park.number} 
+      disabled={park.status} 
+      checked={checkboxState[index]}
+      onChange={event => handleCheckboxChange(index, event.target.checked)}
+      />
+      <label class="form-check-label" for={park.number}>{park.number}</label>
+    </div>
+  );
+}
+
+const handleCheckboxChange = (index, checked) => {
+  setCheckboxState(prevState => {
+    const newState = [...prevState];
+    newState[index] = checked;
+    console.log(newState);
+    return newState;
+  });
+};
+
 
   return restaurantDetail !== null ? (
     <Container>
@@ -233,6 +282,23 @@ function EditReservationDetails() {
                 required
               />
             </Col>
+          </Row>
+          <Row>
+          <div>
+            <label for="people_number" className="fw-bold">
+              Parking:
+            </label>
+          </div>
+          {console.log("Parkings :",parkings)}
+            {parkings.length !== 0
+            ? 
+              parkings.map((park, index) => parkSel(park,index))
+            :
+            (
+            <div>
+                Currently there are no parking spaces available.
+            </div>
+          )}
           </Row>
           <hr></hr>
           
