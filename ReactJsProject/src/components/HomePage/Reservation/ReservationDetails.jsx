@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import { BuildingUp } from "react-bootstrap-icons";
 import { useNavigate, useParams } from "react-router-dom";
@@ -22,6 +22,7 @@ function ReservationDetails() {
   const [foods, setFoods] = useState([]);
   const [foodCounts, setFoodCounts] = useState([]);
   const [parkings, setParkings] = useState([]);
+  // const initialParkings = useRef([]);
   const [checkboxState, setCheckboxState] = useState([]);
   // const [parkingsOg, setParkingsOg] = useState([]);
 
@@ -58,6 +59,13 @@ function ReservationDetails() {
       .get(baseUrl + "parkings/restaurant/" + restaurantId)
       .then((response) => {
         setParkings(response.data);
+        let data = response.data;
+        for(let i in data){
+          data[i].oldStatus = data[i].status;
+        }
+        // initialParkings.current = data;
+        // console.log(initialParkings.current);
+        setParkings(data);
         // parkings = parkings.filter((parking) => parking.status != true);
         // setParkings(response.data);
         console.log("Parkings data filtered: ", parkings);
@@ -97,16 +105,28 @@ function ReservationDetails() {
     console.log("count", count);
     console.log("restaurantId", restaurantId);
     console.log("user", user);
-    const validParkings = parkings.map((parking,index) => {
+    parkings.map((parking,index) => {
       parking.status = checkboxState[index];
       return parking;
     });
+    // console.log("initial Parkings: " + JSON.stringify(initialParkings.current));
+    // console.log("parkings: " + JSON.stringify(parkings));
+    console.log(parkings);
+    let parkingsToSend = [];
+    for(let i in parkings){
+      console.log(i);
+      console.log(parkings[i]);
+      if(parkings[i].oldStatus === false && parkings[i].status === true){
+        parkingsToSend.push(parkings[i]);
+      }
+    }
 
-    const finalParking = validParkings.filter(parking => parking.status==true).map(parking => {
-      return {"id": parking.id, "number": parking.number, "restaurantId": parking.restaurantId}
-    });
+    // const finalParking = validParkings.filter(parking => parking.status==true).map(parking => {
+    //   return {"id": parking.id, "number": parking.number, "restaurantId": parking.restaurantId}
+    // });
 
-    console.log("ParkingsFinal :", finalParking);
+    // console.log("ParkingsToSend :", parkingsToSend);
+    // return;
 
     const reservation = {
       date: date + " " + hour + ":00",
@@ -114,7 +134,7 @@ function ReservationDetails() {
       restaurantId: restaurantId,
       userId: user.id,
       table: [],
-      parking: finalParking,
+      parking: parkingsToSend,
     };
 
     axios
