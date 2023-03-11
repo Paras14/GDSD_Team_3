@@ -47,6 +47,7 @@ const reviewPetitionRoute = require('./src/routes/reviewPetition.routes')(app);
 const orderReservationRoute = require('./src/routes/orderReservation.routes')(app);
 const parkingRoute = require('./src/routes/parking.routes')(app);
 const tableRoute = require('./src/routes/table.routes')(app);
+const restaurantMapRoute = require('./src/routes/restaurantMap.routes')(app);
 
 app.use (cors({origin: "http://localhost:8080/"}));
 

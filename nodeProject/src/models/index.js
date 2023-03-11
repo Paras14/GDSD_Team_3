@@ -34,6 +34,7 @@ db.restaurantRegistrationPetition = require('./restaurantRegistrationPetition.mo
 db.parking = require('./parking.model')(sequelize, Sequelize);
 db.reviewPetition = require('./reviewPetition.model')(sequelize, Sequelize);
 db.managerWaiter = require('./manager-waiter.model')(sequelize, Sequelize);
+db.restaurantMap = require('./restaurantMap.model')(sequelize, Sequelize);
 
 //add to food category
 //add to restaurant
@@ -66,6 +67,8 @@ db.orderReservation.belongsTo(db.reservation);
 
 db.restaurant.hasOne(db.restaurantRegistrationPetition);
 db.review.hasOne(db.reviewPetition);
+
+db.restaurantMap.belongsTo(db.restaurant);
 
 //db.reservation.belongsToMany(db.foods,{through:'foodReservation'});
 

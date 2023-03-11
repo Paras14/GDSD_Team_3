@@ -16,7 +16,7 @@ const TableMap = () => {
     const baseUrl = Global.baseUrl;
     const navigate = useNavigate();
     //const [divElement, setDivElement] = useState({});
-    const [tableElement, setTableElement] = useState({});
+    const elementInfo = useRef({h: 0, w: 0});
     const [manager, setManager] = useState(null);
     
     const containerRef = useRef(null);
@@ -30,28 +30,128 @@ const TableMap = () => {
     const elementBeingDragged = useRef(null);
     const dragZone = useRef(null);
     const isauthorized = isAuthorized();
-
-
+    const restaurantId = useRef(0);
+    const initialRender = useRef(false);
+    const oldContainerDimensions = useRef({h: 0, w: 0});
     
 
     useEffect(() => {
         if(!isauthorized)
             navigate('/signIn');
         setManager(JSON.parse(localStorage.getItem("user")));
+        if(window.innerWidth < 768){
+            document.getElementsByClassName('fw-bold')[0].parentElement.parentElement.parentElement.parentElement.parentElement.style.marginTop = "550px";
+        }
+        containerRef.current.innerHTML = "Checking for map...";
         left.current = containerRef.current.offsetLeft;
         right.current = left.current + containerRef.current.clientWidth;
         top.current = containerRef.current.offsetTop;
         bottom.current = top.current + containerRef.current.clientHeight;
         console.log(`${left.current} ${right.current} ${top.current} ${bottom.current}`);
+        axios.get(baseUrl + 'restaurants/manager/' + JSON.parse(localStorage.getItem("user")).id)
+            .then(response => {
+                containerRef.current.innerHTML = "";
+                restaurantId.current = response.data.id;
+                axios.get(baseUrl + 'restaurantMap/' + response.data.id)
+                    .then(response => {
+                        console.log(response.data);
+                        console.log(initialRender);
+                        oldContainerDimensions.current = {h: containerRef.current.offsetHeight, w: containerRef.current.offsetWidth};
+                        if(!(initialRender.current && response.data.length !== 0)){
+                            updateElements(response.data);
+                            initialRender.current = true;
+                        }
+                        
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    }
+                );
+            })
+            .catch(error => {
+                console.log(error);
+            });
         updateDimensions();
+        window.addEventListener('resize', handleResize);
     }, []);
 
+    function handleResize(){
+        let elementList = [];
+        console.log(tableCount.current + " " + windowCount.current + " " + doorCount.current);
+        const heightRatio = parseFloat(containerRef.current.offsetHeight)/parseFloat(oldContainerDimensions.current.h);
+        const widthRatio = parseFloat(containerRef.current.offsetWidth)/parseFloat(oldContainerDimensions.current.w);
+        for(let i=1; i<=tableCount.current; i++){
+            const element = document.getElementById('T' + i);
+            elementList.push({
+                elementType: 'Table',
+                x: element.getAttribute('x'),
+                y: element.getAttribute('y'),
+                height: heightRatio * parseFloat(element.offsetHeight),
+                width: widthRatio * parseFloat(element.offsetWidth),
+                viewHeight: oldContainerDimensions.current.h,
+                viewWidth: oldContainerDimensions.current.w
+            });
+            element.remove();
+            
+        }
+        tableCount.current = 0;
+        for(let i=1; i<=windowCount.current; i++){
+            const element = document.getElementById('W' + i);
+            elementList.push({
+                elementType: 'Window',
+                x: element.getAttribute('x'),
+                y: element.getAttribute('y'),
+                height: heightRatio * parseFloat(element.offsetHeight),
+                width: widthRatio * parseFloat(element.offsetWidth),
+                viewHeight: oldContainerDimensions.current.h,
+                viewWidth: oldContainerDimensions.current.w
+            });
+            element.remove();
+            
+        }
+        windowCount.current = 0;
+        for(let i=1; i<=doorCount.current; i++){
+            const element = document.getElementById('D' + i);
+            elementList.push({
+                elementType: 'Door',
+                x: element.getAttribute('x'),
+                y: element.getAttribute('y'),
+                height: heightRatio * parseFloat(element.offsetHeight),
+                width: widthRatio * parseFloat(element.offsetWidth),
+                viewHeight: oldContainerDimensions.current.h,
+                viewWidth: oldContainerDimensions.current.w
+            });
+            element.remove();
+            
+        }
+        oldContainerDimensions.current = {h: containerRef.current.offsetHeight, w: containerRef.current.offsetWidth};
+        doorCount.current = 0;
+        console.log(elementList);
+        console.log(containerRef.current.offsetHeight + " " + containerRef.current.offsetWidth);
+        console.log(tableCount.current + " " + windowCount.current + " " + doorCount.current);
+        updateElements(elementList);
+    }
+    
+    
+    
+    
+    function updateElements(elements){
+        for(let i=0; i<elements.length; i++){
+            updateDimensions(parseFloat(elements[i].viewHeight)/parseFloat(elements[i].height), parseFloat(elements[i].viewWidth)/parseFloat(elements[i].width));
+            const widthRatio = parseFloat(containerRef.current.offsetWidth)/parseFloat(elements[i].viewWidth);
+            const heightRatio = parseFloat(containerRef.current.offsetHeight)/parseFloat(elements[i].viewHeight);
+            console.log(elements[i].elementType[0].toLocaleLowerCase());
+            addElement(elements[i].elementType[0].toLocaleLowerCase(), widthRatio * parseFloat(elements[i].x), heightRatio * parseFloat(elements[i].y));
+        }
+    }
+
     function updateDimensions(row = 10, col = 10){
-        const h = containerRef.current.offsetHeight/col;
-        const w = containerRef.current.offsetWidth/row;
+        const h = containerRef.current.offsetHeight/row;
+        const w = containerRef.current.offsetWidth/col;
+        console.log("dimensions: " + row + " " + col + " " + h + " " + w );
         //setDivElement({height: h*0.8, width: w*0.8});
         console.log('reached here');
-        setTableElement({height: h-1, width: w-1});
+        elementInfo.current = {height: h, width: w};
 
     }
 
@@ -63,7 +163,7 @@ const TableMap = () => {
         // element.style.width = 0;
     }
 
-    function addElement(elementName){
+    function addElement(elementName, tx=0, ty=0){
         let elementId = '';
         let elementType = '';
         let elementColor = '';
@@ -132,7 +232,7 @@ const TableMap = () => {
                         case 'D':   elementCount = doorCount.current;
                                     doorCount.current--;
                     }
-                    var elementNumber = parseInt(elementBeingDragged.current.innerHTML.split(' ')[1]);
+                    var elementNumber = parseFloat(elementBeingDragged.current.innerHTML.split(' ')[1]);
                     console.log(elementNumber);
                     // elementToRemove.current.remove();
                     removeElement(elementBeingDragged.current);
@@ -155,8 +255,9 @@ const TableMap = () => {
                 }
             }}>
                 <div id={elementId} className='border border-secondary rounded' 
-                style={{height:tableElement.height, width:tableElement.width, textAlign:"center",
-                 position:"absolute", display:"-webkit-inline-flex", top: top.current, justifyContent:"center", backgroundColor:elementColor, color:"white"}}>
+                style={{height:elementInfo.current.height, width:elementInfo.current.width, textAlign:"center",
+                 position:"absolute", display:"-webkit-inline-flex", top: top.current, justifyContent:"center", 
+                 backgroundColor:elementColor, color:"white", transform:`translate(${tx}px, ${ty}px)` }}>
                     {elementText}
                 
                 </div>
@@ -168,24 +269,30 @@ const TableMap = () => {
         newRoot.style.display = "inline-block";
         hydrate(newElement, newRoot);
         containerRef.current.appendChild(newRoot);
-        document.getElementById(elementId).setAttribute("x","0");
-        document.getElementById(elementId).setAttribute("y","0");
+        document.getElementById(elementId).setAttribute("x",""+tx);
+        document.getElementById(elementId).setAttribute("y",""+ty);
+        console.log(tx, ty);
+        setTimeout(() => {
+            console.log("Id is " + elementId);
+            document.getElementById(elementId).style.transform = "translate("+tx+"px,"+ty+"px)";
+        }, 10);
+        
     }
-    
+
     function saveElements(){
         let tableList = [];
         let doorList = [];
         let windowList = [];
-        let rows = parseInt(containerRef.current.offsetWidth);
-        let cols = parseInt(containerRef.current.offsetHeight);
+        let rows = parseFloat(containerRef.current.offsetWidth);
+        let cols = parseFloat(containerRef.current.offsetHeight);
         let positionArray = new Array(rows).fill(null).map(() => Array(cols).fill(0));
         
         for(let i=1; i<=tableCount.current; i++){
             const element = document.getElementById("T"+i);
-            let x = parseInt(element.getAttribute("x"));
-            let y = parseInt(element.getAttribute("y"));
-            let h = parseInt(element.offsetHeight);
-            let w = parseInt(element.offsetWidth);
+            let x = parseFloat(element.getAttribute("x"));
+            let y = parseFloat(element.getAttribute("y"));
+            let h = parseFloat(element.offsetHeight);
+            let w = parseFloat(element.offsetWidth);
             if(x<0 || y<0 || (x+w)>rows || (y+h)>cols){
                 console.log("Table " + element.id + " outside boundary");
                 return;
@@ -204,14 +311,14 @@ const TableMap = () => {
                 }
             }
             
-            tableList.push({id:element.id, x:x, y:y, h:h, w:w});
+            tableList.push({id:element.id, x:x, y:y, h:h, w:w, vw:rows, vh:cols});
         }
         for(let i=1; i<=doorCount.current; i++){
             const element = document.getElementById("D"+i);
-            let x = parseInt(element.getAttribute("x"));
-            let y = parseInt(element.getAttribute("y"));
-            let h = parseInt(element.offsetHeight);
-            let w = parseInt(element.offsetWidth);
+            let x = parseFloat(element.getAttribute("x"));
+            let y = parseFloat(element.getAttribute("y"));
+            let h = parseFloat(element.offsetHeight);
+            let w = parseFloat(element.offsetWidth);
             if(x<0 || y<0 || (x+w)>rows || (y+h)>cols){
                 console.log("Door " + element.id + " outside boundary");
                 return;
@@ -226,14 +333,14 @@ const TableMap = () => {
                     }
                 }
             }
-            doorList.push({id:element.id, x:x, y:y, h:h, w:w});
+            doorList.push({id:element.id, x:x, y:y, h:h, w:w, vw:rows, vh:cols});
         }
         for(let i=1; i<=windowCount.current; i++){
             const element = document.getElementById("W"+i);
-            let x = parseInt(element.getAttribute("x"));
-            let y = parseInt(element.getAttribute("y"));
-            let h = parseInt(element.offsetHeight);
-            let w = parseInt(element.offsetWidth);
+            let x = parseFloat(element.getAttribute("x"));
+            let y = parseFloat(element.getAttribute("y"));
+            let h = parseFloat(element.offsetHeight);
+            let w = parseFloat(element.offsetWidth);
             if(x<0 || y<0 || (x+w)>rows || (y+h)>cols){
                 console.log("Window " + element.id + " outside boundary");
                 return;
@@ -248,12 +355,19 @@ const TableMap = () => {
                     }
                 }
             }
-            windowList.push({id:element.id, x:x, y:y, h:h, w:w});
+            windowList.push({id:element.id, x:x, y:y, h:h, w:w, vw:rows, vh:cols});
         }
 
         console.log(tableList);
         console.log(windowList);
         console.log(doorList);
+        axios.put(baseUrl+'restaurantMap/' + restaurantId.current, {Table: tableList, Window: windowList, Door: doorList})
+            .then(res => {
+                console.log(res.data); 
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 
     
