@@ -7,6 +7,7 @@ import { Global } from '../../helpers/Global';
 import { Link, useNavigate } from 'react-router-dom';
 import * as ReactDOM from 'react-dom';
 import { hydrate } from "react-dom";
+import {hydrateRoot} from 'react-dom/client';
 import * as ReactDOMServer from 'react-dom/server';
 import { renderToStaticMarkup } from "react-dom/server"
 import Draggable, {DraggableCore} from "react-draggable";
@@ -39,6 +40,8 @@ const TableMap = () => {
         if(!isauthorized)
             navigate('/signIn');
         setManager(JSON.parse(localStorage.getItem("user")));
+        
+
         if(window.innerWidth < 768){
             document.getElementsByClassName('fw-bold')[0].parentElement.parentElement.parentElement.parentElement.parentElement.style.marginTop = "550px";
         }
@@ -73,9 +76,15 @@ const TableMap = () => {
             });
         updateDimensions();
         window.addEventListener('resize', handleResize);
+        
     }, []);
 
     function handleResize(){
+        if(window.innerWidth < 768){
+            document.getElementsByClassName('fw-bold')[0].parentElement.parentElement.parentElement.parentElement.parentElement.style.marginTop = "550px";
+        } else{
+            document.getElementsByClassName('fw-bold')[0].parentElement.parentElement.parentElement.parentElement.parentElement.style.marginTop = "0px";
+        }
         let elementList = [];
         console.log(tableCount.current + " " + windowCount.current + " " + doorCount.current);
         const heightRatio = parseFloat(containerRef.current.offsetHeight)/parseFloat(oldContainerDimensions.current.h);
@@ -154,13 +163,12 @@ const TableMap = () => {
         elementInfo.current = {height: h, width: w};
 
     }
+    
 
     function removeElement(element){
         element.id = "";
         element.style.visibility = "hidden";
-        //element.style.display = "none";
-        // element.style.height = 0;
-        // element.style.width = 0;
+        
     }
 
     function addElement(elementName, tx=0, ty=0){
@@ -198,82 +206,105 @@ const TableMap = () => {
                 console.log("Invalid Element!");
                 return;
         }
-        
-        let newElement = (
-            <Draggable
-            onStart={(event, data) =>{
-                elementBeingDragged.current = event.target;
-            }}
-            onStop={(event, data) =>{
-                if(!(event.target.innerHTML.split(' ')[0]=='Table' || 
-                        event.target.innerHTML.split(' ')[0]=='Window' || 
-                        event.target.innerHTML.split(' ')[0]=='Door')){
-                    console.log(event.target);
-                    return;
-                }
-                console.log(elementBeingDragged);
-                elementBeingDragged.current.setAttribute("x", data.x);
-                elementBeingDragged.current.setAttribute("y", data.y);
-                const element = elementBeingDragged.current.getBoundingClientRect();
-                const dragArea = dragZone.current.getBoundingClientRect();
-                const overlapping = !(
-                    element.right < dragArea.left || element.left > dragArea.right ||
-                    element.top > dragArea.bottom || element.bottom < dragArea.top
-                );
-                if(overlapping){
-                    let elementCount = 0;
-                    switch(elementType[0]){
-                        case 'T':   elementCount = tableCount.current;
-                                    tableCount.current--;
-                                    break;
-                        case 'W':   elementCount = windowCount.current;
-                                    windowCount.current--;
-                                    break;
-                        case 'D':   elementCount = doorCount.current;
-                                    doorCount.current--;
-                    }
-                    var elementNumber = parseFloat(elementBeingDragged.current.innerHTML.split(' ')[1]);
-                    console.log(elementNumber);
-                    // elementToRemove.current.remove();
-                    removeElement(elementBeingDragged.current);
-                    elementBeingDragged.current = null;
-                    let foundSkipped = false;
-                    while(elementNumber<=elementCount){
-                        console.log("element Count is: ", elementCount);
-                        const element = document.getElementById(elementType[0] + elementNumber);
-                        if(!element){
-                            elementNumber++;
-                            foundSkipped = true;
-                            continue;
-                        }
-                        console.log(element);
-                        if(foundSkipped)
-                            element.id = elementType[0] + (elementNumber-1);
-                        element.innerHTML = elementType + " " + (elementNumber-1);
-                    }
-                    
-                }
-            }}>
-                <div id={elementId} className='border border-secondary rounded' 
-                style={{height:elementInfo.current.height, width:elementInfo.current.width, textAlign:"center",
-                 position:"absolute", display:"-webkit-inline-flex", top: top.current, justifyContent:"center", 
-                 backgroundColor:elementColor, color:"white", transform:`translate(${tx}px, ${ty}px)` }}>
-                    {elementText}
-                
-                </div>
-            </Draggable>
+        function handleStop(event, data) {
             
-        );
+            event.preventDefault();
+            event.stopPropagation();
+            console.log("Event Target was:" + event.target.innerHTML);
+            
+            console.log(elementBeingDragged);
+            console.log(elementBeingDragged.current.style.transform);
+            elementBeingDragged.current.setAttribute("x", data.x);
+            elementBeingDragged.current.setAttribute("y", data.y);
+            const element = elementBeingDragged.current.getBoundingClientRect();
+            const dragArea = dragZone.current.getBoundingClientRect();
+            const overlapping = !(
+                element.right < dragArea.left || element.left > dragArea.right ||
+                element.top > dragArea.bottom || element.bottom < dragArea.top
+            );
+            if(overlapping){
+                let elementCount = 0;
+                switch(elementType[0]){
+                    case 'T':   elementCount = tableCount.current;
+                                tableCount.current--;
+                                break;
+                    case 'W':   elementCount = windowCount.current;
+                                windowCount.current--;
+                                break;
+                    case 'D':   elementCount = doorCount.current;
+                                doorCount.current--;
+                }
+                var elementNumber = parseFloat(elementBeingDragged.current.innerHTML.split(' ')[1]);
+                console.log(elementNumber);
+                // elementToRemove.current.remove();
+                removeElement(elementBeingDragged.current);
+                elementBeingDragged.current = null;
+                let foundSkipped = false;
+                while(elementNumber<=elementCount){
+                    console.log("element Count is: ", elementCount);
+                    const element = document.getElementById(elementType[0] + elementNumber);
+                    if(!element){
+                        elementNumber++;
+                        foundSkipped = true;
+                        continue;
+                    }
+                    console.log(element);
+                    if(foundSkipped)
+                        element.id = elementType[0] + (elementNumber-1);
+                    element.innerHTML = elementType + " " + (elementNumber-1);
+                }
+                
+            }
+           
+        }
+        function handleStart(event, data){
+            
+            event.preventDefault();
+            event.stopPropagation();
+            console.log("Event Target was:" + event.target.id);
+            elementBeingDragged.current = event.target;
+            
+        }
+
+        function handleDrag(event, data){
+            
+            event.preventDefault();
+            event.stopPropagation();
+            console.log("Event Target was:" + event.target.id);
+        }
+        // let newElement = (
+        //     <Draggable 
+        //     onStart={handleStart}
+            
+        //     onStop={handleStop}>
+        //         <div id={elementId} className='border border-secondary rounded' 
+        //         style={{height:elementInfo.current.height, width:elementInfo.current.width, textAlign:"center",
+        //          position:"absolute", display:"-webkit-inline-flex", top: top.current, justifyContent:"center", 
+        //          backgroundColor:elementColor, color:"white", transform:`translate(${tx}px, ${ty}px)` }}>
+        //             {elementText}
+                
+        //         </div>
+        //     </Draggable>
+            
+        // );
+        const newElement = React.createElement(Draggable, {onStart:handleStart, onDrag:handleDrag, onStop:handleStop},
+             React.createElement('div', {id:elementId, className:'border border-secondary rounded',
+             style:{height:elementInfo.current.height, width:elementInfo.current.width, textAlign:"center",
+             position:"absolute", display:"-webkit-inline-flex", top: top.current, justifyContent:"center",
+             backgroundColor:elementColor, color:"white", transform:`translate(${tx}px, ${ty}px)`}},
+             elementText));
         const newRoot = document.createElement("div");
         newRoot.style.width = "fit-content";
         newRoot.style.display = "inline-block";
-        hydrate(newElement, newRoot);
+        // hydrate(newElement, newRoot);
+        ReactDOM.render(newElement, newRoot);
         containerRef.current.appendChild(newRoot);
         document.getElementById(elementId).setAttribute("x",""+tx);
         document.getElementById(elementId).setAttribute("y",""+ty);
         console.log(tx, ty);
         setTimeout(() => {
             console.log("Id is " + elementId);
+            // newElement.style.transform = "translate("+tx+"px,"+ty+"px)";
             document.getElementById(elementId).style.transform = "translate("+tx+"px,"+ty+"px)";
         }, 10);
         
@@ -289,8 +320,8 @@ const TableMap = () => {
         
         for(let i=1; i<=tableCount.current; i++){
             const element = document.getElementById("T"+i);
-            let x = parseFloat(element.getAttribute("x"));
-            let y = parseFloat(element.getAttribute("y"));
+            let x = parseInt(element.getAttribute("x"));
+            let y = parseInt(element.getAttribute("y"));
             let h = parseFloat(element.offsetHeight);
             let w = parseFloat(element.offsetWidth);
             if(x<0 || y<0 || (x+w)>rows || (y+h)>cols){
@@ -310,13 +341,12 @@ const TableMap = () => {
                     }
                 }
             }
-            
             tableList.push({id:element.id, x:x, y:y, h:h, w:w, vw:rows, vh:cols});
         }
         for(let i=1; i<=doorCount.current; i++){
             const element = document.getElementById("D"+i);
-            let x = parseFloat(element.getAttribute("x"));
-            let y = parseFloat(element.getAttribute("y"));
+            let x = parseInt(element.getAttribute("x"));
+            let y = parseInt(element.getAttribute("y"));
             let h = parseFloat(element.offsetHeight);
             let w = parseFloat(element.offsetWidth);
             if(x<0 || y<0 || (x+w)>rows || (y+h)>cols){
@@ -337,8 +367,8 @@ const TableMap = () => {
         }
         for(let i=1; i<=windowCount.current; i++){
             const element = document.getElementById("W"+i);
-            let x = parseFloat(element.getAttribute("x"));
-            let y = parseFloat(element.getAttribute("y"));
+            let x = parseInt(element.getAttribute("x"));
+            let y = parseInt(element.getAttribute("y"));
             let h = parseFloat(element.offsetHeight);
             let w = parseFloat(element.offsetWidth);
             if(x<0 || y<0 || (x+w)>rows || (y+h)>cols){
