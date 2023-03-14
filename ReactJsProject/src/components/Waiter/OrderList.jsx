@@ -7,25 +7,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Global } from '../../helpers/Global.js';
 import FoodDetailsDisplay from './FoodDetailsDisplay';
 
-// const dummyOrder = [
-//     { name: "Food 1", Quantity: 2, Price: 10},
-//     { name: "Food 2", Quantity: 2, Price: 10},
-//     { name: "Food 3", Quantity: 2, Price: 10},
-// ]
-
-// let totalPrice = 0;
-
-// dummyOrder.map((food) => {
-//     totalPrice += food.Quantity*food.Price;
-// });
-
-
-
 const OrderList = () => {
 
-    // const isauthorized = isAuthorized();
-    // const [user, setUser] = useState(null);
-    // const navigate = useNavigate();
     const [orderData, setOderData] = useState([]);
     const [foodData, setFoodData] = useState([]);
     const [quantities, setQuantity] = useState([]);
@@ -48,20 +31,6 @@ const displayFoodItems = (foodItem, idx) => {
       />
     );
   }
-
-    // useEffect(() => {
-    //     // Update the document title using the browser API
-    //     document.title = `OrderListReservations`;
-
-    //     if (isauthorized) {
-    //         console.log("isauthorized");
-    //         setUser(JSON.parse(localStorage.getItem("user")));
-
-    //     } else {
-    //         navigate("/signIn");
-    //     }
-
-    // }, []);
 
 
     useEffect(() => {
@@ -99,7 +68,7 @@ const displayFoodItems = (foodItem, idx) => {
             orderData.forEach(element => {
             axios
             .get(`${baseUrl}foods/${element.foodId}`)
-            .then((res) => {
+            .then((res) => {//this line of code is updating the state of foodData by adding new data to the existing data and removing any duplicates based on their id
                 setFoodData(prevdata => [...new Map([...prevdata, res.data].map((m) => [m.id, m])).values()])
             })
             .catch((err) => console.log(err));
