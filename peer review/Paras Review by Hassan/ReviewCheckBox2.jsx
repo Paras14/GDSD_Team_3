@@ -6,7 +6,7 @@ function ReviewCheckBox(props) {
       <Row className="d-flex text-center">
         <div md="6" className="mt-4">
           <input type="checkbox" className="mx-2 quick-service-bool" checked={props.quickService} 
-            onChange = {//Hassan; This code can be briefly explain 
+            onChange = {//Hassan; This code can be briefly explain - Rejected
               () => props.setQuickService(!props.quickService)
             }
           />

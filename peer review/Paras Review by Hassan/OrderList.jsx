@@ -6,7 +6,7 @@ import { isAuthorized } from '../../helpers/isAuthorized';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Global } from '../../helpers/Global.js';
 import FoodDetailsDisplay from './FoodDetailsDisplay';
-//Hassan; can remove unnecessary comment with code
+//Hassan; can remove unnecessary comment with code - Accepted
 // const dummyOrder = [
 //     { name: "Food 1", Quantity: 2, Price: 10},
 //     { name: "Food 2", Quantity: 2, Price: 10},
@@ -90,7 +90,7 @@ const displayFoodItems = (foodItem, idx) => {
             const foods = []
             orderData.forEach(element => {
             axios
-            .get(`${baseUrl}foods/${element.foodId}`) //Can add comment to explain the code briefly
+            .get(`${baseUrl}foods/${element.foodId}`) //Can add comment to explain the code briefly - Accepted
             .then((res) => {
                 setFoodData(prevdata => [...new Map([...prevdata, res.data].map((m) => [m.id, m])).values()])
             })
