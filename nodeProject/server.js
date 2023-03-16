@@ -60,7 +60,7 @@ app.get ("/", (req, res, callback) => {
     res.json({message: "Welcome to RISTO"});
     callback();
 });
-
+exports.io = io;
 //app.use('/foods', foodRoute);
 
 require('./src/socket/socket.js')(io);

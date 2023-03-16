@@ -5,7 +5,7 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import { formatDate } from '../Chat/format/formatDate';
 import { Global } from '../../helpers/Global';
 import { Link, useNavigate } from 'react-router-dom';
-
+import socket from '../Chat/Socket';
 
 const TableCard = ({ table }) => {
     
@@ -34,6 +34,7 @@ const TableCard = ({ table }) => {
                                 axios.put(baseUrl+"restaurants/tables/" + table.id, {status: status})
                                     .then((res) => {
                                         console.log(res.data);
+                                        socket.emit('tablesUpdated', {});
                                         window.location.reload();
                                     })
                                     .catch((err) => console.log(err));

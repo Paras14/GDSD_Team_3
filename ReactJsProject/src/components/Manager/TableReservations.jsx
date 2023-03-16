@@ -4,7 +4,7 @@ import { Global } from '../../helpers/Global.js';
 import {useState, useEffect } from "react";
 import {isAuthorized} from "../../helpers/isAuthorized";
 import TableCard from "./TableCard";
-
+import socket from "../Chat/Socket";
 
 const TableReservation = () => {
     const isauthorized = isAuthorized();
@@ -15,7 +15,7 @@ const TableReservation = () => {
     useEffect(() => {
         // Update the document title using the browser API
         document.title = `Table Reservations`;
-
+        
         if (isauthorized) {
             console.log("isauthorized");
             setUser(JSON.parse(localStorage.getItem("user")));
@@ -44,6 +44,9 @@ const TableReservation = () => {
             })
             .catch((err) => {
                 console.log(err.message);
+            });
+            socket.on('updateTables', () => {
+                window.location.reload();
             });
         }
     }, [user]);

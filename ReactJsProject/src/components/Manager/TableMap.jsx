@@ -176,6 +176,7 @@ const TableMap = () => {
         let elementType = '';
         let elementColor = '';
         let elementText = '';
+        let changedTranslateOnce = false;
         switch(elementName){
             case 't':
                 tableCount.current +=1;
@@ -207,15 +208,17 @@ const TableMap = () => {
                 return;
         }
         function handleStop(event, data) {
-            
+            console.log("Drag Ended");
             event.preventDefault();
             event.stopPropagation();
             console.log("Event Target was:" + event.target.innerHTML);
             
             console.log(elementBeingDragged);
             console.log(elementBeingDragged.current.style.transform);
-            elementBeingDragged.current.setAttribute("x", data.x);
-            elementBeingDragged.current.setAttribute("y", data.y);
+            setTimeout(() => {
+                elementBeingDragged.current.setAttribute("x", elementBeingDragged.current.style.transform.split('(')[1].split('px')[0]);
+                elementBeingDragged.current.setAttribute("y", elementBeingDragged.current.style.transform.split(',')[1].split('px')[0]);
+            }, 10);
             const element = elementBeingDragged.current.getBoundingClientRect();
             const dragArea = dragZone.current.getBoundingClientRect();
             const overlapping = !(
@@ -258,7 +261,7 @@ const TableMap = () => {
            
         }
         function handleStart(event, data){
-            
+            console.log("Drag Started");
             event.preventDefault();
             event.stopPropagation();
             console.log("Event Target was:" + event.target.id);
@@ -267,26 +270,13 @@ const TableMap = () => {
         }
 
         function handleDrag(event, data){
-            
+            console.log("Dragging", changedTranslateOnce);
+           
             event.preventDefault();
             event.stopPropagation();
-            console.log("Event Target was:" + event.target.id);
+            
+            console.log("Event Target was:" + elementBeingDragged.current.id);
         }
-        // let newElement = (
-        //     <Draggable 
-        //     onStart={handleStart}
-            
-        //     onStop={handleStop}>
-        //         <div id={elementId} className='border border-secondary rounded' 
-        //         style={{height:elementInfo.current.height, width:elementInfo.current.width, textAlign:"center",
-        //          position:"absolute", display:"-webkit-inline-flex", top: top.current, justifyContent:"center", 
-        //          backgroundColor:elementColor, color:"white", transform:`translate(${tx}px, ${ty}px)` }}>
-        //             {elementText}
-                
-        //         </div>
-        //     </Draggable>
-            
-        // );
         const newElement = React.createElement(Draggable, {onStart:handleStart, onDrag:handleDrag, onStop:handleStop},
              React.createElement('div', {id:elementId, className:'border border-secondary rounded',
              style:{height:elementInfo.current.height, width:elementInfo.current.width, textAlign:"center",
@@ -301,12 +291,18 @@ const TableMap = () => {
         containerRef.current.appendChild(newRoot);
         document.getElementById(elementId).setAttribute("x",""+tx);
         document.getElementById(elementId).setAttribute("y",""+ty);
+        switch(elementId[0]){
+            // case 'W': document.getElementById(elementId).style.backgroundImage = 'url(https://i.ibb.co/CtqRqGb/window.png)';
+            // document.getElementById(elementId).style.backgroundSize = 'cover';
+            // document.getElementById(elementId).style.backgroundRepeat = 'no-repeat';
+            // document.getElementById(elementId).style.backgroundColor = 'transparent';
+        }
         console.log(tx, ty);
         setTimeout(() => {
             console.log("Id is " + elementId);
             // newElement.style.transform = "translate("+tx+"px,"+ty+"px)";
             document.getElementById(elementId).style.transform = "translate("+tx+"px,"+ty+"px)";
-        }, 10);
+        }, 50);
         
     }
 

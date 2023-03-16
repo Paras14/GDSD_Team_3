@@ -24,6 +24,9 @@ const socket = (io) => {
             })*/
             io.emit('messages');
         })
+
+        socket.on('tablesUpdated', () => io.emit('updateTables'));
+
     })
 }
 
