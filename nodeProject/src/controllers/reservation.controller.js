@@ -51,13 +51,14 @@ exports.create = (req, res) => {
                 //res.send(data);
                 let tables = [];
                 let parkings = [];
-                
-
+                let reservationTablesQuery = "INSERT INTO reservationTable (reservationId, tableId, createdAt, updatedAt) VALUES";
+                let reservationParkingsQuery = "INSERT INTO reservationParking (reservationId, parkingId, createdAt, updatedAt) VALUES";
                 //create list of tables to update
                 for(i in req.body.table){
                   let current = req.body.table[i];
                   current.status = 1;
                   tables.push(current);
+                  reservationTablesQuery += `(${data.id}, ${current.id}, '${new Date(data.createdAt).toISOString().replace("T", " ").split(".")[0]}', '${new Date(data.updatedAt).toISOString().replace("T", " ").split(".")[0]}'),`;
                 }
                 
 
@@ -66,6 +67,7 @@ exports.create = (req, res) => {
                   let current = req.body.parking[i];
                   current.status = 1;
                   parkings.push(current);
+                  reservationParkingsQuery += `(${data.id}, ${current.id}, '${new Date(data.createdAt).toISOString().replace("T", " ").split(".")[0]}', '${new Date(data.updatedAt).toISOString().replace("T", " ").split(".")[0]}'),`;
                 }
                 
                 data.table = tables;
@@ -91,6 +93,23 @@ exports.create = (req, res) => {
                     });
                   });
 
+                  reservationTablesQuery = reservationTablesQuery.slice(0, -1);
+                  Sequelize.query(reservationTablesQuery, { type: QueryTypes.INSERT })
+                    .catch(err => {
+                      res.status(500).send({
+                        message:
+                          err.message || "Some error occurred while updating the orderReservation."
+                      });
+                    });
+
+                  reservationParkingsQuery = reservationParkingsQuery.slice(0, -1);
+                  Sequelize.query(reservationParkingsQuery, { type: QueryTypes.INSERT })
+                    .catch(err => {
+                      res.status(500).send({
+                        message:
+                          err.message || "Some error occurred while updating the orderReservation."
+                      });
+                    });
                   res.send(output);
               })
               .catch(err => {
@@ -155,13 +174,51 @@ exports.update = (req, res) => {
   }
   
   
-exports.delete = (req, res) => {
+exports.delete = async (req, res) => {
     const id = req.params.id;
   
+    const tables = await Sequelize.query(`SELECT tableId FROM reservationTable WHERE reservationId = ${id}`, { type: QueryTypes.SELECT });
+    const parkings = await Sequelize.query(`SELECT parkingId FROM reservationParking WHERE reservationId = ${id}`, { type: QueryTypes.SELECT });
+    for(let i in tables){
+      Sequelize.query(`UPDATE tables SET status = 0 WHERE id = ${tables[i].tableId}`, { type: QueryTypes.UPDATE })
+        .catch(err => {
+          res.status(500).send({
+            message:
+              err.message || "Some error occurred while deleting the orderReservation."
+          });
+      });
+    }
+    for(let i in parkings){
+      Sequelize.query(`UPDATE parkings SET status = 0 WHERE id = ${parkings[i].parkingId}`, { type: QueryTypes.UPDATE })
+        .catch(err => {
+          res.status(500).send({
+            message: 
+              err.message || "Some error occurred while deleting the orderReservation."
+          });
+      });
+    }
+  
+    Sequelize.query(`DELETE FROM reservationTable WHERE reservationId = ${id}`, { type: QueryTypes.DELETE })
+          .catch(err => {
+            res.status(500).send({
+              message:
+                err.message || "Some error occurred while deleting the orderReservation."
+            });
+    });
+    Sequelize.query(`DELETE FROM reservationParking WHERE reservationId = ${id}`, { type: QueryTypes.DELETE })
+          .catch(err => {
+            res.status(500).send({
+              message:
+                err.message || "Some error occurred while deleting the orderReservation."
+            });
+    });
+
     Reservation.destroy({
       where: { id: id }
     })
       .then(num => {
+        
+
         if (num == 1) {
           res.send({
             message: "Reservation was deleted successfully!"
