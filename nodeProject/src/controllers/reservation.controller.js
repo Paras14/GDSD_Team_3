@@ -328,25 +328,38 @@ exports.deleteAllOrder = (req, res) => {
 };
 
 
-exports.changeStatus = async(req, res) => {
- const order = await OrderReservation.findOne({where: {id: req.params.id}});
-
- const reservationId = order.reservationId;
- 
- const query = "Update orderReservations set status = '" + req.body.data.status + "' where reservationId = " + reservationId;
-
- Sequelize.query(query, {type: QueryTypes.UPDATE})
-  .then((data) => {
-
-    res.status(200).send(
-      {message: "Updated status of reservation with Id: " + reservationId + " to '" + req.body.data.status + "'"}
-    );
-  })
-  .catch((err) => {
-    res.status(500).send({
-      message: "Could not change status"
+exports.changeStatus = (req, res) => {
+  const status = req.body.data.status;
+  console.log(status);
+  OrderReservation.findOne({where: {reservationId: req.params.id}})
+    .then( (data) => {
+        const reservationId = data.reservationId;
+        console.log("Data is: " + data);
+        const query = "Update orderReservations set status = '" + status + "' where reservationId = " + reservationId;
+        console.log("Query is: " + query);
+        Sequelize.query(query, {type: QueryTypes.UPDATE})
+        .then((data) => {
+      
+          res.status(200).send(
+            {message: "Updated status of reservation with Id: " + reservationId + " to '" + status + "'"}
+          );
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: "Could not change status"
+          });
+        });
+    })
+    .catch((err) => {
+      console.log("Reached Catch Block");
+      res.status(500).send({
+        
+        message: "Could not change status"
+      });
     });
-  });
+
+ 
+
 
 
 
