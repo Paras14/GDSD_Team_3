@@ -150,7 +150,10 @@ exports.create = (req, res) => {
 
 exports.update = (req, res) => {
     const id = req.params.id;
-  
+    // exports.delete(req, res)
+    //   .then(() => {
+    //     exports.create(req, res);
+    //   });
     Reservation.update(req.body, {
       where: { id: id }
     })

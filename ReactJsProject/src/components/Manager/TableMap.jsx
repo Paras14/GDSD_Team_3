@@ -146,7 +146,7 @@ const TableMap = () => {
     
     function updateElements(elements){
         for(let i=0; i<elements.length; i++){
-            updateDimensions(parseFloat(elements[i].viewHeight)/parseFloat(elements[i].height), parseFloat(elements[i].viewWidth)/parseFloat(elements[i].width));
+            updateDimensions(parseFloat(containerRef.current.offsetHeight)/parseFloat(elements[i].height), parseFloat(containerRef.current.offsetWidth)/parseFloat(elements[i].width));
             const widthRatio = parseFloat(containerRef.current.offsetWidth)/parseFloat(elements[i].viewWidth);
             const heightRatio = parseFloat(containerRef.current.offsetHeight)/parseFloat(elements[i].viewHeight);
             console.log(elements[i].elementType[0].toLocaleLowerCase());
