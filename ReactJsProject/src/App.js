@@ -47,6 +47,7 @@ import WaiterNavbar from "./components/Waiter/WaiterNavbar";
 import OrderList from "./components/Waiter/OrderList";
 import WaiterRegister from "./components/Manager/WaiterRegister";
 import TableMap from "./components/Manager/TableMap";
+import WaiterPanel from "./components/Waiter/WaiterPanel";
 
 
 const App = () => {
@@ -418,6 +419,15 @@ const App = () => {
           />
           <Route 
             path = "/WaiterPanel"
+            element = {
+              <div>
+                <WaiterNavbar   />
+                <WaiterPanel />
+              </div>
+            }
+          />
+          <Route 
+            path = "/WaiterReservationList"
             element = {
               <div>
                 <WaiterNavbar   />

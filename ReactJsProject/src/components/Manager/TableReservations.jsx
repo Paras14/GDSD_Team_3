@@ -27,28 +27,50 @@ const TableReservation = () => {
     }, []);
  
     useEffect(() => {
-        if(user){
-            console.log("user is", user);
-            console.log("Reached this effect " + user.id);
-            const userId = user.id;
-            console.log("userId is " + userId);
-            axios.get(`${baseUrl}restaurants/tables/${userId}`)
-            .then((res) => {
-                console.log("data is \n");
-                console.log(res.data);
-                setTables(res.data);
-                
-                console.log(tables);
-                
-                
-            })
-            .catch((err) => {
-                console.log(err.message);
-            });
-            socket.on('updateTables', () => {
-                window.location.reload();
-            });
+
+        async function getTableReservationList() {
+
+            if(user){
+                console.log("user is", user);
+                console.log("Reached this effect " + user.id);
+                let userId = user.id;
+
+                // if the user is a waiter, get the restaurant id
+                if (user.rolId === 10) { 
+                    // get restaurant info
+                    const restaurantResponse = await axios
+                        .get(`${baseUrl}restaurants/waiter/${user.id}`)
+                        .catch((err) => console.log(err));
+
+                    if (restaurantResponse) {
+                        console.log(restaurantResponse);
+                        userId = restaurantResponse.data.userId;
+                    }
+    
+                }
+
+                console.log("userId is " + userId);
+                // get tables from the server
+                axios.get(`${baseUrl}restaurants/tables/${userId}`)
+                .then((res) => {
+                    console.log("data is \n");
+                    console.log(res.data);
+                    setTables(res.data);
+                    
+                    console.log(tables);
+                    
+                    
+                })
+                .catch((err) => {
+                    console.log(err.message);
+                });
+                socket.on('updateTables', () => {
+                    window.location.reload();
+                });
+            }
         }
+
+        getTableReservationList();
     }, [user]);
 
 

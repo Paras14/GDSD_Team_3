@@ -33,8 +33,10 @@ const Navbar = () => {
                     navigate("/");
                   } else if (user.rolId === 7) { // 7 is for admin
                     navigate("/adminPanel");
-                  } else if(user.rolId === 9){ // 9 is for manager
+                  } else if (user.rolId === 9){ // 9 is for manager
                     navigate("/managerPanel");
+                  } else if (user.rolId === 10){ // 10 is for waiter
+                    navigate("/WaiterPanel");
                   }
                   
                 }}
@@ -56,6 +58,15 @@ const Navbar = () => {
                 
                 :
                   null}  
+
+              {user.rolId === 10 ? // 10 is for waiter
+                <div className="align-self-center">
+                  <p className="text-light fs-3">Waiter Panel</p>
+                </div>
+
+                :
+                  null}
+                  
              
               <div className="align-self-center d-flex text-light">
 

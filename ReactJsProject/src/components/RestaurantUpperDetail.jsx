@@ -71,6 +71,8 @@ function RestaurantUpperDetail({ restaurantDetail }) {
                   Ban Restaurant
                   </button>
                 </div>
+              : user !== null && user.rolId === 10 ?
+                null
               :
               <div>
                 <button className="btn btn-primary btn-lg"

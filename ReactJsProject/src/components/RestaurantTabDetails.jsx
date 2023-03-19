@@ -235,7 +235,7 @@ function RestaurantTabDetails({ restaurantDetail }) {
               />
             </div>
             <div class="tab-pane fade" id="parking-tab-pane" role="tabpanel" aria-labelledby="parking-tab" tabindex="0">
-              {user !== null && user.rolId === 9? //If the user is a restaurant owner, he can add parking facilities and remove them 
+              {user !== null && user.rolId === 9 ? //If the user is a restaurant owner, he can add parking facilities and remove them 
                 <div className="center">
                     <Button className="btn-primary m-1" onClick={addParking}>Add Parking Facility</Button>
                 </div>
@@ -264,6 +264,20 @@ function RestaurantTabDetails({ restaurantDetail }) {
                     </div>
                     <div className="col-md-3">
                       <Button className="btn-danger m-1" onClick={() => deleteParking(parking.id)}>Delete Parking</Button>
+                    </div>
+                  </div>
+                ))
+                :parkings !== [] && parkingsNumber > 0 && user !== null && user.rolId === 10?
+                  parkings.map((parking) => (
+                  <div className="row">
+                    <div className="col-md-3">
+                      <p>Place number: {parking.id}</p>
+                    </div>
+                    <div className="col-md-3">
+                      <p>Is free: {parking.status? "No" : "Yes"}</p>
+                    </div>
+                    <div className="col-md-3">
+                      <Button className="btn-primary m-1" onClick={() => changeParkingStatus(parking.id, parking.status)}>Change Status</Button>
                     </div>
                   </div>
                 ))
