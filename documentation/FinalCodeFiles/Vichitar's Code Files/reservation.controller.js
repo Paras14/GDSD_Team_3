@@ -284,84 +284,6 @@ exports.delete = async (req, res) => {
       });
   };
 
-//Get a single Reservation with an id
-exports.findOne = (req, res) => {
-    const id = req.params.id;
-  
-    Reservation.findByPk(id)
-      .then(data => {
-        if (data) {
-          res.send(data);
-        } else {
-          res.status(404).send({
-            message: `Cannot find Reservation with id=${id}.`
-          });
-        }
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error retrieving Reservation with id=" + id
-        });
-      });
-  };
-
-  //Get all reservations from a user
-    exports.findAllFromUser = (req, res) => {
-        const id = req.params.id;
-        if(!id) return res.status(404).json({error: "No data"});
-        Reservation.findAll({ where: { userId: id } })
-          .then(data => {
-            res.send(data);
-          })
-          .catch(err => {
-            res.status(500).send({
-              message:
-                err.message || "Some error occurred while retrieving reservations."
-            });
-          });
-      };
-
-//Get all reservations from a restaurant
-exports.findAllFromRestaurant = (req, res) => {
-    const id = req.params.id;
-    Reservation.findAll({ where: { restaurantId: id } })
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving reservations."
-        });
-      });
-  };
-
-  //Get all reservations from a manager
-    exports.findAllFromManager = (req, res) => {
-        const id = req.params.id;
-        if(!id) return res.status(404).json({error: "No id"});
-        Restaurant.findOne({ where: { userId: id } }).then(data => {
-            Reservation.findAll({ where: { restaurantId: data.id } })
-            .then(data => {
-              res.send(data);
-            })
-            .catch(err => {
-              res.status(500).send({
-                message:
-                  err.message || "Some error occurred while retrieving reservations."
-              });
-            });
-        })
-        .catch(err => {
-            res.status(500).send({
-              message:
-                err.message || "Some error occurred while retrieving reservations."
-            });
-          });
-        };
-
-
-
 //Adding code for managing orders for a reservation
 exports.addOrder = (req, res) => {
       const id = req.body.id;
@@ -491,21 +413,4 @@ exports.changeStatus = (req, res) => {
         message: "Could not change status"
       });
     });
-}
-
-exports.getTableNumber = (req, res) => {
-  console.log("In the controller for getTableNumber");
-  const tableGetQuery = `Select * from reservationTable where reservationId = ${req.params.id}`;
-  Sequelize.query(tableGetQuery, { type: QueryTypes.SELECT })
-  .then((data) => {
-    res.status(200).send(
-      data
-    );
-  })
-  .catch(err => {
-    res.status(500).send({
-      message:
-        err.message || "Some error occurred while selecting ReservationTable entry."
-    });
-  })
 }
