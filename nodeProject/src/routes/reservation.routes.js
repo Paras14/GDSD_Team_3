@@ -35,6 +35,9 @@ module.exports = app => {
      // Delete all food corresponding to a reservation
     router.delete("/order/:reservationId", reservations.deleteAllOrder);
 
+    //Get a Table corresponding to the reservation
+    router.get("/tables/:id", reservations.getTableNumber);
+
     // Get a list of orders for a reservation
     //router.get("/order/:id", reservations.findAllOrders);
 

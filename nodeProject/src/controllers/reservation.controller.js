@@ -417,10 +417,21 @@ exports.changeStatus = (req, res) => {
         message: "Could not change status"
       });
     });
+}
 
- 
-
-
-
-
+exports.getTableNumber = (req, res) => {
+  console.log("In the controller for getTableNumber");
+  const tableGetQuery = `Select * from reservationTable where reservationId = ${req.params.id}`;
+  Sequelize.query(tableGetQuery, { type: QueryTypes.SELECT })
+  .then((data) => {
+    res.status(200).send(
+      data
+    );
+  })
+  .catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while selecting ReservationTable entry."
+    });
+  })
 }

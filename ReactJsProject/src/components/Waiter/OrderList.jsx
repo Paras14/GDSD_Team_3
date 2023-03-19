@@ -14,6 +14,7 @@ const OrderList = () => {
     const [quantities, setQuantity] = useState([]);
     const [currentStatus, setCurrentStatus] = useState("");
     const status = ["pending","processing","done"];
+    const [tableNumber, setTableNumber] = useState([]);
     const baseUrl = Global.baseUrl;
     let params = useParams();
 
@@ -91,6 +92,19 @@ const displayFoodItems = (foodItem, idx) => {
         })
     }
 
+    useEffect(() => {
+      axios
+      .get(`${baseUrl}reservations/tables/${params.id}`)
+      .then((res) => {
+        console.log("This is get Table response",res);
+        const tablenumbers = res.data.map(x => x.tableId);
+        setTableNumber(tablenumbers);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }, [orderData.length]);
+
     return (
         <Container>
         <br></br>
@@ -101,6 +115,14 @@ const displayFoodItems = (foodItem, idx) => {
             <option value={"processing"}>processing</option>
             <option value={"done"}>done</option>
         </select>
+        </Col>
+        <Col lg={2} md={2} xs={2}>
+          For Tables :- {tableNumber.map(item => {
+          return (
+            <ul className='list-group'>
+            <li className='list-group-item'>{item}</li>
+            </ul>);
+        })}
         </Col>
           </Row>
         </Row>
