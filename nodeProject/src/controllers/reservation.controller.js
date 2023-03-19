@@ -11,7 +11,7 @@ const Sequelize = db.sequelize;
 const {QueryTypes} = require('sequelize');
 
 // Create and Save a new Reservation
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
     // Validate request
     console.log(req.body);
     if (!req.body.date) {
@@ -42,12 +42,16 @@ exports.create = (req, res) => {
               const res = out.res;
               // Save Reservation in the database
               const reservation = {};
+              if(!req.params.noHeader)
+                reservation.id = req.body.id;
               reservation.date = req.body.date;
               reservation.numberofplaces = req.body.numberofplaces;
               reservation.userId = req.body.userId;
               reservation.restaurantId = req.body.restaurantId;
-              db.reservation.create(reservation)
+              console.log(reservation);
+              Reservation.create(reservation)
               .then(async (data) => {
+                console.log(data);
                 //res.send(data);
                 let tables = [];
                 let parkings = [];
@@ -75,7 +79,7 @@ exports.create = (req, res) => {
                 
                 const output = {};
                 output.reservation = data;
-                
+                //update status of tables
                 output.table = await db.table.bulkCreate(tables, { updateOnDuplicate: ["status"] })
                   .catch(err => {
                     res.status(500).send({
@@ -93,33 +97,42 @@ exports.create = (req, res) => {
                     });
                   });
 
-                  reservationTablesQuery = reservationTablesQuery.slice(0, -1);
-                  Sequelize.query(reservationTablesQuery, { type: QueryTypes.INSERT })
-                    .catch(err => {
-                      res.status(500).send({
-                        message:
-                          err.message || "Some error occurred while updating the orderReservation."
-                      });
-                    });
+                  //link reservation to tables
 
-                  reservationParkingsQuery = reservationParkingsQuery.slice(0, -1);
-                  Sequelize.query(reservationParkingsQuery, { type: QueryTypes.INSERT })
-                    .catch(err => {
-                      res.status(500).send({
-                        message:
-                          err.message || "Some error occurred while updating the orderReservation."
+                  if(tables.length > 0){
+                      reservationTablesQuery = reservationTablesQuery.slice(0, -1);
+                    Sequelize.query(reservationTablesQuery, { type: QueryTypes.INSERT })
+                      .catch(err => {
+                        res.status(500).send({
+                          message:
+                            err.message || "Some error occurred while updating the orderReservation."
+                        });
                       });
-                    });
-                  res.send(output);
+                    }
+                  
+                  //link reservation to parkings
+                  if(parkings.length > 0){
+                    reservationParkingsQuery = reservationParkingsQuery.slice(0, -1);
+                    Sequelize.query(reservationParkingsQuery, { type: QueryTypes.INSERT })
+                      .catch(err => {
+                        res.status(500).send({
+                          message:
+                            err.message || "Some error occurred while updating the orderReservation."
+                        });
+                      });
+                  }
+                  
+                  if(!req.params.noHeader)
+                    res.send(output);
               })
               .catch(err => {
+                console.log(err);
+                return;
                 res.status(500).send({
                   message:
                     err.message || "Some error occurred while creating the Reservation."
                 });
               });
-              
-              
           })
           .catch((err) => {
             res.status(500).send({
@@ -134,52 +147,108 @@ exports.create = (req, res) => {
             err.message || "Some error occurred while creating the Reservation."
         });
       });
-      
-    // Save Reservation in the database
-    // Reservation.create(reservation)
-    //   .then(data => {
-    //     res.send(data);
-    //   })
-    //   .catch(err => {
-    //     res.status(500).send({
-    //       message:
-    //         err.message || "Some error occurred while creating the Reservation."
-    //     });
-    //   });
   };
 
 exports.update = (req, res) => {
     const id = req.params.id;
-    // exports.delete(req, res)
-    //   .then(() => {
-    //     exports.create(req, res);
-    //   });
-    Reservation.update(req.body, {
-      where: { id: id }
-    })
-      .then(num => {
-        if (num == 1) {
-          res.send({
-            message: "Reservation was updated successfully.",
-            reservation: req.body
-          });
-        } else {
-          res.send({
-            message: `Cannot update Reservation with id=${id}. Maybe Reservation was not found or req.body is empty!`
-          });
-        }
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error updating Reservation with id=" + id
-        });
+    
+    // Validate request
+    console.log(req.body);
+    if (!req.body.date) {
+      res.status(400).send({
+        message: "Reservation date can not be empty!"
       });
+      return;
+    }
+  
+    const reservation = {
+        id: id,
+        date: req.body.date,
+        numberofplaces: req.body.numberofplaces,
+        userId: req.body.userId,
+        restaurantId: req.body.restaurantId,
+        table: req.body.table,
+        parking: req.body.parking
+    };
+    
+    let query = "Select * from tables where (id in (";
+  for(let table in req.body.table){
+    query += req.body.table[table].id + ",";
   }
+  if(req.body.table.length == 0)
+    query += "0";
+  else
+    query = query.slice(0, -1);
+  query += ")) and (id not in (select tableId from reservationTable where reservationId = " + id + ")) and status = 1";
+  Sequelize.query(query, { type: QueryTypes.SELECT })
+    .then( (data) => {
+      if(data.length > 0){
+        res.status(500).send({
+          message:
+            "Some tables are already reserved."
+        });
+      }
+      let query = "Select * from parkings where (id in (";
+      for(let parking in req.body.parking){
+        query += req.body.parking[parking].id + ",";
+      }
+      if(req.body.parking.length == 0)
+        query += "0";
+      else
+        query = query.slice(0, -1);
+      query += ")) and (id not in (select parkingId from reservationParking where reservationId = " + id + ")) and status = 1";
+      Sequelize.query(query, { type: QueryTypes.SELECT })
+        .then( (data) => {
+          if(data.length > 0){
+            res.status(500).send({
+              message:
+                "Some parkings are already reserved."
+            });
+          }
+          // Update the reservation in the database
+          let newReq = req;
+          newReq.params.id = id;
+          newReq.params.noHeader = true;
+          exports.delete(newReq, res)
+            .then( () => {
+              exports.create(newReq, res)
+                .then( (data) => {
+                  setTimeout(() => {res.send(data);}, 1000);
+                })
+                .catch(err => {
+                  res.status(500).send({
+                    message:
+                      err.message || "Some error occurred while updating the orderReservation."
+                  });
+                });
+            })
+            .catch(err => {
+              res.status(500).send({
+                message:
+                  err.message || "Some error occurred while updating the orderReservation."
+              });
+            });
+        })
+        .catch(err => {
+          res.status(500).send({
+            message:
+              err.message || "Some error occurred while updating the orderReservation."
+          });
+        });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while updating the orderReservation."
+      });
+    });
+
+  }
+  
   
   
 exports.delete = async (req, res) => {
     const id = req.params.id;
-  
     const tables = await Sequelize.query(`SELECT tableId FROM reservationTable WHERE reservationId = ${id}`, { type: QueryTypes.SELECT });
     const parkings = await Sequelize.query(`SELECT parkingId FROM reservationParking WHERE reservationId = ${id}`, { type: QueryTypes.SELECT });
     for(let i in tables){
@@ -222,14 +291,15 @@ exports.delete = async (req, res) => {
       .then(num => {
         
 
-        if (num == 1) {
+        if (num == 1 && !req.params.noHeader) {
           res.send({
             message: "Reservation was deleted successfully!"
           });
         } else {
-          res.send({
-            message: `Cannot delete Reservation with id=${id}. Maybe Reservation was not found!`
-          });
+          if(!req.params.noHeader)
+            res.send({
+              message: `Cannot delete Reservation with id=${id}. Maybe Reservation was not found!`
+            });
         }
       })
       .catch(err => {
@@ -387,6 +457,36 @@ exports.deleteAllOrder = (req, res) => {
     });
 };
 
+exports.getReservationTables = (req, res) => {
+  const id = req.params.reservationId;
+  Sequelize.query(`Select tableId from reservationTable WHERE reservationId = ${id}`, { type: QueryTypes.SELECT })
+    .then(data => {
+      console.log(data);
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while getting the tables reserved."
+      });
+    });
+
+}
+
+exports.getReservationParkings = (req, res) => {
+  const id = req.params.reservationId;
+  Sequelize.query(`Select tableId from reservationParking WHERE reservationId = ${id}`, { type: QueryTypes.SELECT })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while getting the parkings reserved."
+      });
+    });
+
+}
 
 exports.changeStatus = (req, res) => {
   const status = req.body.data.status;
@@ -394,12 +494,9 @@ exports.changeStatus = (req, res) => {
   OrderReservation.findOne({where: {reservationId: req.params.id}})
     .then( (data) => {
         const reservationId = data.reservationId;
-        console.log("Data is: " + data);
         const query = "Update orderReservations set status = '" + status + "' where reservationId = " + reservationId;
-        console.log("Query is: " + query);
         Sequelize.query(query, {type: QueryTypes.UPDATE})
         .then((data) => {
-      
           res.status(200).send(
             {message: "Updated status of reservation with Id: " + reservationId + " to '" + status + "'"}
           );
@@ -411,9 +508,7 @@ exports.changeStatus = (req, res) => {
         });
     })
     .catch((err) => {
-      console.log("Reached Catch Block");
       res.status(500).send({
-        
         message: "Could not change status"
       });
     });

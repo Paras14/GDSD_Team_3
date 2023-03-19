@@ -172,9 +172,6 @@ exports.create = (req, res) => {
                 result[i].status = null;
               }
             }
-            // console.log(data);
-            // console.log('----------------');
-            // console.log(tables);
             res.send(result);
           })
           .catch(err => {

@@ -1,68 +1,62 @@
 import React, {useEffect, useState, useRef} from 'react';
-
-
 import axios from 'axios';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import {  Button } from 'react-bootstrap';
 import { Global } from '../../helpers/Global';
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import * as ReactDOM from 'react-dom';
-import { hydrate } from "react-dom";
-import {hydrateRoot} from 'react-dom/client';
-import * as ReactDOMServer from 'react-dom/server';
-import { renderToStaticMarkup } from "react-dom/server"
 import Draggable, {DraggableCore} from "react-draggable";
 import '../../styles/Scrollbar.css';
 import {isAuthorized} from '../../helpers/isAuthorized';
+
+//Create component for table map
 const TableMap = () => {
     const baseUrl = Global.baseUrl;
     const navigate = useNavigate();
-    //const [divElement, setDivElement] = useState({});
-    const elementInfo = useRef({h: 0, w: 0});
-    const [manager, setManager] = useState(null);
+    const elementInfo = useRef({h: 0, w: 0}); //height and width of the element being dragged
+    const [manager, setManager] = useState(null); //manager object
     
-    const containerRef = useRef(null);
-    const left = useRef(0);
-    const right = useRef(0);
-    const top = useRef(0);
-    const bottom = useRef(0);
-    const tableCount = useRef(0);
-    const windowCount = useRef(0);
-    const doorCount = useRef(0);
-    const elementBeingDragged = useRef(null);
-    const dragZone = useRef(null);
-    const isauthorized = isAuthorized();
-    const restaurantId = useRef(0);
-    const initialRender = useRef(false);
-    const oldContainerDimensions = useRef({h: 0, w: 0});
+    const containerRef = useRef(null); //reference to the container div
+    const left = useRef(0); //left offset of the container div
+    const right = useRef(0); //right offset of the container div
+    const top = useRef(0);  //top offset of the container div
+    const bottom = useRef(0); //bottom offset of the container div
+    const tableCount = useRef(0); //number of tables in the map
+    const windowCount = useRef(0); //number of windows in the map
+    const doorCount = useRef(0); //number of doors in the map
+    const elementBeingDragged = useRef(null); //reference to the element being dragged
+    const dragZone = useRef(null); //reference to the drag zone for deleting an element
+    const isauthorized = isAuthorized(); //method to check if the user is authorized
+    const restaurantId = useRef(0); //id of the restaurant
+    const initialRender = useRef(false); //boolean to check if the component is being rendered for the first time
+    const oldContainerDimensions = useRef({h: 0, w: 0}); //height and width of the container div before resizing
     
-
+    //method to render the entire screen
     useEffect(() => {
-        if(!isauthorized)
+        if(!isauthorized)   //if the user is not authorized, redirect to the sign in page
             navigate('/signIn');
-        setManager(JSON.parse(localStorage.getItem("user")));
+        setManager(JSON.parse(localStorage.getItem("user"))); //set the manager object
         
 
-        if(window.innerWidth < 768){
+        if(window.innerWidth < 768){   //if the screen is smaller than 768px, set the margin top of the footer to 550px(fixes CSS positioning issue)
             document.getElementsByClassName('fw-bold')[0].parentElement.parentElement.parentElement.parentElement.parentElement.style.marginTop = "550px";
         }
-        containerRef.current.innerHTML = "Checking for map...";
+
+        containerRef.current.innerHTML = "Checking for map..."; //until map loads, display loading text
         left.current = containerRef.current.offsetLeft;
-        right.current = left.current + containerRef.current.clientWidth;
-        top.current = containerRef.current.offsetTop;
+        right.current = left.current + containerRef.current.clientWidth; 
+        top.current = containerRef.current.offsetTop;  
         bottom.current = top.current + containerRef.current.clientHeight;
-        console.log(`${left.current} ${right.current} ${top.current} ${bottom.current}`);
+        //get the restaurant id of the manager
         axios.get(baseUrl + 'restaurants/manager/' + JSON.parse(localStorage.getItem("user")).id)
             .then(response => {
                 containerRef.current.innerHTML = "";
                 restaurantId.current = response.data.id;
-                axios.get(baseUrl + 'restaurantMap/' + response.data.id)
+                axios.get(baseUrl + 'restaurantMap/' + response.data.id) //get the restaurant map
                     .then(response => {
-                        console.log(response.data);
-                        console.log(initialRender);
                         oldContainerDimensions.current = {h: containerRef.current.offsetHeight, w: containerRef.current.offsetWidth};
                         if(!(initialRender.current && response.data.length !== 0)){
-                            updateElements(response.data);
-                            initialRender.current = true;
+                            updateElements(response.data); //update the elements on the map
+                            initialRender.current = true; //set the initial render to true so that the map is not updated again redundantly
                         }
                         
                     })
@@ -74,39 +68,46 @@ const TableMap = () => {
             .catch(error => {
                 console.log(error);
             });
-        updateDimensions();
-        window.addEventListener('resize', handleResize);
+
+        updateDimensions(); //update the dimensions of the new element to be added to the map
+        window.addEventListener('resize', handleResize); //add event listener for resizing the window
         
     }, []);
 
+    //method to resize the map when the window is resized
     function handleResize(){
-        if(window.innerWidth < 768){
+        if(window.innerWidth < 768){ //if the screen is smaller than 768px, set the margin top of the footer to 550px(fixes CSS positioning issue)
             document.getElementsByClassName('fw-bold')[0].parentElement.parentElement.parentElement.parentElement.parentElement.style.marginTop = "550px";
-        } else{
+        } else{ //if the screen is larger than 768px, set the margin top of the footer to 0px(fixes CSS positioning issue)
             document.getElementsByClassName('fw-bold')[0].parentElement.parentElement.parentElement.parentElement.parentElement.style.marginTop = "0px";
         }
-        let elementList = [];
-        console.log(tableCount.current + " " + windowCount.current + " " + doorCount.current);
-        const heightRatio = parseFloat(containerRef.current.offsetHeight)/parseFloat(oldContainerDimensions.current.h);
-        const widthRatio = parseFloat(containerRef.current.offsetWidth)/parseFloat(oldContainerDimensions.current.w);
+
+        let elementList = []; //list of elements on the map
+
+        const heightRatio = parseFloat(containerRef.current.offsetHeight)/parseFloat(oldContainerDimensions.current.h); //ratio of the new height to the old height of container div
+        const widthRatio = parseFloat(containerRef.current.offsetWidth)/parseFloat(oldContainerDimensions.current.w); //ratio of the new width to the old width of container div
+
+        //setting all the new tables on the map
         for(let i=1; i<=tableCount.current; i++){
             const element = document.getElementById('T' + i);
-            elementList.push({
+            elementList.push({ //push the table to the list with updated dimensions
                 elementType: 'Table',
                 x: element.getAttribute('x'),
                 y: element.getAttribute('y'),
-                height: heightRatio * parseFloat(element.offsetHeight),
+                height: heightRatio * parseFloat(element.offsetHeight), 
                 width: widthRatio * parseFloat(element.offsetWidth),
                 viewHeight: oldContainerDimensions.current.h,
                 viewWidth: oldContainerDimensions.current.w
             });
-            element.remove();
+            element.remove();  //remove the table from the map
             
         }
-        tableCount.current = 0;
+        tableCount.current = 0; //reset the table count
+
+        //setting all the new windows on the map
         for(let i=1; i<=windowCount.current; i++){
             const element = document.getElementById('W' + i);
-            elementList.push({
+            elementList.push({ //push the window to the list with updated dimensions
                 elementType: 'Window',
                 x: element.getAttribute('x'),
                 y: element.getAttribute('y'),
@@ -115,13 +116,15 @@ const TableMap = () => {
                 viewHeight: oldContainerDimensions.current.h,
                 viewWidth: oldContainerDimensions.current.w
             });
-            element.remove();
+            element.remove(); //remove the window from the map
             
         }
-        windowCount.current = 0;
+        windowCount.current = 0; //reset the window count
+
+        //setting all the new doors on the map
         for(let i=1; i<=doorCount.current; i++){
             const element = document.getElementById('D' + i);
-            elementList.push({
+            elementList.push({ //push the door to the list with updated dimensions
                 elementType: 'Door',
                 x: element.getAttribute('x'),
                 y: element.getAttribute('y'),
@@ -130,57 +133,55 @@ const TableMap = () => {
                 viewHeight: oldContainerDimensions.current.h,
                 viewWidth: oldContainerDimensions.current.w
             });
-            element.remove();
+            element.remove(); //remove the door from the map
             
         }
-        oldContainerDimensions.current = {h: containerRef.current.offsetHeight, w: containerRef.current.offsetWidth};
-        doorCount.current = 0;
-        console.log(elementList);
-        console.log(containerRef.current.offsetHeight + " " + containerRef.current.offsetWidth);
-        console.log(tableCount.current + " " + windowCount.current + " " + doorCount.current);
-        updateElements(elementList);
+        oldContainerDimensions.current = {h: containerRef.current.offsetHeight, w: containerRef.current.offsetWidth}; //set the old container dimensions to the new dimensions
+        doorCount.current = 0; //reset the door count
+        
+        updateElements(elementList); //update the elements on the map with the list created
     }
     
-    
-    
-    
+    //method to update the elements on the map
     function updateElements(elements){
-        for(let i=0; i<elements.length; i++){
+        for(let i=0; i<elements.length; i++){ //loop through the list of elements
+            //update dimensions for the current element to be added to the map
             updateDimensions(parseFloat(containerRef.current.offsetHeight)/parseFloat(elements[i].height), parseFloat(containerRef.current.offsetWidth)/parseFloat(elements[i].width));
+            //get height and width ratios for resizing the element positions
             const widthRatio = parseFloat(containerRef.current.offsetWidth)/parseFloat(elements[i].viewWidth);
             const heightRatio = parseFloat(containerRef.current.offsetHeight)/parseFloat(elements[i].viewHeight);
-            console.log(elements[i].elementType[0].toLocaleLowerCase());
+            //add the element to the map
             addElement(elements[i].elementType[0].toLocaleLowerCase(), widthRatio * parseFloat(elements[i].x), heightRatio * parseFloat(elements[i].y));
         }
     }
 
+    //method to update the dimensions of the new element to be added to the map
     function updateDimensions(row = 10, col = 10){
         const h = containerRef.current.offsetHeight/row;
         const w = containerRef.current.offsetWidth/col;
-        console.log("dimensions: " + row + " " + col + " " + h + " " + w );
-        //setDivElement({height: h*0.8, width: w*0.8});
-        console.log('reached here');
+        //set the height and width of the new element to be added to the map
         elementInfo.current = {height: h, width: w};
 
     }
     
-
+    //method to add an element to the map
     function removeElement(element){
         element.id = "";
         element.style.visibility = "hidden";
-        
     }
 
+    //method to add an element to the map
     function addElement(elementName, tx=0, ty=0){
         let elementId = '';
         let elementType = '';
         let elementColor = '';
         let elementText = '';
         let changedTranslateOnce = false;
+
+        //switch statement to set the element id, type, color, and text based on the element name
         switch(elementName){
             case 't':
                 tableCount.current +=1;
-                console.log(tableCount.current);
                 elementId = 'T' + tableCount.current;
                 elementType = 'Table';
                 elementColor = 'burlywood';
@@ -207,24 +208,24 @@ const TableMap = () => {
                 console.log("Invalid Element!");
                 return;
         }
+        //function to handle the drag end event
         function handleStop(event, data) {
-            console.log("Drag Ended");
+            
             event.preventDefault();
             event.stopPropagation();
-            console.log("Event Target was:" + event.target.innerHTML);
-            
-            console.log(elementBeingDragged);
-            console.log(elementBeingDragged.current.style.transform);
-            setTimeout(() => {
+            //set the x and y attributes of the element to the new position
+            setTimeout(() => { //use timeout to do the operation in next frame so x and y attributes are not set to 0
                 elementBeingDragged.current.setAttribute("x", elementBeingDragged.current.style.transform.split('(')[1].split('px')[0]);
                 elementBeingDragged.current.setAttribute("y", elementBeingDragged.current.style.transform.split(',')[1].split('px')[0]);
             }, 10);
             const element = elementBeingDragged.current.getBoundingClientRect();
             const dragArea = dragZone.current.getBoundingClientRect();
+            //check if the element is overlapping with the drag area
             const overlapping = !(
                 element.right < dragArea.left || element.left > dragArea.right ||
                 element.top > dragArea.bottom || element.bottom < dragArea.top
             );
+            //if the element is overlapping with the drag area, remove the element
             if(overlapping){
                 let elementCount = 0;
                 switch(elementType[0]){
@@ -238,15 +239,14 @@ const TableMap = () => {
                                 doorCount.current--;
                 }
                 var elementNumber = parseFloat(elementBeingDragged.current.innerHTML.split(' ')[1]);
-                console.log(elementNumber);
-                // elementToRemove.current.remove();
                 removeElement(elementBeingDragged.current);
                 elementBeingDragged.current = null;
-                let foundSkipped = false;
+                let foundSkipped = false; //flag to check if an element was skipped
+                //loop through the elements to update the ids and text
                 while(elementNumber<=elementCount){
                     console.log("element Count is: ", elementCount);
                     const element = document.getElementById(elementType[0] + elementNumber);
-                    if(!element){
+                    if(!element){   //if the element is not found, skip it for the first time(because one element was overwritten by react in place of the deleted one)
                         elementNumber++;
                         foundSkipped = true;
                         continue;
@@ -260,23 +260,19 @@ const TableMap = () => {
             }
            
         }
+        //function to handle the drag start event
         function handleStart(event, data){
-            console.log("Drag Started");
             event.preventDefault();
             event.stopPropagation();
-            console.log("Event Target was:" + event.target.id);
             elementBeingDragged.current = event.target;
             
         }
-
+        //function to handle the drag event
         function handleDrag(event, data){
-            console.log("Dragging", changedTranslateOnce);
-           
             event.preventDefault();
             event.stopPropagation();
-            
-            console.log("Event Target was:" + elementBeingDragged.current.id);
         }
+        //create the new element
         const newElement = React.createElement(Draggable, {onStart:handleStart, onDrag:handleDrag, onStop:handleStop},
              React.createElement('div', {id:elementId, className:'border border-secondary rounded',
              style:{height:elementInfo.current.height, width:elementInfo.current.width, textAlign:"center",
@@ -286,26 +282,20 @@ const TableMap = () => {
         const newRoot = document.createElement("div");
         newRoot.style.width = "fit-content";
         newRoot.style.display = "inline-block";
-        // hydrate(newElement, newRoot);
+        //render the new element
         ReactDOM.render(newElement, newRoot);
         containerRef.current.appendChild(newRoot);
         document.getElementById(elementId).setAttribute("x",""+tx);
         document.getElementById(elementId).setAttribute("y",""+ty);
-        switch(elementId[0]){
-            // case 'W': document.getElementById(elementId).style.backgroundImage = 'url(https://i.ibb.co/CtqRqGb/window.png)';
-            // document.getElementById(elementId).style.backgroundSize = 'cover';
-            // document.getElementById(elementId).style.backgroundRepeat = 'no-repeat';
-            // document.getElementById(elementId).style.backgroundColor = 'transparent';
-        }
+        
         console.log(tx, ty);
-        setTimeout(() => {
-            console.log("Id is " + elementId);
-            // newElement.style.transform = "translate("+tx+"px,"+ty+"px)";
+        setTimeout(() => {  //wait for the element to be rendered before setting the transform
             document.getElementById(elementId).style.transform = "translate("+tx+"px,"+ty+"px)";
         }, 50);
         
     }
 
+    //method to save elements to the database
     function saveElements(){
         let tableList = [];
         let doorList = [];
@@ -313,7 +303,7 @@ const TableMap = () => {
         let rows = parseFloat(containerRef.current.offsetWidth);
         let cols = parseFloat(containerRef.current.offsetHeight);
         let positionArray = new Array(rows).fill(null).map(() => Array(cols).fill(0));
-        
+        //loop through the elements to check if they are inside the drag area and store if they are
         for(let i=1; i<=tableCount.current; i++){
             const element = document.getElementById("T"+i);
             let x = parseInt(element.getAttribute("x"));
@@ -383,22 +373,16 @@ const TableMap = () => {
             }
             windowList.push({id:element.id, x:x, y:y, h:h, w:w, vw:rows, vh:cols});
         }
-
-        console.log(tableList);
-        console.log(windowList);
-        console.log(doorList);
+        //send the list of elements to the database
         axios.put(baseUrl+'restaurantMap/' + restaurantId.current, {Table: tableList, Window: windowList, Door: doorList})
             .then(res => {
-                console.log(res.data); 
+                console.log("Map saved successfully"); 
             })
             .catch(err => {
                 console.log(err);
             });
     }
-
-    
-    console.log('called TableMap');
-
+    //return the component
     return (
         <div style={{height:"500px", zIndex:"0"}}>
             <div className='row' style={{height:"100%", position:"relative", zIndex:"0"}}>

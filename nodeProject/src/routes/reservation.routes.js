@@ -38,6 +38,10 @@ module.exports = app => {
     //Get a Table corresponding to the reservation
     router.get("/tables/:id", reservations.getTableNumber);
 
+    router.get("/:reservationId/tables", reservations.getReservationTables);
+
+    router.get("/:reservationId/parkings", reservations.getReservationParkings);
+
     // Get a list of orders for a reservation
     //router.get("/order/:id", reservations.findAllOrders);
 

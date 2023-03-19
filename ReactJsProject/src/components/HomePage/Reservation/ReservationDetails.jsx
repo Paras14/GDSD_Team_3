@@ -97,8 +97,8 @@ function ReservationDetails() {
         });
 
         socket.on('updateTables', async() => {
-          createMap();
-        
+          if(document.getElementById('closeMapButton').style.display!=='none')
+            createMap();
         });
       }
   }, [parkings.length]);
