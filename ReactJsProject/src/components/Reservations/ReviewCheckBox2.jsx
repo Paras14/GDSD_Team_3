@@ -18,7 +18,14 @@ function ReviewCheckBox(props) {
               () => props.setDeliciousFood(!props.deliciousFood)
             }
           />
-          
+          <label>Delicious Food</label>
+        </div>
+        <div md="6" className="mt-4">
+          <input type="checkbox" className="mx-2 polite-behaviour-bool" checked={props.politeBehavior}
+            onChange = {
+              () => props.setPoliteBehavior(!props.politeBehavior)
+            }
+          />
           <label>Polite Behaviour</label>
         </div>
         <div md="6" className="mt-4">
