@@ -26,6 +26,7 @@ function EditReservationDetails() {
   const [reservation, setReservation] = useState(null);
   const [parkings, setParkings] = useState([]);
   const [checkboxState, setCheckboxState] = useState([]);
+  const [userSelectedParkings, setUserSelParking] = useState([]);
   const containerRef = useRef(null);
   const elementInfo = useRef({h: 0, w: 0});
   const containerInfo = useRef({h: 0, w: 0});
@@ -85,6 +86,16 @@ function EditReservationDetails() {
         console.log("foodCounts: ",foodCounts);
         setFoodCounts(foodCounts);
 
+      //get Parkings selected for a reservation
+        axios
+        .get(baseUrl + 'reservations/' + reservationId + '/parkings')
+        .then((res) => {
+          const data = res.data;
+          setUserSelParking(data.map((item) => item.parkingId))
+          console.log("User Selected Parkings array: "+ userSelectedParkings);
+        })
+
+      //get Parkings for restaurant
         axios
       .get(baseUrl + "parkings/restaurant/" + restaurantId.current)
         .then((response) => {
@@ -376,10 +387,14 @@ function EditReservationDetails() {
   ];
 */
 const parkSel = (park, index) => {
+  var userBool = true;
+  if(userSelectedParkings.includes(park.id)){
+    userBool = false;
+  }
   return (
     <div className="form-check form-check-inline">
       <input type="checkbox" className="form-check-input" id={park.number} name={park.number} 
-      disabled={park.status} 
+      disabled={park.status && userBool}
       checked={checkboxState[index]}
       onChange={event => handleCheckboxChange(index, event.target.checked)}
       />
