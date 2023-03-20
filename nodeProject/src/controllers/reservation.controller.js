@@ -453,7 +453,7 @@ exports.getReservationTables = (req, res) => {
 //get all the parkings reserved in a reservation
 exports.getReservationParkings = (req, res) => {
   const id = req.params.reservationId;
-  Sequelize.query(`Select tableId from reservationParking WHERE reservationId = ${id}`, { type: QueryTypes.SELECT })
+  Sequelize.query(`Select parkingId from reservationParking WHERE reservationId = ${id}`, { type: QueryTypes.SELECT })
     .then(data => {
       res.send(data);
     })
