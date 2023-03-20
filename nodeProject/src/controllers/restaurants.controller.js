@@ -2,6 +2,8 @@ const { sequelize } = require("../models");
 const db = require("../models");
 const Restaurant = db.restaurant;
 const managerWaiter = db.managerWaiter;
+const Sequelize = db.sequelize;
+const { QueryTypes } = require('sequelize');
 
 const Op = db.Sequelize.Op;
 const petitionController = require("./restaurantRegistrationPetition.controller");
@@ -229,7 +231,13 @@ exports.getTablesByManager = (req, res) => {
 
 exports.updateTableStatus = (req, res) => {
     const Table = require('./tables.controller');
-    Table.update(req, res);
+    const tableId = req.params.id;
+    Sequelize.query(`Delete from reservationTable where tableId = ${tableId}`, { type: QueryTypes.INSERT })
+      .then(() => {
+        Table.update(req, res);
+      });
+    
+    
 }
 
 exports.findRestaurantByManagerId = (req, res) => {

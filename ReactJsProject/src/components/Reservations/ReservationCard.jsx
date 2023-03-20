@@ -5,6 +5,7 @@ import { Button } from 'react-bootstrap';
 import { formatDate } from '../Chat/format/formatDate';
 import { Global } from '../../helpers/Global';
 import { Link, useNavigate } from 'react-router-dom';
+import socket from '../Chat/Socket.js'
 
 // this component displays the information of a reservation in the list of reservations of the user
 const ReservationCard = ({ reservation }) => {
@@ -65,6 +66,7 @@ const ReservationCard = ({ reservation }) => {
                                         .delete(baseUrl + "reservations/" + reservation.id)
                                         .then((res) => {
                                             console.log(res);
+                                            socket.emit("tablesUpdated", {});
                                             window.location.reload();
                                         })
                                         .catch((err) => console.log(err));

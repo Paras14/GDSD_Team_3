@@ -341,7 +341,7 @@ function EditReservationDetails() {
       .put(`${baseUrl}reservations/${reservationId}`, reservation)
       .then((res) => {
         console.log(res);
-
+        socket.emit("tablesUpdated",{});
         // if there is food in the restaurant
         if (foods.length > 0) {
             // First we need to delete the orders of the reservation
