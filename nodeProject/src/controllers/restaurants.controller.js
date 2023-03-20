@@ -232,7 +232,7 @@ exports.getTablesByManager = (req, res) => {
 exports.updateTableStatus = (req, res) => {
     const Table = require('./tables.controller');
     const tableId = req.params.id;
-    Sequelize.query(`Delete from reservationTable where tableId = ${tableId}`, { type: QueryTypes.INSERT })
+    Sequelize.query(`Delete from reservationTable where tableId = ${tableId}`, { type: QueryTypes.DELETE })
       .then(() => {
         Table.update(req, res);
       });

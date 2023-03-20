@@ -307,9 +307,10 @@ function EditReservationDetails() {
     for(let i in parkings){
       console.log(i);
       console.log(parkings[i]);
-      if(parkings[i].oldStatus === false && parkings[i].status === true){
-        parkingsToSend.push(parkings[i]);
-      }
+      if(!document.getElementById("Parking " + parkings[i].id).disabled)
+        if(parkings[i].status === true){
+          parkingsToSend.push(parkings[i]);
+        }
     }
 
     // const finalParking = validParkings.filter(parking => parking.status==true).map(parking => {
@@ -393,7 +394,7 @@ const parkSel = (park, index) => {
   }
   return (
     <div className="form-check form-check-inline">
-      <input type="checkbox" className="form-check-input" id={park.number} name={park.number} 
+      <input type="checkbox" className="form-check-input" id={"Parking " + park.id} name={park.number} 
       disabled={park.status && userBool}
       checked={checkboxState[index]}
       onChange={event => handleCheckboxChange(index, event.target.checked)}

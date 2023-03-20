@@ -1,6 +1,8 @@
 const db = require("../models");
 const Parking = db.parking;
 const Op = db.Sequelize.Op;
+const Sequelize = db.sequelize;
+const { QueryTypes } = require('sequelize');
 
 // Create and Save a new Parking
 exports.create = (req, res) => {
@@ -74,10 +76,15 @@ exports.findOne = (req, res) => {
 // Update a Parking by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
+  
   Parking.update(req.body, {
     where: { id: id }
   })
     .then(num => {
+      console.log("Reached here");
+      Sequelize.query(`Delete from reservationParking where parkingId = ${id}`, { type: QueryTypes.DELETE });
+      
+      console.log("Reacher here too");
       if (num == 1) {
         res.send({
           message: "Parking was updated successfully."
