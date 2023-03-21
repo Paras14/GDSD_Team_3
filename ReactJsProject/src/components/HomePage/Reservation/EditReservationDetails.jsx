@@ -49,14 +49,14 @@ function EditReservationDetails() {
         const dateObject = new Date(reservation.data.date);
         restaurantId.current = reservation.data.restaurantId;
         const localdate = dateObject.toISOString().split('T')[0];
-        let localhour = dateObject.toLocaleTimeString();
+        let localhour = dateObject.toISOString().split('T')[1].split('.')[0];
 
         console.log("Date day: " + localdate);
         console.log("Date time: " + localhour);
         console.log("Date time first: " + dateObject.toLocaleTimeString().split(':')[0]);
-        if (dateObject.toLocaleTimeString().split(':')[0].length === 1) {
-            console.log("Date time: " + "0" + dateObject.toLocaleTimeString());
-            localhour = "0" + dateObject.toLocaleTimeString();
+        if (dateObject.toISOString().split('T')[1].split(':')[0].length === 1) {
+            console.log("Date time: " + "0" + dateObject.toISOString().split('T')[1].split('.')[0]);
+            localhour = "0" + dateObject.toISOString().split('T')[1].split('.')[0];
         }
 
         setDate(localdate);
@@ -361,7 +361,8 @@ function EditReservationDetails() {
 
             const orders = {
                 id: reservationId,
-                list: list
+                list: list,
+                isUpdated: true
             }
 
             // We create the orders

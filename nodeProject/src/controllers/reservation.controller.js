@@ -109,6 +109,7 @@ exports.create = async (req, res) => {
                   
                   if(!req.params.noHeader)  //if update is being executed, do not send headers
                     res.send(output);
+                  
               })
               .catch(err => {
                 res.status(500).send({
@@ -188,6 +189,7 @@ exports.update = (req, res) => {
             .then( () => {
               exports.create(newReq, res) //after deleting the reservation, create a new one with the updated details
                 .then( (data) => {
+                  
                   setTimeout(() => {res.send(data);}, 1000);
                 })
                 .catch(err => {
@@ -363,8 +365,16 @@ exports.findAllFromRestaurant = (req, res) => {
 
 
 //Adding code for managing orders for a reservation
-exports.addOrder = (req, res) => {
-      const id = req.body.id;
+exports.addOrder = async (req, res) => {
+      let id = 0;
+      if(req.body.isUpdated){
+        id = await Sequelize.query('Select max(id) as id from reservations', { type: QueryTypes.SELECT });
+        id = id[0].id;
+      }
+      else
+      {
+        id = req.body.id;
+      }
       const foodQuantity = req.body.list; 
       if(!req.body.id){
         res.status(400).send({
@@ -397,7 +407,7 @@ exports.addOrder = (req, res) => {
 //get all the orders corresponding to a reservation
 exports.getAllOrder = (req, res) => {
     const id = req.params.reservationId;
-    OrderReservation.findAll({where:{reservationId:id}})
+    OrderReservation.findAll({where:{[Op.or]:[{reservationId:id}, {reservationId:null}]}})
     .then(data => {
       res.send(data);
     })
