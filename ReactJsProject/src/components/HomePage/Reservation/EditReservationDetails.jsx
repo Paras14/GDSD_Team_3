@@ -49,15 +49,7 @@ function EditReservationDetails() {
         const dateObject = new Date(reservation.data.date);
         restaurantId.current = reservation.data.restaurantId;
         const localdate = dateObject.toISOString().split('T')[0];
-        let localhour = dateObject.toISOString().split('T')[1].split('.')[0];
-
-        console.log("Date day: " + localdate);
-        console.log("Date time: " + localhour);
-        console.log("Date time first: " + dateObject.toLocaleTimeString().split(':')[0]);
-        if (dateObject.toISOString().split('T')[1].split(':')[0].length === 1) {
-            console.log("Date time: " + "0" + dateObject.toISOString().split('T')[1].split('.')[0]);
-            localhour = "0" + dateObject.toISOString().split('T')[1].split('.')[0];
-        }
+        let localhour = dateObject.toLocaleTimeString('en-GB');
 
         setDate(localdate);
         setHour(localhour);
