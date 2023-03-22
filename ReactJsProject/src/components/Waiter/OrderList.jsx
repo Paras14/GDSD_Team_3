@@ -14,6 +14,7 @@ const OrderList = () => {
     const [quantities, setQuantity] = useState([]);
     const [currentStatus, setCurrentStatus] = useState("");
     const status = ["pending","processing","done"];
+    const [tableId, setTableId] = useState([]);
     const [tableNumber, setTableNumber] = useState([]);
     const baseUrl = Global.baseUrl;
     let params = useParams();
@@ -95,10 +96,16 @@ const displayFoodItems = (foodItem, idx) => {
     useEffect(() => {
       axios
       .get(`${baseUrl}reservations/tables/${params.id}`)
-      .then((res) => {
+      .then( async(res) => {
         console.log("This is get Table response",res);
-        const tablenumbers = res.data.map(x => x.tableId);
-        setTableNumber(tablenumbers);
+        const tableids = res.data.map(x => x.tableId);
+        const tbid = tableids.map((id) => {
+        return axios
+          .get(`${baseUrl}tables/${id}`)
+         });
+         const response = await Promise.all(tbid);
+         console.log("response : ", response);
+         setTableNumber(response.map((table) => table.data.number));
       })
       .catch((err) => {
         console.log(err);
