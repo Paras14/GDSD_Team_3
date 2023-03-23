@@ -1,3 +1,6 @@
+* {
+  font-family: Nunito Sans;
+}
 .App {
   text-align: center;
 }
@@ -36,7 +39,6 @@
     transform: rotate(360deg);
   }
 }
-
 
 .rating {
   width: 180px;

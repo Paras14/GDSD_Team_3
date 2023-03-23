@@ -1,3 +1,4 @@
+import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/HomePage/Navbar";
 import Cards from "./components/HomePage/Cards";
@@ -48,7 +49,6 @@ import OrderList from "./components/Waiter/OrderList";
 import WaiterRegister from "./components/Manager/WaiterRegister";
 import TableMap from "./components/Manager/TableMap";
 import WaiterPanel from "./components/Waiter/WaiterPanel";
-
 
 const App = () => {
   return (
@@ -387,50 +387,50 @@ const App = () => {
               </div>
             }
           />
-          <Route 
-            path = "/otherProfile/:userId"
-            element = {
+          <Route
+            path="/otherProfile/:userId"
+            element={
               <div>
-                <Navbar   />
+                <Navbar />
                 <OtherProfile />
                 <Footer />
               </div>
             }
           />
-          <Route 
-            path = "/createFood/:restaurantId"
-            element = {
+          <Route
+            path="/createFood/:restaurantId"
+            element={
               <div>
-                <Navbar   />
+                <Navbar />
                 <CreateFood />
                 <Footer />
               </div>
             }
           />
-          <Route 
-            path = "/EditRestaurantDetails/:restaurantId"
-            element = {
+          <Route
+            path="/EditRestaurantDetails/:restaurantId"
+            element={
               <div>
-                <Navbar   />
+                <Navbar />
                 <EditRestaurantDetails />
                 <Footer />
               </div>
             }
           />
-          <Route 
-            path = "/WaiterPanel"
-            element = {
+          <Route
+            path="/WaiterPanel"
+            element={
               <div>
-                <WaiterNavbar   />
+                <WaiterNavbar />
                 <WaiterPanel />
               </div>
             }
           />
-          <Route 
-            path = "/WaiterReservationList"
-            element = {
+          <Route
+            path="/WaiterReservationList"
+            element={
               <div>
-                <WaiterNavbar   />
+                <WaiterNavbar />
                 <GuestReservationList />
               </div>
             }
